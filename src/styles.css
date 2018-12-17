@@ -1,0 +1,80 @@
+* {
+  padding: 0;
+  margin: 0;
+  /*background-color: #333;*/ }
+
+body {
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  background: #fff; }
+
+.wrapper {
+  padding-left: 80px !important; }
+  .wrapper .sidebarleft {
+    width: 80px !important;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    height: 100%;
+    overflow: hidden;
+    background: #333; }
+  .wrapper.toggled {
+    padding-left: 250px !important; }
+    .wrapper.toggled .sidebarleft {
+      width: 250px !important; }
+
+.navig ul {
+  width: 100%; }
+.navig li {
+  width: 300%;
+  font-size: 1.2em;
+  font-weight: 500;
+  padding: 30px 30px;
+  opacity: .7;
+  display: block; }
+  .navig li:hover {
+    opacity: 1;
+    background: #111; }
+  .navig li.active {
+    opacity: 1;
+    background: #222;
+    box-shadow: inset 0px -5px 10px rgba(0, 0, 0, 0.3), inset 0px 5px 10px rgba(0, 0, 0, 0.3); }
+
+.statusbar {
+  height: 9vh;
+  width: 100%;
+  background-color: #3a9db6; }
+
+.itemlistrow {
+  width: 100%;
+  padding: 12px 0px 12px 12px;
+  font-size: 16px;
+  border-bottom: 1px solid #ccc; }
+
+.listhd {
+  background: #ddd;
+  color: #333;
+  padding: 10px 0px 10px 10px; }
+
+.tab {
+  height: 91vh; }
+
+.tabnav {
+  height: 70%;
+  bottom: 0; }
+
+.main {
+  width: 100%; }
+
+.hamburger-inner,
+.hamburger-inner::before,
+.hamburger-inner::after {
+  background-color: #fff !important;
+  outline: none; }
+
+.hamburger--3dxy-r.is-active
+.hamburger-inner {
+  background-color: transparent !important; }
+
+/*# sourceMappingURL=styles.css.map */

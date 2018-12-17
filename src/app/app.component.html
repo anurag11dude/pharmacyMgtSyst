@@ -1,0 +1,29 @@
+<div class="wrapper anim" [class.toggled] = "sidebarnav.menuicon.toggled">
+    <div class="sidebarleft anim">
+        <div class="h-15 menuicon w-100 ml-3 pl-1 py-4">
+            <div class="hamburger hamburger--3dxy-r p-0 " [class.is-active] = "sidebarnav.menuicon.toggled" (click) = "sidebarnav.menuicon.toggled = sidebarnav.menuicon.toggled ? false : true">
+                <div class="hamburger-box">
+                    <div class="hamburger-inner"></div>
+                </div>
+            </div>
+        </div>
+        <div class="navig">
+            <ul class="wht">
+                <li routerLink = "{{nav.route}}" *ngFor = "let nav of sidebarnav.navig.navs" class = "anim" (click) = "sidebarnav.navig.activeNav = nav.name;" [class.active] = "sidebarnav.navig.activeNav == nav.name" ><fa class = "mr-3" name="{{nav.iconClass}}"></fa>{{sidebarnav.menuicon.toggled ? nav.name : null}}</li>
+            </ul>
+        </div>
+    </div>
+    <div class="main">
+      <div class="statusbar row  align-items-end pl-4">
+        <h5 class="wht font-fam-Montserrat-bold mr-5 my-2 py-1">PricePoint Pharmacy</h5>
+        <div class="tabnav row" [class.vanish] = "showMenu">
+            <button *ngFor='let nav of menuObj.menu' class="tabpill btnnone" (click)="selectMenu(nav)" [class.focus] ="menuObj.selected == nav.menuName">
+                <h6 class = "m-0 f-17 px-3 font-fam-Montserrat">{{nav.menuName}}</h6>
+            </button>
+        </div>
+      </div>
+      <router-outlet (activate) = "createMenu($event.menuObj)"></router-outlet>
+    </div>
+</div>
+
+
