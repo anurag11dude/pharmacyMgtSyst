@@ -48,14 +48,18 @@ body {
 
 .itemlistrow {
   width: 100%;
-  padding: 12px 0px 12px 12px;
+  padding: 12px 0px 12px 0px;
   font-size: 16px;
-  border-bottom: 1px solid #ccc; }
+  border-bottom: 1px solid #ccc;
+  opacity: 1; }
+  .itemlistrow.active {
+    box-shadow: inset 200px 200px 200px rgba(0, 0, 0, 0.6);
+    color: #fff; }
 
 .listhd {
   background: #ddd;
   color: #333;
-  padding: 10px 0px 10px 10px; }
+  padding: 10px 0px 10px 0px; }
 
 .tab {
   height: 91vh; }
@@ -76,5 +80,22 @@ body {
 .hamburger--3dxy-r.is-active
 .hamburger-inner {
   background-color: transparent !important; }
+
+.selectbtn {
+  color: #5bc0de;
+  background-image: none;
+  background-color: transparent;
+  border-color: #5bc0de; }
+  .selectbtn.actv {
+    color: #fff;
+    background-color: #5bc0de;
+    border-color: #5bc0de;
+    outline: none !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important; }
+  .selectbtn:focus {
+    outline: none !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important; }
 
 /*# sourceMappingURL=styles.css.map */

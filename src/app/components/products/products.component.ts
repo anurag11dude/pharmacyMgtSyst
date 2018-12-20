@@ -13,7 +13,17 @@ export class ProductsComponent implements OnInit {
     menu : [{menuName : 'Products'},{menuName : 'Sales'}],
     selected : "Products"
   };
-
+  public tableData:Object = {
+    map:[
+      {name: "Product", body: "product_name", width:"w-25"},
+      {name: "Description", body: "product_description", width:"w-25"},
+      {name: "Stock", body: "stock", width:"w-10"},
+      {name: "Retail", body: "product_retailprice", width:"w-10"},
+      {name: "Wholesale", body: "product_wholesaleprice", width:"w-10"},
+      {name: "C.ExpDate", body: "expiry_date", width:"w-20"}
+    ]
+  }
+  selectMode:boolean = false;
   constructor(public menuService:MenuService) { }
 
   ngOnInit() {
@@ -23,7 +33,12 @@ export class ProductsComponent implements OnInit {
           this.menuObj.selected = data.tab;
         }
       }
-    )
+    );
+    this.menuService.getData("/api/products").then((result)=>{
+      console.log(result);
+      this.tableData["data"] = result;
+    })
   }
+
 
 }

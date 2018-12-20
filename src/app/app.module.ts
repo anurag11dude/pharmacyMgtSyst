@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { NgxElectronModule } from 'ngx-electron';
 import { routing } from './app.routing';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import {MenuService} from "./services/menu.service";
+import {HttpModule} from "@angular/http";
 
 import { AppComponent } from './app.component';
 import { ProductsComponent } from './components/products/products.component';
@@ -25,9 +27,10 @@ import { ListComponent } from './utilities/list.component';
     BrowserModule,
     routing,
     NgxElectronModule,
-    AngularFontAwesomeModule
+    AngularFontAwesomeModule,
+    HttpModule
   ],
-  providers: [],
+  providers: [MenuService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

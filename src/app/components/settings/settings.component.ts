@@ -12,7 +12,14 @@ export class SettingsComponent implements OnInit {
     menu : [{menuName : 'Overview'},{menuName : 'Sales'}],
     selected : "Sales"
   };
-
+  public tableData:Object = {
+    map:[
+      {name: "User", body: "username", width:"w-50"},
+      {name: "Role", body: "category", width:"w-50"}
+    ]
+  }
+  selectMode:boolean = false;
+  
   constructor(public menuService:MenuService) { }
 
   ngOnInit() {
@@ -22,7 +29,14 @@ export class SettingsComponent implements OnInit {
           this.menuObj.selected = data.tab;
         }
       }
-    )
+    );
+    this.menuService.getData("/api/users").then((result)=>{
+      console.log(result);
+      this.tableData["data"] = result;
+    })
   }
 
+  listSelected(params){
+    console.log(params);
+  }
 }
