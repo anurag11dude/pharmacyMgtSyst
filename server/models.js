@@ -39,7 +39,24 @@ const models = {
     },
     users: {
         username: Sequelize.STRING,
-        category: Sequelize.STRING/* ,
-        password: Sequelize.TEXT, */
+        category: Sequelize.STRING,
+        password: Sequelize.TEXT,
+    },
+    stock: {
+        productname: Sequelize.STRING,
+        expirydate: Sequelize.DATE,
+        stockbought: Sequelize.STRING,
+        stocksold: Sequelize.INTEGER,
+        stockremain: Sequelize.INTEGER,
+        entry_date: Sequelize.DATE,
+        entries: Sequelize.INTEGER
+    },
+    stockentry: {
+        entry_date: Sequelize.DATE,
+        product: Sequelize.STRING,
+        stockno: Sequelize.INTEGER,
+        stocktype: Sequelize.STRING,
+        stockexpiry_date: Sequelize.STRING,
+        byadmin: Sequelize.STRING
     }
 }

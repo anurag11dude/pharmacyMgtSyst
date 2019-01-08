@@ -40,4 +40,7 @@ export class CustomersComponent implements OnInit {
     })
   }
 
+  listSelected(params){
+    console.log(params);
+  }
 }

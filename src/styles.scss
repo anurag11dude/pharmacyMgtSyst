@@ -55,22 +55,38 @@ body {
     width : 100%;
     background-color: rgb(58, 157, 182);
 }
-.itemlistrow {
-    width: 100%;
-    padding: 12px 0px 12px 0px;
-    font-size: 16px;
-    border-bottom: 1px solid #ccc;
-    opacity: 1;
-    &.active{
-        box-shadow : inset 200px 200px 200px rgba(0,0,0, .6);
-        color:#fff;
+list-table{
+    .listhd{
+        background: #ddd;
+        color: #333;
+        padding: 10px 0px 10px 0px;
+        font-size: 13px !important;   
+        .right-sidebar &{
+            font-size: 12px !important;
+        }
     }
+    .itemlistrow {
+        width: 100%;
+        padding: 12px 0px 12px 0px;
+        font-size: 16px;
+        border-bottom: 1px solid #ccc;
+        opacity: 1;
+        &.active{
+            box-shadow : inset 200px 200px 200px  rgba(161, 78, 157, 0.781);
+            color:#fff;
+            .right-sidebar &{
+                font-size: 12px !important;
+                color:white;
+                border-bottom: none;
+            }
+        }   
+        .right-sidebar &{
+            font-size: 12px !important;
+            color:white;
+        }
+    }  
 }
-.listhd {
-    background: #ddd;
-    color: #333;
-    padding: 10px 0px 10px 0px;
-}
+
 .tab{
     height: 91vh;
 }
@@ -92,22 +108,37 @@ body {
     background-color: transparent !important;
 }
 .selectbtn{
-    color: #5bc0de;
-    background-image: none;
-    background-color: transparent;
+    color: #fff;
+    background-color: #5bc0de;
     border-color: #5bc0de;
+    outline: none !important;
+    -webkit-box-shadow: none !important;
+            box-shadow: none !important;
     &.actv{
-        color: #fff;
-        background-color: #5bc0de;
-        border-color: #5bc0de;
-        outline: none !important;
-        -webkit-box-shadow: none !important;
-                box-shadow: none !important;
+        color: #5bc0de !important;
+        background-image: none !important;
+        background-color: transparent !important;
+        border-color: #5bc0de !important;
     }
     &:focus {
         outline: none !important;
         -webkit-box-shadow: none !important;
                 box-shadow: none !important;
+    }
+}
+.right-sidebar{
+    box-shadow : inset 0px 0px 40px rgba(0,0,0,.5);
+    background-color: rgba(0, 0, 0, 0.7);
+    .btn{
+        border-width: 1.5px;
+        border-style: solid;
+        font-weight: 600;
+    }
+    .stockclip{
+        border: none;
+        padding: 5px 15px !important;
+        box-shadow : inset 0px 10px 5px rgba(0,0,0,.07);
+        border-radius:0;
     }
 }
 

@@ -66,7 +66,7 @@ li:focus{
     outline: none;
 }
 .excerpt{
-    white-space: nowrap;
+    white-space: pre-wrap;
     text-overflow: ellipsis;
     overflow: hidden;
 }
@@ -348,6 +348,9 @@ input::placeholder, textarea::placeholder {
 }
 .f-19{
     font-size: 19px  !important;
+}
+.f-25{
+    font-size: 23px  !important;
 }
 .opac-50{
     opacity: .5;

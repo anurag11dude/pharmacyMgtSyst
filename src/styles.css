@@ -46,20 +46,29 @@ body {
   width: 100%;
   background-color: #3a9db6; }
 
-.itemlistrow {
+list-table .listhd {
+  background: #ddd;
+  color: #333;
+  padding: 10px 0px 10px 0px;
+  font-size: 13px !important; }
+  .right-sidebar list-table .listhd {
+    font-size: 12px !important; }
+list-table .itemlistrow {
   width: 100%;
   padding: 12px 0px 12px 0px;
   font-size: 16px;
   border-bottom: 1px solid #ccc;
   opacity: 1; }
-  .itemlistrow.active {
-    box-shadow: inset 200px 200px 200px rgba(0, 0, 0, 0.6);
+  list-table .itemlistrow.active {
+    box-shadow: inset 200px 200px 200px rgba(161, 78, 157, 0.781);
     color: #fff; }
-
-.listhd {
-  background: #ddd;
-  color: #333;
-  padding: 10px 0px 10px 0px; }
+    .right-sidebar list-table .itemlistrow.active {
+      font-size: 12px !important;
+      color: white;
+      border-bottom: none; }
+  .right-sidebar list-table .itemlistrow {
+    font-size: 12px !important;
+    color: white; }
 
 .tab {
   height: 91vh; }
@@ -82,20 +91,33 @@ body {
   background-color: transparent !important; }
 
 .selectbtn {
-  color: #5bc0de;
-  background-image: none;
-  background-color: transparent;
-  border-color: #5bc0de; }
+  color: #fff;
+  background-color: #5bc0de;
+  border-color: #5bc0de;
+  outline: none !important;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important; }
   .selectbtn.actv {
-    color: #fff;
-    background-color: #5bc0de;
-    border-color: #5bc0de;
-    outline: none !important;
-    -webkit-box-shadow: none !important;
-    box-shadow: none !important; }
+    color: #5bc0de !important;
+    background-image: none !important;
+    background-color: transparent !important;
+    border-color: #5bc0de !important; }
   .selectbtn:focus {
     outline: none !important;
     -webkit-box-shadow: none !important;
     box-shadow: none !important; }
+
+.right-sidebar {
+  box-shadow: inset 0px 0px 40px rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.7); }
+  .right-sidebar .btn {
+    border-width: 1.5px;
+    border-style: solid;
+    font-weight: 600; }
+  .right-sidebar .stockclip {
+    border: none;
+    padding: 5px 15px !important;
+    box-shadow: inset 0px 10px 5px rgba(0, 0, 0, 0.07);
+    border-radius: 0; }
 
 /*# sourceMappingURL=styles.css.map */

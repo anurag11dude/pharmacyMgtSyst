@@ -11,7 +11,7 @@
       </div>
     </div>
     
-    <list-table class="w-100" [selectMode] = "selectMode" [tableData] = "tableData" height = "h-80"></list-table>
+    <list-table class="w-100" [selectMode] = "selectMode" [tableData] = "tableData" height = "h-80" (selected) = "listSelected($event)"></list-table>
   </div>
   <div class="right-sidebar w-30 p-4" style="border-left:1px solid #333">
 

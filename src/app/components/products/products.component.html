@@ -1,19 +1,53 @@
 <div class="tab row justify-content-between">
-  <div class="prime w-70 p-4">
-    <div class="hs-15 row align-items-center ">
-      <h4 class="py-2 font-fam-Montserrat-bold col-4 px-0">Manage Products</h4>
-      <div class="col-8 px-0 row align-items-center justify-content-end">
-        <input class="form-control text-center mx-3 float-left w-35" placeholder="Search"/>
-        <button class="h-80 btn btn-success mx-1 font-fam-Montserrat f-12" >Add</button>
-        <button class="h-80 btn btn-warning mx-1 font-fam-Montserrat f-12" >Update</button>
-        <button class="h-80 btn btn-danger mx-1 font-fam-Montserrat f-12" >Delete</button>
-        <button class="h-80 btn btn-outline-info mx-1 font-fam-Montserrat f-12" (click) = "selectMode = selectMode ? false : true;">Select</button>
+  <div class="prime w-70 px-4 pb-4 py-3">
+    
+    <div class="py-2 row align-items-center mt-4">
+      <div class="w-100 pb-3 row align-items-center">
+        <h4 class="font-fam-Montserrat-bold col-5 px-0">Manage Products</h4>
+        <div class="col-7 pb-1 px-0 row align-items-center justify-content-between">
+          <input class="form-control text-center w-35" placeholder="Search"/>
+          <button class="btn w-15 btn-success font-fam-Montserrat f-12" >Add</button>
+          <button class="btn w-15 btn-warning font-fam-Montserrat f-12" >Update</button>
+          <button class="btn w-15 btn-danger font-fam-Montserrat f-12" >Delete</button>
+          <button class="btn w-15 selectbtn font-fam-Montserrat f-12" [class.actv] = "selectMode.products" (click) = "activateSelectMode('products')">{{selectMode.products ? 'Unselect' : 'Select'}}</button>
+        </div>
       </div>
+      
     </div>
     
-    <list-table class="w-100" [selectMode] = "selectMode" [tableData] = "tableData" height = "h-80"></list-table>
+    <list-table changeDisplay = true class="w-100" [selectMode] = "selectMode.products" name = "products" [tableData] = "tableData.products" height = "h-80" (selected) = "productsListSelected($event)"></list-table>
   </div>
-  <div class="right-sidebar w-30 p-4" style="border-left:1px solid #333">
 
+  <div class="right-sidebar w-30 px-4">
+      <button *ngIf = "selected.products" class="btn btn-warning btn-sm d-block mx-auto mb-3 stockclip">{{dblselected.stocks ? 'StockEntry' : 'Stock'}}</button>
+    <div class="py-2 h-100">
+      <div *ngIf = "!selected.products || selectMode.products" class="font-fam-Montserrat wht w-100 row h-100 align-items-center justify-content-center" [@fadeInOut]>
+        <h4>Select A product</h4>
+      </div>
+      <div *ngIf = "selected.products && !selectMode.products" class="relatv" [@fadeInOut]>
+        <div *ngIf = "!dblselected.stocks" [@fadeInOut] class="abs w-100" style="right:0;">
+          <div class="header font-fam-Montserrat text-bold wht w-100">
+            <h4 class="text-center mx-auto f-25 w-80 excerpt" style = "height:48px">{{selected.products[0]['product_name']}}</h4>
+            <div class="w-100 row justify-content-between mt-3">
+              <button class="btn btn-success mx-1 font-fam-Montserrat f-12" >Add</button>
+              <button class="btn btn-danger mx-1 font-fam-Montserrat f-12" >Delete</button>
+              <button class="btn btn-info selectbtn mx-1 font-fam-Montserrat f-12" [class.actv] = "selectMode.stocks" (click) = "activateSelectMode('stocks')">{{selectMode.stocks ? 'Unselect' : 'Select'}}</button>
+            </div>
+          </div>
+          <list-table dblclick = true class="stocks w-100" [selectMode] = "selectMode.stocks" name = "stocks" [tableData] = "tableData.stocks" height = "h-80" (selected) = "stocksListSelected($event)" (dblselected) = "stockListDblSelected($event)"></list-table>
+        </div>
+        <div *ngIf = "dblselected.stocks" [@fadeInOut] class="abs w-100" style="right:0;">
+          <div class="header font-fam-Montserrat text-bold wht w-100">
+            <h4 class="text-center mx-auto f-25 w-80 excerpt" style = "height:48px">{{selected.products[0]['product_name']}}</h4>
+            <div class="w-100 row justify-content-between mt-3">
+              <button class="btn btn-success mx-1 font-fam-Montserrat f-12" >Update</button>
+              <button class="btn btn-danger mx-1 font-fam-Montserrat f-12" >Delete</button>
+              <button class="btn btn-info selectbtn mx-1 font-fam-Montserrat f-12" [class.actv] = "selectMode.stockentry" (click) = "activateSelectMode('stockentry')">{{selectMode.stockentry ? 'Unselect' : 'Select'}}</button>
+            </div>
+          </div>
+          <list-table class="stockentry w-100" [selectMode] = "selectMode.stockentry" name = "stockentry" [tableData] = "tableData.stockentry" height = "h-80" (selected) = "stockentryListSelected($event)"></list-table>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
