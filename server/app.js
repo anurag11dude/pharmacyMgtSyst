@@ -2,7 +2,7 @@ const express = require("express");
 const Models = require('./models');
 const Constants = require('./constants');
 const Sequelize = Models.sqlModule;
-
+console.log(Constants);
 const connection = new Sequelize(Constants.db, Constants.username, Constants.password, {
     host: Constants.host,
     dialect: "mysql",
