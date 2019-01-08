@@ -22,6 +22,15 @@
     padding: 10px;
     border: none;
 }
+.modal-holder{
+    animation-name: example;
+    animation-duration: 0.3s;
+  }
+  
+@keyframes example {
+0%   {transform: scale(0.5)}
+100% {transform: scale(1)}
+}
 button.btnnone{
     background: none;
     color: inherit;

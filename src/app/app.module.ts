@@ -9,8 +9,7 @@ import {HttpModule} from "@angular/http";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 import { AppComponent } from './app.component';
-import { ProductsComponent } from './components/products/products.component';
-//import { ProductModalComponent } from './components/products/modal.component';
+import { ProductsComponent, NgbdModalContent } from './components/products/products.component';
 import { CustomersComponent } from './components/customers/customers.component';
 import { RecordsComponent } from './components/records/records.component';
 import { SettingsComponent } from './components/settings/settings.component';
@@ -24,7 +23,8 @@ import { ListComponent } from './utilities/list.component';
     RecordsComponent,
     SettingsComponent,
     DashboardComponent,
-    ListComponent
+    ListComponent,
+    NgbdModalContent
   ],
   imports: [
     BrowserModule,
@@ -36,6 +36,9 @@ import { ListComponent } from './utilities/list.component';
     NgbModule
   ],
   providers: [MenuService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    NgbdModalContent
+  ]
 })
 export class AppModule { }

@@ -6,7 +6,7 @@
         <h4 class="font-fam-Montserrat-bold col-5 px-0">Manage Products</h4>
         <div class="col-7 pb-1 px-0 row align-items-center justify-content-between">
           <input class="form-control text-center w-35" placeholder="Search"/>
-          <button class="btn w-15 btn-success font-fam-Montserrat f-12" >Add</button>
+          <button class="btn w-15 btn-success font-fam-Montserrat f-12" (click) = "open();" >Add</button>
           <button class="btn w-15 btn-warning font-fam-Montserrat f-12" >Update</button>
           <button class="btn w-15 btn-danger font-fam-Montserrat f-12" >Delete</button>
           <button class="btn w-15 selectbtn font-fam-Montserrat f-12" [class.actv] = "selectMode.products" (click) = "activateSelectMode('products')">{{selectMode.products ? 'Unselect' : 'Select'}}</button>

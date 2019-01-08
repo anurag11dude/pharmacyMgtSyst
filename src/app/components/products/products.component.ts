@@ -1,6 +1,7 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { MenuService } from '../../services/menu.service';
-import { trigger,state,style,transition,animate,keyframes } from '@angular/animations'
+import { trigger,state,style,transition,animate,keyframes } from '@angular/animations';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-products',
@@ -61,7 +62,7 @@ export class ProductsComponent implements OnInit {
     stocks : false,
   };
 
-  constructor(public menuService:MenuService) { }
+  constructor(public menuService:MenuService, private modalService: NgbModal) { }
 
   ngOnInit() {
     this.menuService.menuMsg.subscribe(
@@ -124,4 +125,31 @@ export class ProductsComponent implements OnInit {
       this.tableData.stockentry["data"] = result;
     });
   }
+  open() {
+    const modalRef = this.modalService.open(NgbdModalContent, {windowClass: 'modal-holder', centered: true});
+    modalRef.componentInstance.name = 'World';
+  }
+}
+
+@Component({
+  selector: 'ngbd-modal-content',
+  template: `
+    <div class="modal-header">
+      <h4 class="modal-title">Hi there!</h4>
+      <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p>Hello, {{name}}!</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
+    </div>
+  `
+})
+export class NgbdModalContent {
+  @Input() name;
+
+  constructor(public activeModal: NgbActiveModal) {}
 }
