@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Http } from '@angular/http';
 
-const SERVER = "http://localhost:8080";
+const SERVER = "http://localhost:80";
 @Injectable({
   providedIn: 'root'
 })
@@ -19,5 +19,20 @@ public menuMsg = new Subject<any>();
   getData(path):Promise<any>{
     path = SERVER + path;
     return this.http.get(path).toPromise().then(response => response.json().data as Object);
+    /* 
+    options = new RequestOptions({
+      
+    })
+    path = SERVER + path;
+    return this.http.post(path,
+      {
+        params: data
+      },{
+        headers: new HttpHeaders
+      }).toPromise().then(response => {
+        response.json().data as Object;
+        console.log(response);
+      });
+    */
   }
 }

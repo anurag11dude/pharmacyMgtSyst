@@ -72,7 +72,7 @@ export class ProductsComponent implements OnInit {
         }
       }
     );
-    this.menuService.getData("/api/products").then((result)=>{
+    this.menuService.getData("/server/pharmacy/getlist.php").then((result)=>{
       console.log(result);
       this.tableData.products["data"] = result;
     })
