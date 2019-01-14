@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { Http } from '@angular/http';
+import { Http, RequestOptions } from '@angular/http';
 
 const SERVER = "http://localhost:80";
 @Injectable({
@@ -10,29 +10,49 @@ const SERVER = "http://localhost:80";
 export class MenuService {
 
 public menuMsg = new Subject<any>();
+public modalActionData = new Subject<any>();
 
   constructor(private http:Http) { }
 
   sendMenu(menu){
      this.menuMsg.next(menu);
   }
-  getData(path):Promise<any>{
+  jsonPost(path, data = {}):Promise<any>{
+    /* let header:any = this.setHeader();
+    let options = new RequestOptions({ headers: header });
+    console.log(data); */
     path = SERVER + path;
-    return this.http.get(path).toPromise().then(response => response.json().data as Object);
-    /* 
-    options = new RequestOptions({
-      
-    })
-    path = SERVER + path;
-    return this.http.post(path,
-      {
-        params: data
-      },{
-        headers: new HttpHeaders
-      }).toPromise().then(response => {
-        response.json().data as Object;
-        console.log(response);
-      });
-    */
+    return this.http.post(path, data).toPromise().then(response => {
+      console.log(response);
+      let result; 
+      try{
+        result = {
+          status : "SUCCESS",
+          data : response.json().data as Object
+        }
+      }catch (e){
+        console.log(e);
+        result = {
+          status : "ERROR",
+          data : {msg: 'something went wrong'}
+        }
+      }
+      return result;
+    });
   }
+
+  setHeader(){
+    let header = new Headers({ 'Content-Type': 'application/json' });
+    header.append('Accept', 'application/json');
+    header.append('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, DELETE, PUT');
+    header.append('Access-Control-Allow-Origin', '*');
+    console.log("headers1: value" + JSON.stringify(header));
+
+    return header;
+  }
+
+  modalAction(action){
+    this.modalActionData.next(action);
+  }
+
 }

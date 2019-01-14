@@ -25,7 +25,7 @@ export class RecordsComponent implements OnInit {
       {name: "Sales Rep", body: "salesref", width:"w-10"},
     ]
   }
-  selectMode:boolean = false;
+  multiSelect:boolean = false;
   
   constructor(public menuService:MenuService) { }
 
@@ -37,9 +37,10 @@ export class RecordsComponent implements OnInit {
         }
       }
     );
-    this.menuService.getData("/api/customerinvoice").then((result)=>{
+    this.menuService.jsonPost("/api/customerinvoice").then((result)=>{
       console.log(result);
-      this.tableData["data"] = result;
+      if(result.status != "SUCCESS") return;
+      this.tableData["data"] = result.data;
     })
   }
 

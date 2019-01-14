@@ -1,10 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { NgxElectronModule } from 'ngx-electron';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { routing } from './app.routing';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import {MenuService} from "./services/menu.service";
+import {ModalService} from "./services/modal.service";
 import {HttpModule} from "@angular/http";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
@@ -15,6 +17,7 @@ import { RecordsComponent } from './components/records/records.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ListComponent } from './utilities/list.component';
+import { search } from './utilities/customPipes';
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,7 +27,8 @@ import { ListComponent } from './utilities/list.component';
     SettingsComponent,
     DashboardComponent,
     ListComponent,
-    NgbdModalContent
+    NgbdModalContent,
+    search
   ],
   imports: [
     BrowserModule,
@@ -33,9 +37,10 @@ import { ListComponent } from './utilities/list.component';
     AngularFontAwesomeModule,
     HttpModule,
     BrowserAnimationsModule,
-    NgbModule
+    NgbModule,
+    FormsModule
   ],
-  providers: [MenuService],
+  providers: [MenuService, ModalService],
   bootstrap: [AppComponent],
   entryComponents: [
     NgbdModalContent

@@ -1,0 +1,106 @@
+<!-- Start Add Product -->
+<div *ngIf = "data.name == 'addProduct'">
+    <div class="modal-header px-4">
+        <h4 class="modal-title">Add Product</h4>
+        <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form autocomplete="off" role="form" method="get" (ngSubmit) = "onSubmit" class="addProduct">
+            <div class="mx-5 my-2 px-5">
+                <div class="padd mx-auto">
+                    <div class="w-100 pb-3">
+                        <label class="text-primary text-center w-100">Name</label>
+                        <input type="text" [(ngModel)] = "inputs.product_name" name="product_name" class="form-control text-center">
+                    </div>
+                    <div class="w-100 py-3">
+                        <label class="text-primary text-center w-100">Description</label>
+                        <textarea rows=2 [(ngModel)] = "inputs.product_description" type="text" name="product_description" class="form-control text-center"></textarea>
+                    </div>
+                    <div class="w-100 py-3">
+                        <div class="w-50 d-inline-block pr-2">
+                            <label class="text-primary text-center w-100">Retail Price</label>
+                            <input type="number" [(ngModel)] = "inputs.product_retailprice" name="product_retailprice" class="form-control w-100 text-center">
+                        </div>
+                        <div class="w-50 d-inline-block pl-2">
+                            <label class="text-primary text-center w-100">Wholesale Price</label>
+                            <input type="number" [(ngModel)] = "inputs.product_wholesaleprice" name="product_wholesaleprice" class="form-control w-100 text-center">
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </form>
+        <h6 class="w-100 text-center my-3" [style.color] = "output == 'SUCCESS' ? 'green' : 'red'">{{msg || '&nbsp;'}}</h6>
+    </div>
+    <div class="modal-footer row justify-content-center py-4">
+        <div class="{{!loading ? 'gone' : 'notgone'}}">
+            <img src="../../../assets/img/loader.gif" width="60px"
+            height="38px" />
+        </div>
+        <button type="button" class="btn btn-success {{loading ? 'gone' : 'notgone'}}" (click)="addProduct()" [disabled] = "!inputs.product_name || !inputs.product_description || !inputs.product_retailprice || !inputs.product_wholesaleprice">Add</button>
+    </div>
+</div>
+<!-- End Add Product -->
+
+<!-- Start Update Product -->
+<div *ngIf = "data.name == 'updateProduct'">
+    <div class="modal-header px-4">
+        <h4 class="modal-title">Update Product</h4>
+        <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form autocomplete="off" role="form" method="get" (ngSubmit) = "onSubmit" class="addProduct">
+            <div class="mx-5 my-2">
+                <div class="pr-3 w-50 d-inline-block">
+                    <div class="w-100 py-3">
+                        <label class="text-primary text-center w-100">Name</label>
+                        <input type="text" name="proname" class="form-control f-13 w-100 text-center" readonly [(ngModel)] = "inputs.product_name">
+                    </div>
+                    <div class="w-100 py-3">
+                        <label class="text-primary text-center w-100">Description</label>
+                        <textarea rows=2 type="text" name="proddescription" class="form-control f-13 w-100 text-center" readonly [(ngModel)] = "inputs.product_description"></textarea>
+                    </div>
+                    <div class="w-100 py-3">
+                        <label class="text-primary text-center w-100">Retail Price</label>
+                        <input type="number" name="prodretailprice" class="form-control f-13 w-100 text-center" readonly [(ngModel)] = "inputs.product_retailprice">
+                    </div>
+                    <div class="w-100 py-3">
+                        <label class="text-primary text-center w-100">Wholesale Price</label>
+                        <input type="number" name="prodwholesaleprice" class="form-control f-13 w-100 text-center" readonly [(ngModel)] = "inputs.product_wholesaleprice">
+                    </div>
+                </div>
+                <div class="pl-3 w-50 d-inline-block">
+                    <div class="w-100 py-3">
+                        <label class="text-primary text-center w-100">Name</label>
+                        <input type="text" name="product_name" class="form-control f-13 w-100 text-center" [(ngModel)] = "inputs.new_product_name">
+                    </div>
+                    <div class="w-100 py-3">
+                        <label class="text-primary text-center w-100">Description</label>
+                        <textarea rows=2 type="text" name="product_description" class="form-control f-13 w-100 text-center" [(ngModel)] = "inputs.new_product_description"></textarea>
+                    </div>
+                    <div class="w-100 py-3">
+                        <label class="text-primary text-center w-100">Retail Price</label>
+                        <input type="number" name="product_retailprice" class="form-control f-13 w-100 text-center" [(ngModel)] = "inputs.new_product_retailprice">
+                    </div>
+                    <div class="w-100 py-3">
+                        <label class="text-primary text-center w-100">Wholesale Price</label>
+                        <input type="number" name="product_wholesaleprice" class="form-control f-13 w-100 text-center" [(ngModel)] = "inputs.new_product_wholesaleprice">
+                    </div>
+                </div>
+            </div>
+        </form>
+        <h6 class="w-100 text-center my-3" [style.color] = "output == 'SUCCESS' ? 'green' : 'red'">{{msg || '&nbsp;'}}</h6>
+    </div>
+    <div class="modal-footer row justify-content-center py-4">
+        <div class="{{!loading ? 'gone' : 'notgone'}}">
+            <img src="../../../assets/img/loader.gif" width="60px"
+            height="38px" />
+        </div>
+        <button type="button" class="btn btn-success {{loading ? 'gone' : 'notgone'}}" (click)="updateProduct()" [disabled] = "!inputs.new_product_name && !inputs.new_product_description && !inputs.new_product_retailprice && !inputs.new_product_wholesaleprice">Update</button>
+    </div>
+</div>
+<!-- End Update Product -->

@@ -18,7 +18,7 @@ export class SettingsComponent implements OnInit {
       {name: "Role", body: "category", width:"w-50"}
     ]
   }
-  selectMode:boolean = false;
+  multiSelect:boolean = false;
   
   constructor(public menuService:MenuService) { }
 
@@ -30,9 +30,10 @@ export class SettingsComponent implements OnInit {
         }
       }
     );
-    this.menuService.getData("/api/users").then((result)=>{
+    this.menuService.jsonPost("/api/users").then((result)=>{
       console.log(result);
-      this.tableData["data"] = result;
+      if(result.status != "SUCCESS") return;
+      this.tableData["data"] = result.data;
     })
   }
 
