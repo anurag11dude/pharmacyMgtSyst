@@ -34,24 +34,32 @@ export class CroppieComponent implements OnInit {
     public logo: string = "";
     public Croppie;
     public cropShape = 'circle';
+    public fetched = '';
     public loading: boolean = false;
     public loaderUrl: string = "http://localhost:80/server/assets/loader.gif";
     public uploaded = false;
     constructor(public menuService: MenuService) {
-
         console.log(this.logo)
     }
 
     ngOnInit() {
+        let thisComp = this;
         this.displaySetting(() => {
-            this.init();
+            thisComp.fetched = `http://localhost:80/server/assets/${thisComp.logo}`;
+            this.init(thisComp.fetched);
         });
     }
     reset() {
         this.Croppie.destroy();
-        this.init();
+        this.init(this.fetched);
+        
+        /* this.Croppie.viewport = {
+            width: 200,
+            height: 200,
+            type: this.cropShape
+        } */
     }
-    init() {
+    init(fetchedimg) {
         let thisComp = this;
         let Crop = window['Croppie'];
         let elem = document.getElementsByClassName('front-demo')[0]
@@ -65,16 +73,18 @@ export class CroppieComponent implements OnInit {
                 width: 250,
                 height: 250
             },
-            enableOrientation: true
+            enableOrientation: true,
+            enableResize: true
         });
         this.Croppie.bind({
-            url: `http://localhost:80/server/assets/${this.logo}`
+            url: fetchedimg
         });
         thisComp.uploaded = false;
         $('#front-upload-img').on("change", function () {
             thisComp.uploaded = true;
             var reader = new FileReader();
             reader.onload = function (event) {
+                thisComp.fetched = event.target['result'];
                 thisComp.Croppie.bind({
                     url: event.target['result']
                 });
@@ -94,7 +104,7 @@ export class CroppieComponent implements OnInit {
             sess: 'ewere'
         }).then((result) => {
             thisComp.logo = result.data.find(elem => {
-                return elem.prop == 'logo';
+                return elem.prop == 'originallogo';
             }).value;
             console.log(thisComp.logo);
             callback();
@@ -109,22 +119,30 @@ export class CroppieComponent implements OnInit {
             size: 'viewport',
             format: 'png'
         }).then(function (response) {
-            let json = new JsonPipe();
-            thisComp.menuService.jsonPost({
-                act: 'add_operation',
-                arg: {
-                    data: {
-                        settings_data: {
-                            "logo": response
-                        }
+            thisComp.Croppie.result({
+                type: 'canvas',
+                size: 'original',
+                format: 'png',
+                circle: false
+            }).then((res)=>{
+                let json = new JsonPipe();
+                thisComp.menuService.jsonPost({
+                    act: 'add_operation',
+                    arg: {
+                        data: {
+                            settings_data: {
+                                "logo": response,
+                                "originallogo": res
+                            }
+                        },
+                        classname: 'Settings'
                     },
-                    classname: 'Settings'
-                },
-                sess: 'ewere'
-            }).then((result) => {
-                console.log(result);
-                thisComp.loading = false;
-            });
+                    sess: 'ewere'
+                }).then((result) => {
+                    console.log(result);
+                    thisComp.loading = false;
+                });
+            })
         })
     }
 }

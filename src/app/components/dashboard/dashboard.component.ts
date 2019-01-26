@@ -17,9 +17,9 @@ export class DashboardComponent implements OnInit {
   public sanitization:DomSanitizer;
   public customClass: string = 'accord';
   public lastStock = {};
-
+  
   constructor(public menuService:MenuService, private route:ActivatedRoute) { 
-    
+    this.tableData.products.selected = [{id:0}];
     let tab = this.route.snapshot.queryParams.tab;
     console.log(tab);
     if(!tab) {
@@ -44,23 +44,33 @@ export class DashboardComponent implements OnInit {
   handleRouterNavig(tab){
     console.log(tab);
     switch(tab){
-      case "Welcome":
-      //this.displayProduct();
-      this.init();
-      break;
       case "Store":
-      //this.displayProduct();
+      this.initStore();
+      break;
+      default:
+      this.initWelcome();
       break;
     }
   }
 
   ngOnInit() {
-    this.init();
+    switch(this.menuObj.selected.menuName){
+      case "Store":
+      this.initStore();
+      break;
+      default:
+      this.initWelcome();
+      break;
+    }
   }
-  init(){
+  initWelcome(){
     this.sortzeroStockProducts();
     this.sortIndebtedCustomers();
     this.displayLastSale();
+  }
+  initStore(){
+    this.displayProduct();
+    this.displayCustomer();
   }
   autoNav(_route){
     if(_route.menu != 'dashboard'){
@@ -74,18 +84,11 @@ export class DashboardComponent implements OnInit {
     }
   }
   sortzeroStockProducts(){
-    this.displayZeroStockProducts(()=>{
-      let zerostock = this.tableData.zeroStockProducts.data.filter((elem)=>{
-        return elem.stock == 0;
-      });
-      this.tableData.zeroStockProducts.data = zerostock || [];
-    })
+    this.displayZeroStockProducts(()=>{})
   }
   sortIndebtedCustomers(){
     this.displayIndebtedCustomers(()=>{
-      let indebt = this.tableData.indebtedCustomers.data.filter((elem)=>{
-        return elem.outstanding_balance > 0;
-      });
+      let indebt = this.tableData.indebtedCustomers.data;
       indebt.sort((a, b)=>{
         return b.outstanding_balance - a.outstanding_balance;
       })
@@ -93,8 +96,18 @@ export class DashboardComponent implements OnInit {
       console.log(this.tableData.indebtedCustomers.data);
     })
   }
+  selectProd(prod){
+    this.tableData.products.selected = [prod];
+  }
+  displayProduct(callback = function(){}){
+    this.postCall({table: 'products'}, 'products', function(){
+    });
+  }
+  displayCustomer(callback = function(){}){
+    this.postCall({table: 'customers'}, 'customers', callback);
+  }
   displayZeroStockProducts(callback = function(){}){
-    this.postCall({table: 'products'}, 'zeroStockProducts', callback);
+    this.postCall({table: 'products', col:['stock'], val:['0'], signs: ['=']}, 'zeroStockProducts', callback);
   }
   displayLastSale(callback = ()=>{}){
     this.postCall({table: 'customerinvoice'}, 'transactionHistory', ()=>{
@@ -106,7 +119,7 @@ export class DashboardComponent implements OnInit {
     });
   }
   displayIndebtedCustomers(callback = function(){}){
-    this.postCall({table: 'customers'}, 'indebtedCustomers', callback);
+    this.postCall({table: 'customers', col:['outstanding_balance'], val:['0'], signs: ['>']}, 'indebtedCustomers', callback);
   }
   postCall(payload, type, callback, action = 'select_operation', classtype = ''){
     let thisComp = this;
@@ -120,10 +133,10 @@ export class DashboardComponent implements OnInit {
     }).then((result)=>{
       console.log(result);
       if(result.status != "SUCCESS"){
-        thisComp.tableData[type].changeData([]);
+        thisComp.tableData[type].data = [];
         callback();
       } else{
-        thisComp.tableData[type].changeData(result.data);
+        thisComp.tableData[type].data = result.data;
         callback();
       }
     })

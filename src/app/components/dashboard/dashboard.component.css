@@ -3,6 +3,6 @@
     background-size: cover;
     background-position: center;
 }
-.imgcon:hover{
+.imgcon:hover, .swell:hover{
     transform: scale(1.1);
 }

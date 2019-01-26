@@ -140,6 +140,8 @@ list-table .itemlistrow {
     border-width: 1.5px;
     border-style: solid;
     font-weight: 600; }
+  .right-sidebar .Store .fa-inverse {
+    color: #fdd156 !important; }
   .right-sidebar .clip {
     border: none;
     padding: 5px 15px !important;

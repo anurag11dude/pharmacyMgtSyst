@@ -14,33 +14,47 @@
         </div>
       </div>
     </div>
+    <div *ngIf="menuObj.selected.menuName == 'Store'">
+
+    </div>
   </div>
 
   <div class="right-sidebar h-100 {{menuObj.selected.sidebar}}">
-    <accordion [closeOthers]="true" class="h-100">
-      <accordion-group heading="Zero Stock Product List" [isOpen]=true   [panelClass]="customClass" class="" [style.maxHeight] = "'80%'">
-          <list-table [style.marginBottom]="'200px'" dblclick=true class="zeroStockProducts w-100" [multiSelect]="tableData.zeroStockProducts.multiSelect" name="zeroStockProducts"
-          [selectable] = false [query]="tableData.zeroStockProducts.search" [tableData]="tableData.zeroStockProducts" height="hs-60" [change]="tableData.zeroStockProducts.change"></list-table>
-      </accordion-group>
-      <accordion-group heading="indebted Customers
-      " class="btn-gdark"   [panelClass]="customClass" class="" [style.maxHeight] = "'80%'">
-          <list-table [style.marginBottom]="'200px'" dblclick=true class="indebtedCustomers w-100" [multiSelect]="tableData.indebtedCustomers.multiSelect" name="indebtedCustomers"
-          [selectable] = false [query]="tableData.indebtedCustomers.search" [tableData]="tableData.indebtedCustomers" height="hs-60" [change]="tableData.indebtedCustomers.change"></list-table>
-      </accordion-group>
-      <accordion-group heading="Last Sale" class="btn-gdark"   [panelClass]="customClass">
-          <div class="w-100">
-            <h6 class="w-100 text-center">{{lastStock['customer']}}</h6>
-            <div class="row justify-content-between w-100 py-1">
-              <span class="f-13 py-2 fw-600 w-50 text-left">INVOICE NO. : {{lastStock['invno']}}</span>
-              <span class="f-13 py-2 fw-600 w-50 text-right">TOTAL : {{lastStock['totalamt']}}</span>
-              <span class="f-13 py-2 fw-600 w-50 text-left">PAID : {{lastStock['totalpaid']}}</span>
-              <span class="f-13 py-2 fw-600 w-50 text-right">SOLD BY : {{lastStock['salesref']}}</span>
-            </div>
-          </div>
-          <list-table [style.marginBottom]="'200px'" dblclick=true class="lastSales w-100" [multiSelect]="tableData.lastSales.multiSelect" name="lastSales"
-          [selectable] = false [query]="tableData.lastSales.search" [tableData]="tableData.lastSales" height="hs-40" [change]="tableData.lastSales.change"></list-table>
-      </accordion-group>
-    </accordion>
+    <div *ngIf="menuObj.selected.menuName == 'Welcome'">
+        <accordion [closeOthers]="true" class="h-100">
+          <accordion-group heading="Zero Stock Product List" [isOpen]=true   [panelClass]="customClass" class="" [style.maxHeight] = "'80%'">
+              <list-table [style.marginBottom]="'200px'" dblclick=true class="zeroStockProducts w-100" [multiSelect]="tableData.zeroStockProducts.multiSelect" name="zeroStockProducts"
+              [selectable] = false [query]="tableData.zeroStockProducts.search" [tableData]="tableData.zeroStockProducts" height="hs-60" [change]="tableData.zeroStockProducts.change"></list-table>
+          </accordion-group>
+          <accordion-group heading="indebted Customers
+          " class="btn-gdark"   [panelClass]="customClass" class="" [style.maxHeight] = "'80%'">
+              <list-table [style.marginBottom]="'200px'" dblclick=true class="indebtedCustomers w-100" [multiSelect]="tableData.indebtedCustomers.multiSelect" name="indebtedCustomers"
+              [selectable] = false [query]="tableData.indebtedCustomers.search" [tableData]="tableData.indebtedCustomers" height="hs-60" [change]="tableData.indebtedCustomers.change"></list-table>
+          </accordion-group>
+          <accordion-group heading="Last Sale" class="btn-gdark"   [panelClass]="customClass">
+              <div class="w-100">
+                <h6 class="w-100 text-center">{{lastStock['customer']}}</h6>
+                <div class="row justify-content-between w-100 py-1">
+                  <span class="f-13 py-2 fw-600 w-50 text-left">INVOICE NO. : {{lastStock['invno']}}</span>
+                  <span class="f-13 py-2 fw-600 w-50 text-right">TOTAL : {{lastStock['totalamt']}}</span>
+                  <span class="f-13 py-2 fw-600 w-50 text-left">PAID : {{lastStock['totalpaid']}}</span>
+                  <span class="f-13 py-2 fw-600 w-50 text-right">SOLD BY : {{lastStock['salesref']}}</span>
+                </div>
+              </div>
+              <list-table [style.marginBottom]="'200px'" dblclick=true class="lastSales w-100" [multiSelect]="tableData.lastSales.multiSelect" name="lastSales"
+              [selectable] = false [query]="tableData.lastSales.search" [tableData]="tableData.lastSales" height="hs-40" [change]="tableData.lastSales.change"></list-table>
+          </accordion-group>
+        </accordion>
+    </div>
+    <div *ngIf="menuObj.selected.menuName == 'Store'" class="Store py-4 h-100">
+      <div class="row mb-3 px-4 w-100 align-items-center"><fa class="swell px-0 col-2 anim-fast" size = "2x" inverse="true" name = "cart-arrow-down"></fa><input class="form-control text-center w-100 col-10" [(ngModel)] = "tableData.products.search" placeholder="Search Product"/></div>
+      <div class="w-100 my-3 ovflo-y hs-60">
+        <div class="px-4 pointer py-3 w-100" *ngFor = "let prod of tableData.products.data" (click) = "selectProd(prod)" [class.grn] = "tableData.products.selected[0].id == prod.id" >
+          <h6 class="mb-2 wht">{{prod.product_name}}</h6>
+          <div class="w-100 {{tableData.products.selected[0].id == prod.id ? '' : 'opac-70'}} f-13 row justify-content-between"><span class=" wht">wholesale: {{prod.product_wholesaleprice}}</span><span class="wht">retail: {{prod.product_retailprice}}</span></div>
+        </div>
+      </div>
+    </div>
   </div>
 
 </div>

@@ -1,4 +1,5 @@
 const { app, BrowserWindow, ipcMain } = require('electron')
+const fs = require("fs")
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -64,7 +65,17 @@ ipcMain.on('print', (event, content)=>{
 })
 
 ipcMain.on('readyToPrint', (event)=>{
-  workerWindow.webContents.print({silent:true});
+  /* workerWindow.webContents.print({silent:true, printBackground: true}); */
+  workerWindow.webContents.printToPDF({
+    marginsType: 0,
+    printBackground: true
+  }, (error, data)=>{
+    if(error) throw error
+    fs.writeFile(__dirname + '/print.pdf', data, (error)=>{
+      if(error) throw error
+      console.log('write pdf successfull')
+    })
+  })
 })
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.

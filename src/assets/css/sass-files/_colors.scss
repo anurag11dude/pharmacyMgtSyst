@@ -18,6 +18,9 @@ $blac : rgba(0,0,0,1);
 .orange{
     background: #f0ad4e;
     color: #fff;
+    &-clr{
+        color: #f0ad4e !important;
+    }
 }
 .choralback{
     background: #d9534f !important;
