@@ -2,21 +2,26 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgxElectronModule } from 'ngx-electron';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ModalModule, BsDatepickerModule, PopoverModule, AccordionModule } from 'ngx-bootstrap';
+/* import { NgbModule } from '@ng-bootstrap/ng-bootstrap'; */
 import { routing } from './app.routing';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import {MenuService} from "./services/menu.service";
-import {ModalService} from "./services/modal.service";
 import {HttpModule} from "@angular/http";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 import { AppComponent } from './app.component';
-import { ProductsComponent, NgbdModalContent } from './components/products/products.component';
+import { ProductsComponent } from './components/products/products.component';
+import { ProductModalContent } from './components/products/modals.component';
 import { CustomersComponent } from './components/customers/customers.component';
+import { CustomerModalContent } from './components/customers/modals.component';
 import { RecordsComponent } from './components/records/records.component';
+import { RecordModalContent } from './components/records/modals.component';
 import { SettingsComponent } from './components/settings/settings.component';
+import { UserModalContent } from './components/settings/modals.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ListComponent } from './utilities/list.component';
+import { CroppieComponent } from './utilities/croppie.component';
 import { search } from './utilities/customPipes';
 @NgModule({
   declarations: [
@@ -27,7 +32,11 @@ import { search } from './utilities/customPipes';
     SettingsComponent,
     DashboardComponent,
     ListComponent,
-    NgbdModalContent,
+    ProductModalContent,
+    CustomerModalContent,
+    RecordModalContent,
+    CroppieComponent,
+    UserModalContent,
     search
   ],
   imports: [
@@ -37,13 +46,19 @@ import { search } from './utilities/customPipes';
     AngularFontAwesomeModule,
     HttpModule,
     BrowserAnimationsModule,
-    NgbModule,
-    FormsModule
+    ModalModule.forRoot(),
+    BsDatepickerModule.forRoot(),
+    FormsModule,
+    PopoverModule.forRoot(),
+    AccordionModule.forRoot()
   ],
-  providers: [MenuService, ModalService],
+  providers: [MenuService],
   bootstrap: [AppComponent],
   entryComponents: [
-    NgbdModalContent
+    ProductModalContent,
+    CustomerModalContent,
+    RecordModalContent,
+    UserModalContent
   ]
 })
 export class AppModule { }

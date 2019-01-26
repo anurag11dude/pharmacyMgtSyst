@@ -9,6 +9,32 @@ body {
   overflow: hidden;
   background: #fff; }
 
+#InvoiceBody .hd {
+  text-align: center;
+  background: #95bbdf;
+  color: white !important;
+  border-bottom: 2px solid #eceeef !important; }
+#InvoiceBody th, #InvoiceBody td {
+  border-left: 2px solid #eceeef !important; }
+#InvoiceBody .table-bordered {
+  border: 1px solid #eceeef !important; }
+#InvoiceBody tbody {
+  border-top: 2px solid #eceeef !important; }
+#InvoiceBody .inp {
+  width: 100%;
+  height: 'auto';
+  border: none !important;
+  outline-width: 0;
+  white-space: normal;
+  width: 100%;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  cursor: text;
+  resize: none;
+  text-align: center;
+  overflow: hidden; }
+
 .wrapper {
   padding-left: 80px !important; }
   .wrapper .sidebarleft {
@@ -114,7 +140,7 @@ list-table .itemlistrow {
     border-width: 1.5px;
     border-style: solid;
     font-weight: 600; }
-  .right-sidebar .stockclip {
+  .right-sidebar .clip {
     border: none;
     padding: 5px 15px !important;
     box-shadow: inset 0px 10px 5px rgba(0, 0, 0, 0.07);

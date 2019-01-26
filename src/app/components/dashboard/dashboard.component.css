@@ -1,0 +1,8 @@
+.imgcon{
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+.imgcon:hover{
+    transform: scale(1.1);
+}

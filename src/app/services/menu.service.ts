@@ -10,14 +10,15 @@ const SERVER = "http://localhost:80";
 export class MenuService {
 
 public menuMsg = new Subject<any>();
-public modalActionData = new Subject<any>();
+public AutoNavig = new Subject<any>();
+public settingChange = new Subject<any>();
 
   constructor(private http:Http) { }
 
   sendMenu(menu){
      this.menuMsg.next(menu);
   }
-  jsonPost(path, data = {}):Promise<any>{
+  jsonPost(data = {}, path = `/server/getlist.php`):Promise<any>{
     /* let header:any = this.setHeader();
     let options = new RequestOptions({ headers: header });
     console.log(data); */
@@ -51,8 +52,12 @@ public modalActionData = new Subject<any>();
     return header;
   }
 
-  modalAction(action){
-    this.modalActionData.next(action);
+  AutoNavigation(action){
+    this.AutoNavig.next(action);
+  }
+
+  settingChanged(action){
+    this.settingChange.next(action);
   }
 
 }

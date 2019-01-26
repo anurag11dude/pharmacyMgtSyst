@@ -1,0 +1,353 @@
+<!-- Start Add Product -->
+<div *ngIf = "data.name == 'addCustomer'">
+    <div class="modal-header px-4">
+        <h4 class="modal-title">Add Customer</h4>
+        <button type="button" class="close" aria-label="Close" (click)="activeModal.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form autocomplete="off" role="form" method="get" (ngSubmit) = "onSubmit" class="addProduct">
+            <div class="mx-5 my-2 px-5">
+                <div class="w-100 pb-2">
+                    <label class="text-primary text-center w-100">Name</label>
+                    <input type="text" [(ngModel)] = "inputs.customer_name" name="customer_name" class="form-control text-center">
+                </div>
+                <div class="w-100 py-2">
+                    <label class="text-primary text-center w-100">Phone</label>
+                    <input type="number" [(ngModel)] = "inputs.customer_phone" name="customer_phone" class="form-control w-100 text-center">
+                </div>
+                <div class="w-100 py-2">
+                    <label class="text-primary text-center w-100">Email</label>
+                    <input type="text" [(ngModel)] = "inputs.customer_email" name="customer_email" class="form-control w-100 text-center">
+                </div>
+                <div class="w-100 py-2">
+                    <label class="text-primary text-center w-100">Address</label>
+                    <textarea rows=2 [(ngModel)] = "inputs.address" type="text" name="address" class="form-control text-center"></textarea>
+                </div>
+            </div>
+        </form>
+        <h6 class="w-100 text-center my-3" [style.color] = "output == 'SUCCESS' ? 'green' : 'red'">{{msg || '&nbsp;'}}</h6>
+    </div>
+    <div class="modal-footer row justify-content-center py-4">
+        <div class="{{!loading ? 'gone' : 'notgone'}}">
+            <img src="http://localhost:80/server/assets/loader.gif" width="60px"
+            height="38px" />
+        </div>
+        <button type="button" class="btn btn-success {{loading ? 'gone' : 'notgone'}}" (click)="addCustomer()" [disabled] = "!inputs.customer_name || !inputs.customer_phone || !inputs.customer_email || !inputs.address">Add</button>
+    </div>
+</div>
+<!-- End Add Product -->
+
+<!-- Start Update Product -->
+<div *ngIf = "data.name == 'updateCustomer'">
+    <div class="modal-header px-4">
+        <h4 class="modal-title">Update Customer</h4>
+        <button type="button" class="close" aria-label="Close" (click)="activeModal.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form autocomplete="off" role="form" method="get" (ngSubmit) = "onSubmit" class="addProduct">
+            <div class="mx-5 my-2">
+                <div class="pr-3 w-50 d-inline-block">
+                    <div class="w-100 pb-2">
+                        <label class="text-primary text-center w-100">Name</label>
+                        <input type="text" [(ngModel)] = "inputs.customer_name" name="customer_name" class="form-control text-center">
+                    </div>
+                    <div class="w-100 py-2">
+                        <label class="text-primary text-center w-100">Phone</label>
+                        <input type="number" [(ngModel)] = "inputs.customer_phone" name="customer_phone" class="form-control w-100 text-center">
+                    </div>
+                    <div class="w-100 py-2">
+                        <label class="text-primary text-center w-100">Email</label>
+                        <input type="text" [(ngModel)] = "inputs.customer_email" name="customer_email" class="form-control w-100 text-center">
+                    </div>
+                    <div class="w-100 py-2">
+                        <label class="text-primary text-center w-100">Address</label>
+                        <textarea rows=2 [(ngModel)] = "inputs.address" type="text" name="address" class="form-control text-center"></textarea>
+                    </div>
+                </div>
+                <div class="pl-3 w-50 d-inline-block">
+                    <div class="w-100 pb-2">
+                        <label class="text-primary text-center w-100">Name</label>
+                        <input type="text" [(ngModel)] = "inputs.new_customer_name" name="new_customer_name" class="form-control text-center">
+                    </div>
+                    <div class="w-100 py-2">
+                        <label class="text-primary text-center w-100">Phone</label>
+                        <input type="number" [(ngModel)] = "inputs.new_customer_phone" name="new_customer_phone" class="form-control w-100 text-center">
+                    </div>
+                    <div class="w-100 py-2">
+                        <label class="text-primary text-center w-100">Email</label>
+                        <input type="text" [(ngModel)] = "inputs.new_customer_email" name="new_customer_email" class="form-control w-100 text-center">
+                    </div>
+                    <div class="w-100 py-2">
+                        <label class="text-primary text-center w-100">Address</label>
+                        <textarea rows=2 [(ngModel)] = "inputs.new_address" type="text" name="new_address" class="form-control text-center"></textarea>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <h6 class="w-100 text-center my-3" [style.color] = "output == 'SUCCESS' ? 'green' : 'red'">{{msg || '&nbsp;'}}</h6>
+    </div>
+    <div class="modal-footer row justify-content-center py-4">
+        <div class="{{!loading ? 'gone' : 'notgone'}}">
+            <img src="http://localhost:80/server/assets/loader.gif" width="60px"
+            height="38px" />
+        </div>
+        <button type="button" class="btn btn-success {{loading ? 'gone' : 'notgone'}}" (click)="updateCustomer()" [disabled] = "!inputs.new_customer_name && !inputs.new_customer_phone && !inputs.new_customer_email && !inputs.new_address">Update</button>
+    </div>
+</div>
+<!-- End Update Product -->
+
+<!-- Start Add Product -->
+<div *ngIf = "data.name == 'updateDebtPay'">
+    <div class="modal-header px-4">
+        <h4 class="modal-title">Manage Debt</h4>
+        <button type="button" class="close" aria-label="Close" (click)="activeModal.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form autocomplete="off" role="form" method="get" id="addStock" class="">
+            <div class="mx-5 my-2 px-5">
+                <div class="padd mx-auto">
+                    <div class="w-100 py-3">
+                        <label class="text-primary text-center w-100">Debt</label>
+                        <input [(ngModel)] = "inputs.outbalance"  type="number" name="outbalance" class="form-control w-100 text-center textadjust sdate" readonly>
+                    </div>
+                    <div class="w-100 py-3">
+                        <label class="text-primary text-center w-100">Money paid now</label>
+                        <input [(ngModel)] = "inputs.paidamt"  type="number" name="paidamt" class="form-control w-100 text-center">
+                    </div>
+                    <div class="w-100 py-3">
+                        <label class="text-primary text-center w-100">Payment Method</label>
+                        <select [(ngModel)] = "inputs.paymethod" class="form-control w-100 text-center"  name="paymethod"><option value="Cash">Cash</option><option value="Cheque">Cheque</option><option value="POS">POS</option><option value="Credit">Credit</option></select>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <h6 class="w-100 text-center my-3" [style.color] = "output == 'SUCCESS' ? 'green' : 'red'">{{msg || '&nbsp;'}}</h6>
+    </div>
+    <div class="modal-footer row justify-content-center py-4">
+        <div class="{{!loading ? 'gone' : 'notgone'}}">
+            <img src="http://localhost:80/server/assets/loader.gif" width="60px"
+            height="38px" />
+        </div>
+        <button type="button" class="btn btn-success {{loading ? 'gone' : 'notgone'}}" (click)=" debtPay()" [disabled] = "!inputs.paymethod || !inputs.paidamt">Pay / Create</button>
+    </div>
+</div>
+<!-- End Add Product -->
+
+<!-- Start Update Product -->
+<div *ngIf = "data.name == 'addSale'">
+    <div class="modal-header px-4">
+        <h4 class="modal-title">Add Product to This Sale</h4>
+        <button type="button" class="close" aria-label="Close" (click)="activeModal.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form autocomplete="off" role="form" method="get" (ngSubmit) = "onSubmit" class="addSale">
+            
+            <div class="mx-5 px-4 my-2">
+                <div class="w-100 py-3">
+                    <label class="text-primary text-center w-100">Product</label>
+                    <select [(ngModel)] = "inputs.product_name" class="form-control w-100 text-center" (change) = "saleSync()" name="product_name">
+                        <option *ngFor = "let prod of data.data.products" value = "{{prod.product_name}}">{{prod.product_name}}</option>
+                    </select>
+                </div>
+                <div class="w-100 py-3 row">
+                    <span class = "col-4">
+                        <label class="text-primary text-center w-100">Available</label>
+                        <input [(ngModel)] = "inputs.stock" type="number" name="stock" class="form-control w-100 text-center" readonly>
+                    </span>
+                    <span class = "col-4">
+                        <label class="text-primary text-center w-100">Retail Price</label>
+                        <input [(ngModel)] = "inputs.rprice" type="number" name="rprice" class="form-control w-100 text-center" readonly>
+                    </span>
+                    <span class = "col-4">
+                        <label class="text-primary text-center w-100">WholeSale Price</label>
+                        <input [(ngModel)] = "inputs.wprice" type="number" name="wprice" class="form-control w-100 text-center" readonly>
+                    </span>
+                </div>
+                <div class="w-100 py-3">
+                    <label class="text-primary text-center w-100">Price System</label>
+                    <select [(ngModel)] = "inputs.pricesystem"  class="pricesystem visible form-control" name="pricesystem">
+                        <option value='' disabled selected hidden>select Price System</option>
+                        <option value = "retail">Retail</option>
+                        <option value = "wholesale">Wholesale</option>
+                    </select>
+                </div>
+                <div class="w-100 py-3">
+                    <label class="text-primary text-center w-100">New Quantity</label>
+                    <input [(ngModel)] = "inputs.quantity" type="number" onkeydown="javascript: return event.keyCode !=69 && event.keyCode !=189 && event.keyCode !=109" name="quantity" class="form-control w-100 text-center">
+                </div>
+                <div class="w-100 py-3">
+                    <label class="text-primary text-center w-100">Paid Amount</label>
+                    <input [(ngModel)] = "inputs.paidamt" type="number" onkeydown="javascript: return event.keyCode !=69" name="paidamt" class="form-control w-100 text-center">
+                </div>
+            </div>
+        </form>
+        <h6 class="w-100 text-center my-3" [style.color] = "output == 'SUCCESS' ? 'green' : 'red'">{{msg || '&nbsp;'}}</h6>
+    </div>
+    <div class="modal-footer row justify-content-center py-4">
+        <div class="{{!loading ? 'gone' : 'notgone'}}">
+            <img src="http://localhost:80/server/assets/loader.gif" width="60px"
+            height="38px" />
+        </div>
+        <button type="button" class="btn btn-success {{loading ? 'gone' : 'notgone'}}" (click)="addSale()" [disabled] = "(!inputs.quantity && !inputs.paidamt) || !inputs.pricesystem || (!inputs.rprice && inputs.pricesystem == 'retail')  || (!inputs.wprice && inputs.pricesystem == 'wholesale') || !inputs.stock">Add</button>
+    </div>
+</div>
+<!-- End Update Product -->
+
+<!-- Start Update Product -->
+<div *ngIf = "data.name == 'reprint'">
+    <div class="modal-header px-4">
+        <h4 class="modal-title">Reciept</h4>
+        <button type="button" class="close" aria-label="Close" (click)="activeModal.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        
+        <form role="form" method="post" id="Invoice_form">
+            <div class="Invoicediv">
+                <div class="row mx-3 justify-content-between" id="InvoiceHeader" style="justify-content: space-between !important;display: flex;flex-wrap: wrap; margin-right: 1rem;margin-left: 1rem;">
+                    <div class="col-4" style="flex: 0 0 33.333333%;max-width: 33.333333%;">
+                        <img  class = "" width = 200px height = 200px src = "http://localhost:80/server/assets/{{settings.logo}}"/>
+                        <div class="ml-2" style="font-size:12px;margin-left: 0.5rem !important;">
+                            <div class="my-2">{{settings.motto}}</div>
+                            <div class="my-2">{{settings.address}}</div>
+                            <table class="" width="100%">
+                                <colgroup>
+                                    <col width="50%"/>
+                                    <col width="50%"/>
+                                </colgroup>
+                                <tbody id="invoiceinfo" class="">
+                                    <tr id="invoiceemail">
+                                        <td class="invrow f-12">Email</td>
+                                        <td class="invrow f-12 float-left">{{settings.email}}</td>
+                                    </tr>
+                                    <tr id="invoicetel">
+                                        <td class="invrow f-12">Tel</td>
+                                        <td class="invrow f-12 float-left">{{settings.phone}}</td>
+                                    </tr>
+                                    <tr id="invoicetel">
+                                        <td class="invrow f-12">Bill To</td>
+                                        <td class="invrow f-12 float-left"></td>
+                                    </tr>
+                                </tbody>
+                            </table>   
+                            <div class = "my-3" style="margin-top: 0.5rem;margin-bottom: 0.5rem;">
+                                <h4 style="font-size:20px;">{{data.data.invoice.customer}}</h4>
+                            </div>                                         
+                        </div>
+                    </div>
+                    <div class="offset-4 col-4 mt-2" style="flex: 0 0 33.333333%;max-width: 33.333333%; margin-left: 33.333333%; margin-top: 0.5rem">
+                        <h2 style = "font-weight:700;">INVOICE</h2>
+                        <div style = "width:250px;">
+                            <table class="" width="100%">
+                                <colgroup>
+                                    <col width="60%"/>
+                                    <col width="40%"/>
+                                </colgroup>
+                                <tbody id="invoiceinfo" class="">
+                                    <tr id="invoicenum">
+                                        <td class="invrow f-12">Invoice Number</td>
+                                        <td class="invrow f-12 float-left">{{data.data.invoice.invno}}</td>
+                                    </tr>
+                                    <tr id="invoicedate">
+                                        <td class="invrow f-12">Invoice Date</td>
+                                        <td class="invrow f-12 float-left">{{data.data.invoice.date}}</td>
+                                    </tr>
+                                    <tr id="invoicepage">
+                                        <td class="invrow f-12">Page</td>
+                                        <td class="invrow f-12 float-left">1</td>
+                                    </tr>
+                                    <tr id="invoicebranch">
+                                        <td class="invrow f-12">Branch</td>
+                                        <td class="invrow f-12 float-left">{{settings.branch}}</td>
+                                    </tr>
+                                    <tr id="invoicebalance">
+                                        <td class="invrow f-12">Outstanding<br/> Balance</td>
+                                        <td class="invrow f-12 float-left"> {{data.data.invoice.outbalance}} </td>
+                                    </tr>
+                                    <tr id="invoicepaymeth">
+                                        <td class="invrow f-12">Payment Method</td>
+                                        <td class="invrow f-12 float-left">{{data.data.invoice.paymeth}}</td>
+                                    </tr>
+                                    <tr id="invoicepaid">
+                                        <td class="invrow f-12">Paid</td>
+                                        <td class="invrow f-12 float-left mt-2" style=" margin-top: 0.5rem">{{data.data.invoice.totalpaid}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="row mx-4 px-3 deactivate" style="display: flex;flex-wrap: wrap;margin-right: 1rem;margin-left: 1rem;" id="InvoiceBody">
+                    <table class="table table-striped table-bordered table-sm" style ="padding: 0.3rem;border: 1px solid #aaa;width: 100%;max-width: 100%;margin-bottom: 1rem;border-collapse: collapse;" width="100%">
+                        <colgroup>
+                            <col width="3%">
+                            <col width="3%">
+                            <col width="34%">
+                            <col width="40%">
+                            <col width="10%">
+                            <col width="10%">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th class="hd"style = "padding: 0.75rem;vertical-align: top;border-left: 2px solid #aaa;">S/N</th>
+                                <th class="hd"style = "padding: 0.75rem;vertical-align: top;border-left: 2px solid #aaa;">QUANTITY</th>
+                                <th class="hd"style = "padding: 0.75rem;vertical-align: top;border-left: 2px solid #aaa;">ITEM</th>
+                                <th class="hd"style = "padding: 0.75rem;vertical-align: top;border-left: 2px solid #aaa;">DESCRIPTION</th>
+                                <th class="hd unithd" style = "padding: 0.75rem;vertical-align: top;border-left: 2px solid #aaa;"  data-bool = "false" >UNIT PRICE</th>
+                                <th class="hd" style = "padding: 0.75rem;vertical-align: top;border-left: 2px solid #aaa;">AMOUNT</th>
+                            </tr>
+                        </thead>
+                        <tbody id="candidates" class="cand" style="border-top: 2px solid #aaa;">
+                            <tr class="rowCasing rowCasing{{$index + 1}}" *ngFor = "let prod of data.data.print; let $index = index">
+                                <td style="padding: 2px 4px !important;vertical-align: top;border-left: 2px solid #aaa;text-align: center;" class="td sn text-center f-12">{{$index + 1}}</td>
+                                <td style="padding: 2px 4px !important;vertical-align: top;border-left: 2px solid #aaa;text-align: center;" class="td text-center"><p class="f-12">{{prod.quantity}}</p></td>
+                                <td style="padding: 2px 4px !important;vertical-align: top;border-left: 2px solid #aaa;text-align: center;" class="td text-center"><p class="f-12">{{prod.product}}</p></td>
+                                <td style="padding: 2px 4px !important;vertical-align: top;border-left: 2px solid #aaa;text-align: center;" class="td text-center" ><p id="description{{$index + 1}}" class = "desp f-12"> {{prod.description}}</p></td>
+                                <td style="padding: 2px 4px !important;vertical-align: top;border-left: 2px solid #aaa;text-align: center;" class="td text-center"><p class = "unitprice f-12" data-price = "" data-pricename = "retail" id="unitprice{{$index + 1}}">{{prod.unitprice}}</p ></td>
+                                <td style="padding: 2px 4px !important;vertical-align: top;border-left: 2px solid #aaa;text-align: center;" class="td text-center"><p id="totalprice{{$index + 1}}" class="totalno f-12">{{prod.totalprice}}</p></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row mx-4 px-3" id="Invoicefooter"  style="display: flex;flex-wrap: wrap;margin-right: 1rem;margin-left: 1rem">
+                    <table class="" width="100%">
+                        <colgroup>
+                            <col width="50%"/>
+                            <col width="30%"/>
+                            <col width="20%"/>
+                        </colgroup>
+                        <tbody id="invoiceinfo" class="">
+                            <tr id="invoiceacc">
+                                <td class="invrow f-12" >{{settings.account}}</td>
+                                <td class="invrow f-12 float-left" style="text-align:right; float:left;">Total Invoice Amount<br/>Payment/Credit Applied<br/><br/><b>TOTAL</b></td>
+                                <td class="invrow f-12 float-right amt mr-4" style="float:right;margin-right: 1rem;">{{data.data.invoice.totalamt}}<br><br><br>{{data.data.invoice.totalamt}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="row justify-content-between w-100" style="justify-content: space-between !important;display: flex;flex-wrap: wrap; width:100%">
+                        <div style="text-align:center" class = "text-center"><p>_______________________</p><p>PricePoint Sales Rep</p></div>
+                        <div style="text-align:center" class = "text-center"><p>_______________________</p><p>Customer</p></div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer row justify-content-center py-4">
+        <div class="{{!loading ? 'gone' : 'notgone'}}">
+            <img src="http://localhost:80/server/assets/loader.gif" width="60px"
+            height="38px" />
+        </div>
+        <button type="button" class="btn btn-success {{loading ? 'gone' : 'notgone'}}" (click)="reprint()">REPRINT</button>
+    </div>
+</div>
+<!-- End Update Product -->

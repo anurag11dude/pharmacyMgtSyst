@@ -1,3 +1,46 @@
-<p>
-  dashboard works!
-</p>
+<div class="tab row justify-content-between">
+  <div class="prime {{menuObj.selected.sidebar == 'gone' ? 'w-100' : 'w-70'}} px-4 pb-4 py-3">
+    <div *ngIf="menuObj.selected.menuName == 'Welcome'">
+      <div class="py-2 row align-items-center mt-4">
+        <div class="w-100 pb-1 row align-items-center b-1">
+          <h5 class="font-fam-Montserrat-bold text-center col-12 opac-70 px-0 ">Quick Access</h5>
+        </div>
+        <div class="quick-access w-100 my-2">
+          <div class="text-center d-inline-block {{icon.width}}" *ngFor="let icon of tableData.quickAccess.map" (click)="autoNav(icon.route)">
+            <div class="my-3 mx-auto anim imgcon" [style.width]="icon.imgWidth" [style.height]="icon.imgHeight"
+              [ngStyle]="{'background-image': 'url('+icon.img+')'}"></div>
+            <p class="fw-600 f-15 opac-70">{{icon.name}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="right-sidebar h-100 {{menuObj.selected.sidebar}}">
+    <accordion [closeOthers]="true" class="h-100">
+      <accordion-group heading="Zero Stock Product List" [isOpen]=true   [panelClass]="customClass" class="" [style.maxHeight] = "'80%'">
+          <list-table [style.marginBottom]="'200px'" dblclick=true class="zeroStockProducts w-100" [multiSelect]="tableData.zeroStockProducts.multiSelect" name="zeroStockProducts"
+          [selectable] = false [query]="tableData.zeroStockProducts.search" [tableData]="tableData.zeroStockProducts" height="hs-60" [change]="tableData.zeroStockProducts.change"></list-table>
+      </accordion-group>
+      <accordion-group heading="indebted Customers
+      " class="btn-gdark"   [panelClass]="customClass" class="" [style.maxHeight] = "'80%'">
+          <list-table [style.marginBottom]="'200px'" dblclick=true class="indebtedCustomers w-100" [multiSelect]="tableData.indebtedCustomers.multiSelect" name="indebtedCustomers"
+          [selectable] = false [query]="tableData.indebtedCustomers.search" [tableData]="tableData.indebtedCustomers" height="hs-60" [change]="tableData.indebtedCustomers.change"></list-table>
+      </accordion-group>
+      <accordion-group heading="Last Sale" class="btn-gdark"   [panelClass]="customClass">
+          <div class="w-100">
+            <h6 class="w-100 text-center">{{lastStock['customer']}}</h6>
+            <div class="row justify-content-between w-100 py-1">
+              <span class="f-13 py-2 fw-600 w-50 text-left">INVOICE NO. : {{lastStock['invno']}}</span>
+              <span class="f-13 py-2 fw-600 w-50 text-right">TOTAL : {{lastStock['totalamt']}}</span>
+              <span class="f-13 py-2 fw-600 w-50 text-left">PAID : {{lastStock['totalpaid']}}</span>
+              <span class="f-13 py-2 fw-600 w-50 text-right">SOLD BY : {{lastStock['salesref']}}</span>
+            </div>
+          </div>
+          <list-table [style.marginBottom]="'200px'" dblclick=true class="lastSales w-100" [multiSelect]="tableData.lastSales.multiSelect" name="lastSales"
+          [selectable] = false [query]="tableData.lastSales.search" [tableData]="tableData.lastSales" height="hs-40" [change]="tableData.lastSales.change"></list-table>
+      </accordion-group>
+    </accordion>
+  </div>
+
+</div>

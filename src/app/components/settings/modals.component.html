@@ -1,0 +1,117 @@
+<!-- Start Add Product -->
+<div *ngIf = "data.name == 'addUser'">
+        <div class="modal-header px-4">
+            <h4 class="modal-title">Add User</h4>
+            <button type="button" class="close" aria-label="Close" (click)="activeModal.hide()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form autocomplete="off" role="form" method="get" (ngSubmit) = "onSubmit" class="addUser">
+                <div class="mx-5 my-2 px-5">
+                    <div class="padd mx-auto">
+                        <div class="w-100 pb-3">
+                            <label class="text-primary text-center w-100">User</label>
+                            <input type="text" [(ngModel)] = "inputs.user" name="user" class="form-control text-center">
+                        </div>
+                        <div class="w-100 py-3">
+                            <label class="text-primary text-center w-100">Username</label>
+                            <input type="text" [(ngModel)] = "inputs.username" name="username" class="form-control text-center">
+                        </div>
+                        <div class="w-100 py-3">
+                            <label class="text-primary text-center w-100">Password</label>
+                            <input type="text" [(ngModel)] = "inputs.password" name="password" class="form-control text-center">
+                        </div>
+                        <div class="w-100 px-4 py-4 row justify-content-between">
+                            <div class="d-inline-block">
+                                <input id = "admin" value = "admin" type="radio" [(ngModel)] = "inputs.category" name="category" class="text-left">
+                                <label for = "admin" class="ml-2 fw-600 f-14 text-primary">Admin</label>
+                            </div>
+                            <div class="d-inline-block">
+                                <input id = "user" value = "user" type="radio" [(ngModel)] = "inputs.category" name="category" class="text-left">
+                                <label for = "user" class="ml-2 fw-600 f-14 text-primary">User</label>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </form>
+            <h6 class="w-100 text-center my-3" [style.color] = "output == 'SUCCESS' ? 'green' : 'red'">{{msg || '&nbsp;'}}</h6>
+        </div>
+        <div class="modal-footer row justify-content-center py-4">
+            <div class="{{!loading ? 'gone' : 'notgone'}}">
+                <img src="http://localhost:80/server/assets/loader.gif" width="60px"
+                height="38px" />
+            </div>
+            <button type="button" class="btn btn-success {{loading ? 'gone' : 'notgone'}}" (click)="addUser()" [disabled] = "!inputs.user || !inputs.username || !inputs.category || !inputs.password">Add</button>
+        </div>
+    </div>
+    <!-- End Add Product -->
+    
+    <!-- Start Update Product -->
+    <div *ngIf = "data.name == 'updateUser'">
+        <div class="modal-header px-4">
+            <h4 class="modal-title">Update User</h4>
+            <button type="button" class="close" aria-label="Close" (click)="activeModal.hide()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form autocomplete="off" role="form" method="get" (ngSubmit) = "onSubmit" class="addUser">
+                <div class="mx-5 my-2">
+                    <div class="pr-3 w-50 d-inline-block">
+                        <div class="w-100 pb-3">
+                            <label class="text-primary text-center w-100">User</label>
+                            <input type="text" [(ngModel)] = "inputs.user" name="user" class="form-control text-center" readonly>
+                        </div>
+                        <div class="w-100 py-3">
+                            <label class="text-primary text-center w-100">Username</label>
+                            <input type="text" [(ngModel)] = "inputs.username" name="username" class="form-control text-center" readonly>
+                        </div>
+                        <div class="w-100 py-3">
+                            <label class="text-primary text-center w-100">Current Password</label>
+                            <input [attr.disabled] = '!inputs.new_password ? "" : null' type="password" [(ngModel)] = "inputs.new_currentPassword" name="password" class="form-control text-center">
+                        </div>
+                        <div class="w-100 py-3">
+                            <label class="text-primary text-center w-100">Category</label>
+                            <input type="text" [(ngModel)] = "inputs.category" name="category" class="form-control text-center" readonly>
+                        </div>
+                    </div>
+                    <div class="pl-3 w-50 d-inline-block">
+                            <div class="w-100 pb-3">
+                                <label class="text-primary text-center w-100">User</label>
+                                <input type="text" [(ngModel)] = "inputs.new_user" name="new_user" class="form-control text-center">
+                            </div>
+                            <div class="w-100 py-3">
+                                <label class="text-primary text-center w-100">Username</label>
+                                <input type="text" [(ngModel)] = "inputs.new_username" name="new_username" class="form-control text-center">
+                            </div>
+                            <div class="w-100 py-3">
+                                <label class="text-primary text-center w-100">Password</label>
+                                <input (keyup) = "inputs.new_currentPassword = !inputs.new_password ? null : inputs.new_currentPassword" type="text" [(ngModel)] = "inputs.new_password" name="new_password" class="form-control text-center">
+                            </div>
+                            <div class="w-100 p-5 my-2 row justify-content-between">
+                                <div class="d-inline-block">
+                                    <input id = "admin" value = "admin" type="radio" [(ngModel)] = "inputs.new_category" name="new_category" class="text-left">
+                                    <label for = "admin" class="ml-2 fw-600 f-14 text-primary">Admin</label>
+                                </div>
+                                <div class="d-inline-block">
+                                    <input id = "user" value = "user" type="radio" [(ngModel)] = "inputs.new_category" name="new_category" class="text-left">
+                                    <label for = "user" class="ml-2 fw-600 f-14 text-primary">User</label>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </form>
+            <h6 class="w-100 text-center my-3" [style.color] = "output == 'SUCCESS' ? 'green' : 'red'">{{msg || '&nbsp;'}}</h6>
+        </div>
+        <div class="modal-footer row justify-content-center py-4">
+            <div class="{{!loading ? 'gone' : 'notgone'}}">
+                <img src="http://localhost:80/server/assets/loader.gif" width="60px"
+                height="38px" />
+            </div>
+            <button type="button" class="btn btn-success {{loading ? 'gone' : 'notgone'}}" (click)="updateUser()" [disabled] = "(!inputs.new_user && !inputs.new_currentPassword && !inputs.new_username && !inputs.new_category && !inputs.new_password) || (inputs.new_password && !inputs.new_currentPassword)">Update</button>
+        </div>
+    </div>
+    <!-- End Update Product -->
+    

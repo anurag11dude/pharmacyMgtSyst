@@ -1,11 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MenuService } from '../../services/menu.service';
-import { ModalService } from '../../services/modal.service';
-import { trigger,state,style,transition,animate,keyframes } from '@angular/animations';
-import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { FormModels } from 'src/app/utilities/model';
+import { trigger,state,style,transition,animate } from '@angular/animations';
+import { BsModalService } from 'ngx-bootstrap/modal';
 import { List } from 'src/app/utilities/listTemplate';
 import { Tab } from 'src/app/utilities/menuTemplate';
+import { ProductModalContent } from './modals.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-products',
@@ -23,241 +23,162 @@ export class ProductsComponent implements OnInit {
 
   menuObj = new Tab().Products;
   public tableData = new List();
+  public grow:boolean = false;
 
-  constructor(public menuService:MenuService, private modalService: ModalService) { }
-
-  ngOnInit() {
+  constructor(public menuService:MenuService, private modalService: BsModalService, private route:ActivatedRoute) {
+    let tab = this.route.snapshot.queryParams.tab;
+    console.log(tab);
+    if(!tab) {
+      this.handleRouterNavig(this.menuObj.selected.menuName);
+    }else{
+      this.menuObj.selected = this.menuObj.menu.find((elem)=>{
+        return elem.menuName == tab;
+      })
+      this.handleRouterNavig(tab);
+      this.handleAction(this.route.snapshot.queryParams.action);
+    }
     this.menuService.menuMsg.subscribe(
+      data => {
+        if(data.nav == "Products"){
+          this.menuObj.selected = data.tab;
+          console.log(this.menuObj.selected);
+          this.handleRouterNavig(this.menuObj.selected.menuName);
+        }
+      }
+    );
+   }
+   handleAction(action){
+    switch(action){
+      case 'addProduct':
+      this.openModal({size: 'md', name:'addProduct', data: this.tableData.products.selected[0]});
+      break;
+      case 'addStock':
+      setTimeout(()=>{
+        alert('Select a product and click the bouncing button on the left menu');
+      }, 1500);
+      this.grow = true;
+      break;
+    }
+   }
+   handleRouterNavig(tab){
+    console.log(tab);
+    switch(tab){
+      case "Products":
+      this.displayProduct();
+      break;
+    }
+  }
+  ngOnInit() {
+   /*  this.menuService.menuMsg.subscribe(
       data => {
         if(data.nav == "Products"){
           this.menuObj.selected = data.tab;
         }
       }
     );
-    this.displayProduct();
+    this.displayProduct(); */
   }
   activateSelectMode(list){
     let selmode = this.tableData[list].multiSelect;
-    for(let type in this.tableData)this.tableData[type].multiSelect = false;
-    this.tableData[list].multiSelect = selmode ? false : true;
-    this.tableData[list].selected = false;
+    this.tableData.falsify(['products', 'stocks', 'stockentry'], 'multiSelect');
+    selmode ? this.tableData.falsify([list], 'multiSelect') : 
+    this.tableData.truthify([list], 'multiSelect');
+    this.tableData.falsify([list], 'selected');
   }
   productsListSelected(selectedTable){
-    if(!this.selectAnyRow(selectedTable, 'products')) return;
-    this.tableData.stocks.dblselected = false;
-    this.tableData.stocks.selected = false;
-    this.tableData.stockentry.selected = false;
+    if(!this.selectAnyRow(selectedTable, 'products')) {
+      this.tableData.falsify(['products'], 'selected'); return;
+    }
+    this.tableData.falsify(['stocks', 'stockentry'], 'selected');
     this.displayStock();
   }
   stocksListSelected(selectedTable){
-    if(!this.selectAnyRow(selectedTable, 'stocks')) return;
-    this.tableData.stockentry.selected = false;
+    console.log("selected");
+    if(!this.selectAnyRow(selectedTable, 'stocks')) {
+      this.tableData.falsify(['stocks'], 'selected'); return;
+    }
+    this.tableData.falsify(['stockentry'], 'selected');
   }
   stockentryListSelected(selectedTable){
-    if(!this.selectAnyRow(selectedTable, 'stockentry')) return;   
+    if(!this.selectAnyRow(selectedTable, 'stockentry')) {
+      this.tableData.falsify(['stockentry'], 'selected'); return;
+    }   
   }
-  stockListDblSelected(selectedTable){
+  stocksListDblSelected(selectedTable){
     console.log("dblselected");
-    if(!this.selectAnyRow(selectedTable, 'stocks')) return;
-    this.tableData.stocks.dblselected = true;
+    this.tableData.truthify(['stocks'], 'dblselected');
     this.displayStockentry();
   }
   selectAnyRow(selectedTable, type){
     if(selectedTable.row.length == 0) return false;
     if(typeof this.tableData[type].selected === "boolean")
-    this.tableData[type].selected = {};
+    this.tableData.truthify([type], 'selected');
     this.tableData[type].selected = selectedTable.row;
     return true;
   }
   deleteRows(selectedRow, classtype){
+    if(classtype == 'StockEntry' && selectedRow.length == this.tableData.stockentry.data.length){
+      alert('cannot delete last stockentry else this stock will sieze to exist, delete the stock instead');
+      return;
+    }
     if(!confirm("Are you sure you want to delete the selection")) return;
+    this.postCall(selectedRow, '', function(){}, 'delete_operation', classtype);
+  }
+  openModal(_data) {
     let thisComp = this;
-    this.menuService.jsonPost("/server/pharmacy/getlist.php",{
-      act : 'delete_operation',
+    const initialState = {
+      data : _data,
+      callback : function(){
+        thisComp.resetTableSelections(thisComp);
+      }
+    };
+    const modalRef = this.modalService.show(ProductModalContent, {initialState});
+    modalRef.setClass(`modal-${_data.size} modal-dialog-centered`);
+    
+  }
+  resetTableSelections(thisComp) {
+    thisComp.displayProduct(
+    thisComp.displayStock(
+    thisComp.displayStockentry(
+    )));
+  }
+  displayProduct(callback = function(){}){
+    this.postCall({table: 'products'}, 'products', callback);
+  }
+  displayStock(callback = function(){}){
+    if(!this.tableData.products.selected) return;
+    let id = this.tableData.products.selected[0]['product_name'];
+    this.postCall({table: 'stock', col: ['productname'], val: [id], signs: ['=']}, 'stocks', callback);
+  }
+  displayStockentry(callback = function(){}){
+    console.log(this.tableData.stocks.dblselected);
+    if(this.tableData.stocks.dblselected == false) return;
+    let name = this.tableData.stocks.selected[0]['productname'];
+    let exp = this.tableData.stocks.selected[0]['expirydate'];
+    this.postCall({table: 'stockentry', col: ['product', 'stockexpiry_date'], val: [name, exp], signs: ['=']}, 'stockentry', callback);
+  }
+  postCall(payload, type, callback, action = 'select_operation', classtype = ''){
+    let thisComp = this;
+    this.menuService.jsonPost({
+      act : action,
       arg : {
-        data: selectedRow,
+        data: payload,
         classname: classtype
       },
       sess : 'ewere'
     }).then((result)=>{
       console.log(result);
-      thisComp.resetTableSelections(thisComp);
-    })
-  }
-  openModal(data) {
-    const modalRef = this.modalService.open(NgbdModalContent, {size: data.size, windowClass: 'custom-show', centered: true});
-    let thisComp = this;
-    modalRef.componentInstance.defineInput(data, function(){
-      thisComp.resetTableSelections(thisComp);
-    });
-  }
-  resetTableSelections(thisComp) {
-    thisComp.displayProduct((prod)=>{
-      thisComp.displayStock((stock)=>{
-        thisComp.displayStockentry((entry)=>{
-        });
-      });
-    });
-  }
-  displayProduct(callback = function(selectedRow){}){
-    this.menuService.jsonPost("/server/pharmacy/getlist.php",{
-      act : 'select_operation',
-      arg : {
-        table: 'products'
-      },
-      sess : 'ewere'
-    }).then((result)=>{
-      console.log(result);
+      if(action == 'delete_operation'){
+        thisComp.resetTableSelections(this);
+        return;
+      }
       if(result.status != "SUCCESS"){
-        this.tableData.products.changeData([]);
-        callback(false);
+        thisComp.tableData[type].changeData([]);
+        callback();
       } else{
-        this.tableData.products.changeData(result.data);
-        callback(false);
+        thisComp.tableData[type].changeData(result.data);
+        callback();
       }
     })
-  }
-  displayStock(callback = function(selectedRow){}){
-    if(!this.tableData.products.selected) return;
-    let id = this.tableData.products.selected[0]['product_name'];
-    this.menuService.jsonPost("/server/pharmacy/getlist.php",{
-      act : 'select_operation',
-      arg : {
-        table: 'stock',
-        col: ['productname'],
-        val: [id],
-        signs: ['=']
-      },
-      sess : 'ewere'
-    }).then((result)=>{
-      if(result.status != "SUCCESS"){
-        this.tableData.stocks.changeData([]);
-        callback(false);
-      } else{
-        this.tableData.stocks.changeData(result.data);
-        callback(false);
-      }
-    });
-  }
-  displayStockentry(callback = function(selectedRow){}){
-    console.log(this.tableData.stocks.dblselected);
-    if(this.tableData.stocks.dblselected == false) return;
-    let name = this.tableData.stocks.selected[0]['productname'];
-    let exp = this.tableData.stocks.selected[0]['expirydate'];
-    this.menuService.jsonPost("/server/pharmacy/getlist.php",{
-      act : 'select_operation',
-      arg : {
-        table: 'stockentry',
-        col: ['product', 'stockexpiry_date'],
-        val: [name, exp],
-        signs: ['=']
-      },
-      sess : 'ewere'
-    }).then((result)=>{
-      if(result.status != "SUCCESS"){
-        this.tableData.stockentry.changeData([]);
-        callback(false);
-      } else{
-        this.tableData.stockentry.changeData(result.data);
-        callback(false);
-      }
-    });
-  }
-}
-
-@Component({
-  selector: 'ngbd-modal-content',
-  templateUrl: `./modals.component.html`
-})
-export class NgbdModalContent {
-  public data;
-  public inputs:any;
-  public callback:Function;
-  public output:string;
-  public msg:string;
-  public loading:boolean = false;
-  public models:FormModels = new FormModels();
-  constructor(public activeModal: NgbActiveModal, public menuService:MenuService) {
-
-  }
-  defineInput(data, callback){
-    this.callback = callback;
-    this.data = data;
-    this.inputs = this.models[this.data.name];
-    console.log((this.data.name).substring(0,6));
-    if((this.data.name).substring(0,6) == 'update'){
-      for(let prop in this.inputs){
-        console.log(data.data[prop]);
-        this.inputs[prop] = data.data[prop] || this.inputs[prop];
-      }      
-    }
-    console.log(this.inputs);
-  }
-  addProduct(){
-    this.loading = true;
-    console.log(this.inputs);
-    this.menuService.jsonPost("/server/pharmacy/getlist.php",{
-      act : 'add_operation',
-      arg : {
-        data: this.inputs,
-        classname: 'Product' 
-      },
-      sess : 'ewere'
-    }).then((result)=>{
-      console.log(result);
-      this.handleResponse(result);
-      this.callback();
-    });
-  }
-  updateProduct(){
-    this.loading = true; 
-    let updateInputs = this.getUpdates(this.inputs); 
-    updateInputs['wherecol'] = this.data.data.id; 
-    console.log(this.data);
-    this.menuService.jsonPost("/server/pharmacy/getlist.php",{
-      act : 'update_operation',
-      arg : {
-        data : updateInputs,
-        classname : 'Product'
-      },
-      sess : 'ewere'
-    }).then((result)=>{
-      console.log(result);
-      this.handleResponse(result);
-      this.callback();
-    });
-  }
-  getUpdates(formInputs){
-    let inputs = {}; 
-    for(let prop in formInputs){
-      if(formInputs[`new_${prop}`]){
-        inputs[prop] = formInputs[`new_${prop}`];
-      }
-    } 
-    return inputs;
-  }
-  handleResponse(response){
-    this.output = null;
-    this.msg = null;
-    if(response.status == 'SUCCESS'){
-      setTimeout(()=>{
-        this.output = response.status;
-        this.msg = response.data.msg;
-        this.loading = false;
-      }, 700);  
-      setTimeout(()=>{
-        this.activeModal.dismiss('Close click');
-        this.output = null;
-        this.msg = null;
-      }, 3500,);
-    }else{
-      setTimeout(()=>{
-        this.output = response.status;
-        this.msg = response.data.msg;
-        this.loading = false;
-      }, 700); 
-    }
-    
-
   }
 }

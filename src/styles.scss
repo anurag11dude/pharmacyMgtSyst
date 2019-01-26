@@ -9,6 +9,38 @@ body {
     overflow: hidden;
     background: #fff;
 }
+#InvoiceBody {
+    .hd{
+        text-align: center;
+        background: rgb(149,187,223);
+        color: white !important;
+        border-bottom: 2px solid #eceeef !important;
+    }
+    & th, & td{
+        border-left: 2px solid #eceeef !important;
+    }
+    .table-bordered{
+        border: 1px solid #eceeef !important;
+    }
+    tbody{
+        border-top: 2px solid #eceeef !important;
+    }
+    .inp{
+        width:100%;
+        height:'auto';
+        border:none !important;
+        outline-width: 0; 
+        white-space: normal;
+        width: 100%;
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none;
+        cursor:text;
+        resize:none;
+        text-align: center;
+        overflow:hidden;
+    }
+}
 .wrapper{
     padding-left: 80px !important;
     .sidebarleft {
@@ -134,7 +166,7 @@ list-table{
         border-style: solid;
         font-weight: 600;
     }
-    .stockclip{
+    .clip{
         border: none;
         padding: 5px 15px !important;
         box-shadow : inset 0px 10px 5px rgba(0,0,0,.07);

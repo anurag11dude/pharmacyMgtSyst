@@ -5,14 +5,19 @@ import { Pipe, PipeTransform, Injectable } from '@angular/core';
 })
 @Injectable()
 export class search implements PipeTransform {
-	 transform(items:any[], args:any):any[] {
+	 transform(items:any[], args:any, field:string = null):any[] {
 		if(args == undefined) return items;
 		var isSearch = (data:any): boolean => {
 			var isAll = false;
 			if(typeof data === 'object' ){
-				for (var z in data) {
-					if(isAll = isSearch(data[z]) ){
-						break;
+				if(field){
+					let cond = data[field] || 'false';
+					isAll = cond == "false" ? false : isSearch(data[field]);
+				}else{
+					for (var z in data) {
+						if(isAll = isSearch(data[z]) ){
+							break;
+						}
 					}
 				}
 			} else {

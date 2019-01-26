@@ -1,13 +1,22 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, ipcMain } = require('electron')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win
+let workerWindow
 
 function createWindow () {
   // Create the browser window.
+  
+  workerWindow = new BrowserWindow();
+  workerWindow.loadFile("dist/PharmacyManagementSystem/assets/html/worker.html");
+  //workerWindow.hide();
+  workerWindow.on('closed', () => {
+    workerWindow = null
+  })
+  
   win = new BrowserWindow({ width: 800, height: 600 })
-
+  
   // and load the index.html of the app.
   win.loadFile('dist/PharmacyManagementSystem/index.html')
 
@@ -19,7 +28,8 @@ function createWindow () {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
-    win = null
+    win = null;
+    app.quit();
   })
 }
 
@@ -45,5 +55,16 @@ app.on('activate', () => {
   }
 })
 
+ipcMain.on('print', (event, content)=>{
+  console.log('ewere', event);
+  workerWindow.webContents.send('print', content);
+  //windowprint = BrowserWindow.fromId(event.sender.webContents.id);
+  //windowprint.webContents.print({silent:true, printBackground:true});
+  //windowprint.webContents.send('print', content);
+})
+
+ipcMain.on('readyToPrint', (event)=>{
+  workerWindow.webContents.print({silent:true});
+})
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.

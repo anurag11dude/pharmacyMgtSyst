@@ -1171,10 +1171,12 @@ pre code {
 .offset-3 {
   margin-left: 25%;
 }
-
-.float-left{
+.offset-4 {
   margin-left: 33.333333%;
 }
+/* .float-left{
+  margin-left: 33.333333%;
+} */
 
 .offset-5 {
   margin-left: 41.666667%;

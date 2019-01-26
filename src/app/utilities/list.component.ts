@@ -1,5 +1,4 @@
 import { Component, Input, Output,EventEmitter,OnChanges, SimpleChange} from '@angular/core';
-import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
   selector: 'list-table',
@@ -13,9 +12,9 @@ import { forEach } from '@angular/router/src/utils/collection';
     </div>
     <div class = "h-80 listbody ovflo-y pb-4" >
         <ul>
-          <li  *ngFor = "let val of tableData.data | search: query"  class = "row w-100">
+          <li  *ngFor = "let val of tableData.data | search: query : field"  class = "row w-100">
             <div class = "{{!multiSelect ? 'gone' : 'w-5 row'}} px-0 align-items-center" ><input (click) = "selectSingle(val, $event)" class = "{{'check' + val.id}} form-control selcheck" type="checkbox" /></div>
-            <div (click) = "selectRow(val)" class = "itemlistrow {{!multiSelect ? 'pl-3 w-100' : 'w-95 pl-2'}} pr-0 row align-items-center f-13" [class.active] = "(selectedRow.id == val.id && !multiSelect) || (select.list['obj' + val.id] && multiSelect)" >
+            <div (click) = "selectRow(val)" class = "itemlistrow {{!multiSelect ? 'pl-3 w-100' : 'w-95 pl-2'}} pr-0 row align-items-center f-13" [class.active] = "(selectedRow.id == val.id && !multiSelect && selectable) || (select.list['obj' + val.id] && multiSelect && selectable)" >
                 <span *ngFor = "let key of tableData.map; first as isFirst" class = "{{key.width}} {{!isFirst ? 'text-center': null}}">{{val[key.body]}}</span>
             </div>
           </li>
@@ -30,11 +29,13 @@ export class ListComponent implements OnChanges{
   //@Input('changeDisplay') changeDisplay:boolean = false;
   @Input('dblclick') dblclick:boolean = false;
   @Input('name') name:String;
+  @Input('field') field:String = null;
   @Input() public tableData = {
     data:[]
   };
   @Input() public multiSelect:boolean = false;
   @Input() public change:boolean = false;
+  @Input() public selectable:boolean = true;
   @Input() public query:string = '';
 
   @Output() selected:EventEmitter<Object> = new EventEmitter<Object>();
@@ -72,6 +73,7 @@ export class ListComponent implements OnChanges{
     });
   }
   selectRow(row){
+    if(!this.selectable) return;
     (this.dblclick && JSON.stringify(this.selectedRow) === JSON.stringify(row)) ? this.handleDblClick(): null;
     //console.log(row, this.selectedRow);
     this.selectedRow = row;
@@ -83,6 +85,7 @@ export class ListComponent implements OnChanges{
   }
 
   selectAll(){
+    if(!this.selectable) return;
     this.select.list = {};
     this.select.checkAll = this.select.checkAll ? false : true;
     let selChk = document.getElementsByClassName('selcheck');
@@ -111,6 +114,7 @@ export class ListComponent implements OnChanges{
   }
 
   selectSingle(obj, evt){
+    if(!this.selectable) return;
     
     if(this.select.checkAll) 
     {

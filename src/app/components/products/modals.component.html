@@ -2,7 +2,7 @@
 <div *ngIf = "data.name == 'addProduct'">
     <div class="modal-header px-4">
         <h4 class="modal-title">Add Product</h4>
-        <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+        <button type="button" class="close" aria-label="Close" (click)="activeModal.hide()">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
@@ -36,7 +36,7 @@
     </div>
     <div class="modal-footer row justify-content-center py-4">
         <div class="{{!loading ? 'gone' : 'notgone'}}">
-            <img src="../../../assets/img/loader.gif" width="60px"
+            <img src="http://localhost:80/server/assets/loader.gif" width="60px"
             height="38px" />
         </div>
         <button type="button" class="btn btn-success {{loading ? 'gone' : 'notgone'}}" (click)="addProduct()" [disabled] = "!inputs.product_name || !inputs.product_description || !inputs.product_retailprice || !inputs.product_wholesaleprice">Add</button>
@@ -48,7 +48,7 @@
 <div *ngIf = "data.name == 'updateProduct'">
     <div class="modal-header px-4">
         <h4 class="modal-title">Update Product</h4>
-        <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+        <button type="button" class="close" aria-label="Close" (click)="activeModal.hide()">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
@@ -97,10 +97,94 @@
     </div>
     <div class="modal-footer row justify-content-center py-4">
         <div class="{{!loading ? 'gone' : 'notgone'}}">
-            <img src="../../../assets/img/loader.gif" width="60px"
+            <img src="http://localhost:80/server/assets/loader.gif" width="60px"
             height="38px" />
         </div>
         <button type="button" class="btn btn-success {{loading ? 'gone' : 'notgone'}}" (click)="updateProduct()" [disabled] = "!inputs.new_product_name && !inputs.new_product_description && !inputs.new_product_retailprice && !inputs.new_product_wholesaleprice">Update</button>
+    </div>
+</div>
+<!-- End Update Product -->
+
+<!-- Start Add Product -->
+<div *ngIf = "data.name == 'addStock'">
+    <div class="modal-header px-4">
+        <h4 class="modal-title">Add Stock</h4>
+        <button type="button" class="close" aria-label="Close" (click)="activeModal.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form autocomplete="off" role="form" method="get" id="addStock" class="">
+            <div class="mx-5 my-2 px-5">
+                <div class="padd mx-auto">
+                    <div class="w-100 py-3">
+                        <label class="text-primary text-center w-100">Entry Date</label>
+                        <input [(ngModel)] = "inputs.entry_date"  type="text" name="entry_date" bsDatepicker [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }" class="form-control w-100 text-center textadjust sdate">
+                    </div>
+                    <div class="w-100 py-3">
+                        <label class="text-primary text-center w-100 mt-3">Stock Quantity</label>
+                        <input [(ngModel)] = "inputs.stockno"  type="Number" name="stockno" class="form-control w-100 text-center">
+                    </div>
+                    <div class="w-100 py-3">
+                        <label class="text-primary text-center w-100 mt-3">Expiry Date</label>
+                        <input [(ngModel)] = "inputs.stockexpiry_date"  type="text" bsDatepicker [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }" placement="top" name="stockexpiry_date" class="form-control w-100 text-center expstkdate exp ">
+                    </div>
+                </div>
+            </div>
+        </form>
+        <h6 class="w-100 text-center my-3" [style.color] = "output == 'SUCCESS' ? 'green' : 'red'">{{msg || '&nbsp;'}}</h6>
+    </div>
+    <div class="modal-footer row justify-content-center py-4">
+        <div class="{{!loading ? 'gone' : 'notgone'}}">
+            <img src="http://localhost:80/server/assets/loader.gif" width="60px"
+            height="38px" />
+        </div>
+        <button type="button" class="btn btn-success {{loading ? 'gone' : 'notgone'}}" (click)=" addStock()" [disabled] = "!inputs.entry_date || !inputs.stockno || !inputs.stockexpiry_date">Add</button>
+    </div>
+</div>
+<!-- End Add Product -->
+
+<!-- Start Update Product -->
+<div *ngIf = "data.name == 'updateStockEntry'">
+    <div class="modal-header px-4">
+        <h4 class="modal-title">Update Stock Entry</h4>
+        <button type="button" class="close" aria-label="Close" (click)="activeModal.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form autocomplete="off" role="form" method="get" (ngSubmit) = "onSubmit" class="addProduct">
+            <div class="mx-5 my-2">
+                <div class="pr-3 w-50 d-inline-block">
+                    <div class="w-100 py-3">
+                        <label class="text-primary text-center w-100">Entry Date</label>
+                        <input type="text" name="entry_date" class="form-control f-13 w-100 text-center" readonly [(ngModel)] = "inputs.entry_date">
+                    </div>
+                    <div class="w-100 py-3">
+                        <label class="text-primary text-center w-100">Stock</label>
+                        <textarea rows=2 type="text" name="stockno" class="form-control f-13 w-100 text-center" readonly [(ngModel)] = "inputs.stockno"></textarea>
+                    </div>
+                </div>
+                <div class="pl-3 w-50 d-inline-block">
+                    <div class="w-100 py-3">
+                        <label class="text-primary text-center w-100">Entry Date</label>
+                        <input type="text" name="new_entry_date" class="form-control f-13 w-100 text-center" bsDatepicker [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }" [(ngModel)] = "inputs.new_entry_date">
+                    </div>
+                    <div class="w-100 py-3">
+                        <label class="text-primary text-center w-100">Stock</label>
+                        <textarea rows=2 type="text" name="new_stockno" class="form-control f-13 w-100 text-center" [(ngModel)] = "inputs.new_stockno"></textarea>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <h6 class="w-100 text-center my-3" [style.color] = "output == 'SUCCESS' ? 'green' : 'red'">{{msg || '&nbsp;'}}</h6>
+    </div>
+    <div class="modal-footer row justify-content-center py-4">
+        <div class="{{!loading ? 'gone' : 'notgone'}}">
+            <img src="http://localhost:80/server/assets/loader.gif" width="60px"
+            height="38px" />
+        </div>
+        <button type="button" class="btn btn-success {{loading ? 'gone' : 'notgone'}}" (click)="updateStockEntry()" [disabled] = "!inputs.new_entry_date && !inputs.new_stockno">Update</button>
     </div>
 </div>
 <!-- End Update Product -->

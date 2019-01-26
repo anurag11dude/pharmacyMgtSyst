@@ -1,0 +1,228 @@
+<!-- Start Start Transaction -->
+<div *ngIf="data.name == 'printTransaction'">
+    <div class="modal-header px-4">
+        <h4 class="modal-title">Print Transactions</h4>
+        <button type="button" class="close" aria-label="Close" (click)="activeModal.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body printRecord">
+        <h4 class="w-100 mb-3 text-center">{{data.data.params.outbal ? data.data.selected : 'CUSTOMERS'}}</h4>
+        <h6 *ngIf = "data.data.dateInterval.start_date && data.data.dateInterval.end_date" class = "text-center my-3">{{data.data.dateInterval.start_date | date:'yyyy/mm/dd'}} &nbsp;&nbsp;&nbsp; ---- &nbsp;&nbsp; {{data.data.dateInterval.end_date | date:'yyyy/mm/dd'}}</h6>
+        <div class="row w-100 ">
+            <div *ngFor="let item of data.data.params | keyvalue" class="fw-600 col-3 text-center py-3">{{item.key |
+                uppercase}} : {{item.value}}</div>
+        </div>
+
+        <div class="w-100">
+            <table class="table table-striped table-bordered table-sm" 
+                width="100%">
+                <colgroup>
+                    <col width="20%">
+                    <col width="10%">
+                    <col width="10%">
+                    <col width="10%">
+                    <col width="10%">
+                    <col width="10%">
+                    <col width="10%">
+                    <col width="10%">
+                    <col width="10%">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th class="hd text-center" >NAME</th>
+                        <th class="hd text-center" >INVOICE</th>
+                        <th class="hd text-center" >DATE</th>
+                        <th class="hd text-center" >COST</th>
+                        <th class="hd text-center" >PAID</th>
+                        <th class="hd text-center" >OUTBALANCE</th>
+                        <th class="hd text-center" >CATEGORY</th>
+                        <th class="hd text-center" >METHOD</th>
+                        <th class="hd text-center" >SALESREP</th>
+                    </tr>
+                </thead>
+                <tbody id="candidates" class="cand" style="border-top: 2px solid #aaa;">
+                    <tr class="rowCasing rowCasing{{$index + 1}}" *ngFor="let tranx of data.data.info; let $index = index">
+                        <td class="td sn text-center f-12">{{tranx.customer}}</td>
+                        <td class="td text-center">
+                            <p class="f-12">{{tranx.invno}}</p>
+                        </td>
+                        <td class="td text-center">
+                            <p class="f-12">{{tranx.date}}</p>
+                        </td>
+                        <td class="td text-center">
+                            <p id="description" class="desp f-12"> {{tranx.totalamt}}</p>
+                        </td>
+                        <td class="td text-center">
+                            <p class="unitprice f-12" data-price="" data-pricename="retail" id="unitprice{{$index + 1}}">{{tranx.totalpaid}}</p>
+                        </td>
+                        <td class="td text-center">
+                            <p id="totalprice" class="totalno f-12">{{tranx.outbalance}}</p>
+                        </td>
+                        <td class="td text-center">
+                            <p id="totalprice" class="totalno f-12">{{tranx.category}}</p>
+                        </td>
+                        <td class="td text-center">
+                            <p id="totalprice" class="totalno f-12">{{tranx.paymeth}}</p>
+                        </td>
+                        <td class="td text-center">
+                            <p id="totalprice" class="totalno f-12">{{tranx.salesref}}</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+    </div>
+    <div class="modal-footer row justify-content-center py-4">
+
+        <button type="button" class="btn btn-success" (click)="print()" [disabled]="data.data.info.length == 0">PRINT</button>
+    </div>
+</div>
+<!-- End Print Transaction -->
+
+<!-- Start Start Sales -->
+<div *ngIf="data.name == 'printSales'">
+    <div class="modal-header px-4">
+        <h4 class="modal-title">Print Sales</h4>
+        <button type="button" class="close" aria-label="Close" (click)="activeModal.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body printRecord">
+        <h4 class="w-100 mb-3 text-center">{{data.data.selected ? data.data.selected : 'SALES'}}</h4>
+        <h6 *ngIf = "data.data.dateInterval.start_date && data.data.dateInterval.end_date" class = "text-center my-3">{{data.data.dateInterval.start_date | date:'yyyy/mm/dd'}} &nbsp;&nbsp;&nbsp; ---- &nbsp;&nbsp; {{data.data.dateInterval.end_date | date:'yyyy/mm/dd'}}</h6>
+        <div class="row w-100 ">
+            <div *ngFor="let item of data.data.params | keyvalue" class="fw-600 col-3 text-center py-3">{{item.key |
+                uppercase}} : {{item.value}}</div>
+        </div>
+
+        <div class="w-100">
+            <table class="table table-striped table-bordered table-sm" 
+                width="100%">
+                <colgroup>
+                    <col width="20%">
+                    <col width="10%">
+                    <col width="10%">
+                    <col width="10%">
+                    <col width="10%">
+                    <col width="10%">
+                    <col width="10%">
+                    <col width="10%">
+                    <col width="10%">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th class="hd text-center" >PRODUCT</th>
+                        <th class="hd text-center" >INVOICE</th>
+                        <th class="hd text-center" >CUSTOMER</th>
+                        <th class="hd text-center" >QTY</th>
+                        <th class="hd text-center" >UNIT</th>
+                        <th class="hd text-center" >TOTAL</th>
+                        <th class="hd text-center" >DATE</th>
+                        <th class="hd text-center" >SALESREP</th>
+                        <th class="hd text-center" >PAYMETHOD</th>
+                    </tr>
+                </thead>
+                <tbody id="candidates" class="cand" style="border-top: 2px solid #aaa;">
+                    <tr class="rowCasing rowCasing{{$index + 1}}" *ngFor="let tranx of data.data.info; let $index = index">
+                        <td class="td sn text-center f-12">{{tranx.product}}</td>
+                        <td class="td text-center">
+                            <p class="f-12">{{tranx.invoiceno}}</p>
+                        </td>
+                        <td class="td text-center">
+                            <p class="f-12">{{tranx.customer_name}}</p>
+                        </td>
+                        <td class="td text-center">
+                            <p id="quantity" class="desp f-12"> {{tranx.quantity}}</p>
+                        </td>
+                        <td class="td text-center">
+                            <p class="unitprice f-12" data-price="" data-pricename="retail" id="unitprice">{{tranx.unitprice}}</p>
+                        </td>
+                        <td class="td text-center">
+                            <p id="totalprice" class="totalno f-12">{{tranx.totalprice}}</p>
+                        </td>
+                        <td class="td text-center">
+                            <p id="salesdate" class="totalno f-12">{{tranx.salesdate}}</p>
+                        </td>
+                        <td class="td text-center">
+                            <p id="saleref" class="totalno f-12">{{tranx.saleref}}</p>
+                        </td>
+                        <td class="td text-center">
+                            <p id="paymethod" class="totalno f-12">{{tranx.paymethod}}</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+    </div>
+    <div class="modal-footer row justify-content-center py-4">
+
+        <button type="button" class="btn btn-success" (click)="print()" [disabled]="data.data.info.length == 0">PRINT</button>
+    </div>
+</div>
+<!-- End Print Sales -->
+
+<!-- Start Start Stock -->
+<div *ngIf="data.name == 'printStock'">
+    <div class="modal-header px-4">
+        <h4 class="modal-title">Print Stock</h4>
+        <button type="button" class="close" aria-label="Close" (click)="activeModal.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body printRecord">
+        <h4 class="w-100 mb-3 text-center">{{data.data.selected ? data.data.selected : 'STOCKS'}}</h4>
+        <h6 *ngIf = "data.data.dateInterval.start_date && data.data.dateInterval.end_date" class = "text-center my-3">{{data.data.dateInterval.start_date | date:'yyyy/mm/dd'}} &nbsp;&nbsp;&nbsp; ---- &nbsp;&nbsp; {{data.data.dateInterval.end_date | date:'yyyy/mm/dd'}}</h6>
+        <div class="row w-100 ">
+            <div *ngFor="let item of data.data.params | keyvalue" class="fw-600 col-3 text-center py-3">{{item.key |
+                uppercase}} : {{item.value}}</div>
+        </div>
+
+        <div class="w-100">
+            <table class="table table-striped table-bordered table-sm" 
+                width="100%">
+                <colgroup>
+                    <col width="30%">
+                    <col width="20%">
+                    <col width="10%">
+                    <col width="20%">
+                    <col width="20%">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th class="hd text-center" >PRODUCT</th>
+                        <th class="hd text-center" >EXPIRYDATE</th>
+                        <th class="hd text-center" >QTY</th>
+                        <th class="hd text-center" >ENTRYDATE</th>
+                        <th class="hd text-center" >BYADMIN</th>
+                    </tr>
+                </thead>
+                <tbody id="candidates" class="cand" style="border-top: 2px solid #aaa;">
+                    <tr class="rowCasing rowCasing{{$index + 1}}" *ngFor="let tranx of data.data.info; let $index = index">
+                        <td class="td sn text-center f-12">{{tranx.product}}</td>
+                        <td class="td text-center">
+                            <p class="f-12">{{tranx.stockexpiry_date}}</p>
+                        </td>
+                        <td class="td text-center">
+                            <p class="f-12">{{tranx.stockno}}</p>
+                        </td>
+                        <td class="td text-center">
+                            <p id="quantity" class="desp f-12"> {{tranx.entry_date}}</p>
+                        </td>
+                        <td class="td text-center">
+                            <p class="unitprice f-12" data-price="" data-pricename="retail" id="unitprice">{{tranx.byadmin}}</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+    </div>
+    <div class="modal-footer row justify-content-center py-4">
+
+        <button type="button" class="btn btn-success" (click)="print()" [disabled]="data.data.info.length == 0">PRINT</button>
+    </div>
+</div>
+<!-- End Print Sales -->

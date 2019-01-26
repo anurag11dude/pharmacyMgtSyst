@@ -1,19 +1,52 @@
 <div class="tab row justify-content-between">
-  <div class="prime w-70 p-4">
-    <div class="hs-15 row align-items-center ">
-      <h4 class="py-2 font-fam-Montserrat-bold col-4 px-0">Manage Customers</h4>
-      <div class="col-8 px-0 row align-items-center justify-content-end">
-        <input class="form-control text-center mx-3 float-left w-35" placeholder="Search"/>
-        <button class="h-80 btn btn-success mx-1 font-fam-Montserrat f-12" >Add</button>
-        <button class="h-80 btn btn-warning mx-1 font-fam-Montserrat f-12" >Update</button>
-        <button class="h-80 btn btn-danger mx-1 font-fam-Montserrat f-12" >Delete</button>
-        <button class="h-80 btn btn-outline-info mx-1 font-fam-Montserrat f-12" (click) = "multiSelect = multiSelect ? false : true;">Select</button>
+  <div class="prime {{menuObj.selected.sidebar == 'gone' ? 'w-100' : 'w-70'}} px-4 pb-4 py-3">
+    <div class="py-2 row align-items-center mt-4">
+      <div class="w-100 pb-3 row align-items-center">
+        <h4 class="font-fam-Montserrat-bold col-4 px-0">Manage Customers</h4>
+        <div class="col-8 pb-1 px-0 row align-items-center justify-content-end">
+          <input class="form-control text-center w-30" [(ngModel)] = "tableData.customers.search" placeholder="Search"/>
+          <button [class.disabled] = "tableData.customers.multiSelect" class="ml-2 btn btn-success font-fam-Montserrat f-12" (click) = "openModal({size: 'md', name:'addCustomer', data: tableData.customers.selected[0]});" >Add</button>
+          <button [class.disabled] = "!tableData.customers.selected || tableData.customers.multiSelect" class="ml-2 btn btn-warning font-fam-Montserrat f-12" (click) = "openModal({size: 'lg', name:'updateCustomer', data: tableData.customers.selected[0]});" >Update</button>
+          <button [class.disabled] = "!tableData.customers.selected" class="ml-2 btn btn-danger font-fam-Montserrat f-12"  (click) = "deleteRows(tableData.customers.selected, 'Customer')">Delete</button>
+          <button class="ml-2 btn selectbtn font-fam-Montserrat f-12" [class.actv] = "tableData.sales.multiSelect" (click) = "activateSelectMode('customers')">{{tableData.customers.multiSelect ? 'Unselect' : 'Select'}}</button>
+        </div>
+      </div>
+
+    </div>
+    <list-table class="w-100" [multiSelect] = "tableData.customers.multiSelect" name = "customers" [tableData] = "tableData.customers" height = "h-80" [query] = "tableData.customers.search" (selected) = "customersListSelected($event)"></list-table>
+  </div>
+
+  <div class="right-sidebar {{menuObj.selected.sidebar}} px-4">
+      <button *ngIf = "tableData.customers.selected && !tableData.customers.multiSelect" class="btn btn-warning btn-sm d-block mx-auto mb-3 clip" (click) = "tableData.invoices.dblselected = false; tableData.sales.selected = false;" >{{tableData.invoices.dblselected ? 'Sales' : 'Invoices'}}</button>
+    <div class="py-2 h-100">
+      <div *ngIf = "!tableData.customers.selected || tableData.customers.multiSelect" class="font-fam-Montserrat wht w-100 row h-100 align-items-center justify-content-center" [@fadeInOut]>
+        <h4>Select A customer</h4>
+      </div>
+      <div *ngIf = "(tableData.customers.selected && !tableData.customers.multiSelect) || tableData.customers.selected.length == 0" class="relatv" [@fadeInOut]>
+        <div *ngIf = "!tableData.invoices.dblselected" [@fadeInOut] class="abs w-100" style="right:0;">
+          <div class="header font-fam-Montserrat text-bold wht w-100">
+            <h4 class="text-center mx-auto f-25 w-80 excerpt" style = "height:48px">{{tableData.customers.selected[0]['customer_name']}}</h4>
+            <div class="w-100 row justify-content-between mt-3">
+              <button class="btn btn-success mx-1 font-fam-Montserrat f-12" [class.disabled] = "tableData.invoices.multiSelect" (click) = "grow = false; openModal({size: 'md', name:'updateDebtPay', data: tableData.invoices.data[(tableData.invoices.data.length - 1)], selected: tableData.customers.selected[0]});" [class.hvr-pulse-grow] = "grow">Pay Debt</button>
+              <button class="btn btn-danger mx-1 font-fam-Montserrat f-12" [class.disabled] = "!tableData.invoices.selected" (click) = "deleteRows(tableData.invoices.selected, 'Inventory')">Delete</button>
+              <button class="btn btn-info selectbtn mx-1 font-fam-Montserrat f-12" [class.actv] = "tableData.invoices.multiSelect" (click) = "activateSelectMode('invoices')">{{tableData.invoices.multiSelect ? 'Unselect' : 'Select'}}</button>
+            </div>
+          </div>
+          <list-table dblclick = true class="invoices w-100" [multiSelect] = "tableData.invoices.multiSelect" name = "invoices" [query] = "tableData.invoices.search" [tableData] = "tableData.invoices" height = "h-80" (selected) = "invoicesListSelected($event)" (dblselected) = "invoicesListDblSelected($event)" [change] = "tableData.invoices.change"></list-table>
+        </div>
+        <div *ngIf = "tableData.invoices.dblselected" [@fadeInOut] class="abs w-100" style="right:0;">
+          <div class="header font-fam-Montserrat text-bold wht w-100">
+            <h4 class="text-center mx-auto f-25 w-80 excerpt" style = "height:48px">{{tableData.customers.selected[0]['customer_name']}}</h4>
+            <div class="w-100 row justify-content-between mt-3">
+              <button class="btn btn-success mx-1 font-fam-Montserrat f-12" (click) = "openModal({size: 'lg', name:'addSale', data: {invoice: tableData.invoices.selected[0], products: tableData.products.data}});" >Add</button>
+              <button class="btn btn-danger mx-1 font-fam-Montserrat f-12" [class.disabled] = "!tableData.sales.selected" (click) = "deleteRows(tableData.sales.selected, 'Sales')">Delete</button>
+              <button class="btn btn-secondary mx-1 font-fam-Montserrat f-12" (click) = "openModal({size: 'lg', name:'reprint', data: {products: tableData.products.data, invoice: tableData.invoices.selected[0], print: tableData.sales.data}});">Reprint</button>
+              <button class="btn btn-info selectbtn mx-1 font-fam-Montserrat f-12" [class.actv] = "tableData.sales.multiSelect" (click) = "activateSelectMode('sales')">{{tableData.sales.multiSelect ? 'Unselect' : 'Select'}}</button>
+            </div>
+          </div>
+          <list-table class="sales w-100" [multiSelect] = "tableData.sales.multiSelect" name = "sales" [tableData] = "tableData.sales" height = "h-80" (selected) = "salesListSelected($event)" [query] = "tableData.sales.search" [change] = "tableData.sales.change"></list-table>
+        </div>
       </div>
     </div>
-    
-    <list-table class="w-100" [multiSelect] = "multiSelect" [tableData] = "tableData" height = "h-80" (selected) = "listSelected($event)"></list-table>
-  </div>
-  <div class="right-sidebar w-30 p-4" style="border-left:1px solid #333">
-
   </div>
 </div>

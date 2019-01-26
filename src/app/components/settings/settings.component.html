@@ -1,19 +1,69 @@
 <div class="tab row justify-content-between">
-  <div class="prime w-70 p-4">
-    <div class="hs-15 row align-items-center ">
-      <h4 class="py-2 font-fam-Montserrat-bold col-4 px-0">Manage Users</h4>
-      <div class="col-8 px-0 row align-items-center justify-content-end">
-        <input class="form-control text-center mx-3 float-left w-35" placeholder="Search"/>
-        <button class="h-80 btn btn-success mx-1 font-fam-Montserrat f-12" >Add</button>
-        <button class="h-80 btn btn-warning mx-1 font-fam-Montserrat f-12" >Update</button>
-        <button class="h-80 btn btn-danger mx-1 font-fam-Montserrat f-12" >Delete</button>
-        <button class="h-80 btn selectbtn mx-1 font-fam-Montserrat f-12" [class.actv] = "multiSelect" (click) = "multiSelect = multiSelect ? false : true;">Select</button>
+  <div class="prime {{menuObj.selected.sidebar == 'gone' ? 'w-100' : 'w-70'}} px-4 pb-4 py-3 row align-items-center">
+    <div *ngIf="menuObj.selected.menuName == 'General'" class="h-100 w-100">
+      <div class="row h-100 justify-content-between pb-3 pt-1">
+        <div class="w-100 h-100 row justify-content-start float-left text-center pt-2">
+          <div class="col-4 row align-items-center">
+            <app-croppie></app-croppie>
+          </div>
+          <div class="row col-8 justify-content-center text-center h-100 ovflo-y">
+            <div class="row col-6 my-2 justify-content-center" *ngFor="let option of tableData.general.map">
+              <h6 class="w-100 my-3 font-weight-bold opac-70">{{option.name}}</h6>
+              <textarea [(ngModel)]="inputs[option.body]" class="text-center form-control f-13 col-12" rows='3'></textarea>
+              <div class="w-25 mt-3 py-0">
+                <img [src]="loaderUrl" width="40px" height="28px" *ngIf="loading[option.body] == 'yes'" />
+                <button *ngIf="loading[option.body] == null || loading[option.body] == 'no'" class="opac-70 btn wht btn-sm btn-success w-100"
+                  (click)="settingUpdate(option.body)">Save</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
       </div>
     </div>
-    
-    <list-table class="w-100" [multiSelect] = "multiSelect" [tableData] = "tableData" height = "h-80" (selected) = "listSelected($event)"></list-table>
-  </div>
-  <div class="right-sidebar w-30 p-4" style="border-left:1px solid #333">
 
+    <div *ngIf="menuObj.selected.menuName == 'Users'" class="h-100 w-100">
+      <div class="py-2 row align-items-center mt-4">
+        <div class="w-100 pb-3 row align-items-center">
+          <h4 class="font-fam-Montserrat-bold col-4 px-0">Manage Users</h4>
+          <div class="col-8 pb-1 px-0 row align-items-center justify-content-end">
+            <input class="form-control text-center w-30" [(ngModel)]="tableData.users.search" placeholder="Search" />
+            <button [class.disabled]="tableData.users.multiSelect" class="ml-2 btn btn-success font-fam-Montserrat f-12"
+              (click)="openModal({size: 'md', name:'addUser', data: tableData.users.selected[0]});">Add</button>
+            <button [class.disabled]="!tableData.users.selected || tableData.users.multiSelect" class="ml-2 btn btn-warning font-fam-Montserrat f-12"
+              (click)="openModal({size: 'lg', name:'updateUser', data: tableData.users.selected[0]});">Update</button>
+            <button [class.disabled]="!tableData.users.selected" class="ml-2 btn btn-danger font-fam-Montserrat f-12"
+              (click)="deleteRows(tableData.users.selected, 'User')">Delete</button>
+            <button class="ml-2 btn selectbtn font-fam-Montserrat f-12" [class.actv]="tableData.users.multiSelect"
+              (click)="activateSelectMode('users')">{{tableData.users.multiSelect ? 'Unselect' : 'Select'}}</button>
+          </div>
+        </div>
+
+      </div>
+
+      <list-table class="w-100" [multiSelect]="tableData.users.multiSelect" name="users" [tableData]="tableData.users"
+        height="h-80" [query]="tableData.users.search" (selected)="usersListSelected($event)"></list-table>
+    </div>
+  </div>
+
+  <div class="right-sidebar {{menuObj.selected.sidebar}} px-4">
+    <div *ngIf="menuObj.selected.menuName == 'Users'" class = "w-100 h-100">
+      <div class="py-2 h-100">
+        <div *ngIf="!tableData.users.selected || tableData.users.multiSelect" class="font-fam-Montserrat wht w-100 row h-100 align-items-center justify-content-center"
+          [@fadeInOut]>
+          <h4>Select A User</h4>
+        </div>
+        <div *ngIf="(tableData.users.selected && !tableData.users.multiSelect) || tableData.users.selected.length == 0"
+          class="relatv h-100" [@fadeInOut]>
+          <div *ngIf="!tableData.sessions.dblselected" [@fadeInOut] class="abs w-100 h-100" style="right:0;">
+            <div class="header font-fam-Montserrat text-bold wht w-100 py-3">
+              <h4 class="text-center mx-auto f-25 w-80 excerpt my-4">{{tableData.users.selected[0]['username']}}</h4>
+            </div>
+            <list-table dblclick=true class="sessions w-100" [multiSelect]="tableData.sessions.multiSelect" name="sessions"
+              [selectable] = false [query]="tableData.sessions.search" [tableData]="tableData.sessions" height="h-80" [change]="tableData.sessions.change"></list-table>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

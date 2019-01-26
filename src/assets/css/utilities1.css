@@ -1,0 +1,395 @@
+@font-face{
+    font-family: 'Montserrat';
+    src: url('./fonts/Montserrat/Montserrat-Regular.ttf') format('truetype');
+}@font-face{
+    font-family: 'Montserrat-bold';
+    src: url('./fonts/Montserrat/Montserrat-Bold.ttf') format('truetype');
+}@font-face{
+    font-family: 'Myriad';
+    src: url('./fonts/Myriad/Myriad-Pro-Regular.ttf') format('truetype');
+}@font-face{
+    font-family: 'Calibri';
+    src: url('./fonts/Calibri/calibrib.ttf') format('truetype');
+}
+.nopaddmarg {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+.tabpill {
+    color: white !important;
+    text-align: center;
+    min-width: 80px;
+    padding: 10px;
+    border: none;
+}
+.modal.show .modal-dialog {
+    transition: 0.25s all;
+    opacity: 1;
+    transform: translate(0, 5vh);
+}
+
+.modal.custom-show .modal-dialog {
+    opacity: 1;
+    transform: translate(0, 0);
+}
+
+.custom-show{
+    animation-name: infade;
+    animation-duration: .8s;
+}
+.custom-hide{
+    animation-name: outfade;
+    animation-duration: .8s;
+}
+  
+/* @keyframes example {
+0%   {transform: scale(0.5)}
+100% {transform: scale(1)}
+} */
+@keyframes infade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+@keyframes outfade {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+button.btnnone{
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    outline: none;
+}
+button:focus{
+    outline: none !important;
+}
+.tabpill.focus {
+    color: #509CCB !important;
+    background: white;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+.center{
+    overflow: auto;
+    margin: auto;
+    position: absolute;
+    top:0; left:0; bottom: 0; right: 0;
+}
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none; 
+    margin: 0; 
+}
+input[type=number] {
+    -moz-appearance:textfield;
+}
+.pointer{
+    cursor:pointer;
+}
+li{
+    text-decoration: none !important;
+    list-style-type: none !important;
+    cursor:pointer;
+}
+li:focus{
+    outline: none;
+}
+.excerpt{
+    white-space: pre-wrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+input::placeholder, textarea::placeholder {
+    opacity: .5 !important;
+}
+.wht{
+    color: white !important;
+}
+.blac{
+    color: black !important;
+}
+.bpx-rad {
+    border-radius: 5px !important;
+}
+.pointer-disabled{
+    pointer-events: none;
+    cursor: not-allowed;
+}
+.anim{
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+.anim-fast{
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+.anim-slow{
+    -webkit-transition: all 0.7s ease;
+    -moz-transition: all 0.7s ease;
+    -o-transition: all 0.7s ease;
+    transition: all 0.7s ease;
+}
+.font-fam-Montserrat{
+    font-family: 'Montserrat', sans-serif;
+}
+.solidtopath{
+    background: none;
+    border: 2px solid #333;
+}
+.font-fam-Montserrat-bold{
+    font-family: 'Montserrat-bold', sans-serif;
+}
+.font-fam-Myriad{
+    font-family: "Segoe UI";
+}
+.font-fam-Calibri{
+    font-family: "Calibri";
+}
+.row{
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+}
+.p-0{
+    padding: 0 !important;
+}
+.px-0{
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+.py-0{
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+.gone{
+    display: none !important;
+}
+.notgone{
+    display: block !important;
+}
+.vanish {
+    opacity: 0;
+    /*display:none;*/
+}
+.clr{
+    clear: both;
+}
+.abs{
+    position: absolute;
+}
+.relatv{
+    position: relative;
+}
+.zindex{
+    z-index: 200 !important;
+}
+.zback{
+    z-index: -200 !important;
+}
+.c-fixed{
+    position: fixed;
+}
+.ovflo-y{
+    overflow-y: auto;
+}
+.w-95{
+    width: 95% !important;
+}
+.w-90{
+    width: 90% !important;
+}
+.w-85{
+    width: 85% !important;
+}
+.w-80{
+    width: 80% !important;
+}
+.w-70{
+    width: 70% !important;
+}
+.w-65{
+    width: 65% !important;
+}
+.w-60{
+    width: 60% !important;
+}
+.w-55{
+    width: 55% !important;
+}
+.w-45{
+    width: 45% !important;
+}
+.w-40{
+    width: 40% !important;
+}
+.w-35{
+    width: 35% !important;
+}
+.w-30{
+    width: 30% !important;
+}
+.w-20{
+    width: 20% !important;
+}
+.w-15{
+    width: 15% !important;
+}
+.w-10{
+    width: 10% !important;
+}
+.w-5{
+    width: 5% !important;
+}
+.w-0{
+    width: 0% !important;
+}
+.h-100{
+    height: 100% !important;
+}
+.h-95{
+    height: 95% !important;
+}
+.h-90{
+    height: 90% !important;
+}
+.h-85{
+    height: 85% !important;
+}
+.h-80{
+    height: 80% !important;
+}
+.h-70{
+    height: 70% !important;
+}
+.h-65{
+    height: 65% !important;
+}
+.h-60{
+    height: 60% !important;
+}
+.h-55{
+    height: 55% !important;
+}
+.h-45{
+    height: 45% !important;
+}
+.h-40{
+    height: 40% !important;
+}
+.h-35{
+    height: 35% !important;
+}
+.h-30{
+    height: 30% !important;
+}
+.h-20{
+    height: 20% !important;
+}
+.h-15{
+    height: 15% !important;
+}
+.h-10{
+    height: 10% !important;
+}
+.h-5{
+    height: 5% !important;
+}
+.h-0{
+    height: 0 !important;
+}
+.hs-100{
+    height: 100vh !important;
+}
+.hs-95{
+    height: 95vh !important;
+}
+.hs-90{
+    height: 90vh !important;
+}
+.hs-85{
+    height: 85vh !important;
+}
+.hs-80{
+    height: 80vh !important;
+}
+.hs-75{
+    height: 75vh !important;
+}
+.hs-70{
+    height: 70vh !important;
+}
+.hs-65{
+    height: 65vh !important;
+}
+.hs-60{
+    height: 60vh !important;
+}
+.hs-55{
+    height: 55vh !important;
+}
+.hs-50{
+    height: 50vh !important;
+}
+.hs-45{
+    height: 45vh !important;
+}
+.hs-40{
+    height: 40vh !important;
+}
+.hs-35{
+    height: 35vh !important;
+}
+.hs-30{
+    height: 30vh !important;
+}
+.hs-25{
+    height: 25vh !important;
+}
+.hs-20{
+    height: 20vh !important;
+}
+.hs-15{
+    height: 15vh !important;
+}
+.hs-10{
+    height: 10vh !important;
+}
+.f-12{
+    font-size: 12px  !important;
+}
+.f-13{
+    font-size: 13px  !important;
+}
+.f-14{
+    font-size: 14px  !important;
+}
+.f-15{
+    font-size: 15px  !important;
+}
+.f-16{
+    font-size: 15px  !important;
+}
+.f-17{
+    font-size: 17px  !important;
+}
+.f-19{
+    font-size: 19px  !important;
+}
+.f-25{
+    font-size: 23px  !important;
+}
+.opac-50{
+    opacity: .5;
+}
+.opac-80{
+    opacity: .8;
+}
+.opac-70{
+    opacity: .7;
+}

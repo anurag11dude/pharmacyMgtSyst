@@ -10,6 +10,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "electron": "ng build && electron .",
+    "electron-only": "electron .",
     "electron-aot": "ng build --prod && electron ."
   },
   "private": true,
@@ -27,9 +28,12 @@
     "@ng-bootstrap/ng-bootstrap": "^4.0.1",
     "angular-font-awesome": "^3.1.2",
     "core-js": "^2.5.4",
+    "croppie": "^2.6.2",
     "deep-equal": "^1.0.1",
     "express": "^4.16.4",
     "font-awesome": "^4.7.0",
+    "jquery": "^3.3.1",
+    "ngx-bootstrap": "^3.1.4",
     "ngx-electron": "^2.0.0",
     "rxjs": "~6.2.0",
     "zone.js": "~0.8.26"
