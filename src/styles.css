@@ -141,11 +141,17 @@ list-table .itemlistrow {
     border-style: solid;
     font-weight: 600; }
   .right-sidebar .Store .fa-inverse {
-    color: #fdd156 !important; }
+    /* color: #fdd156 !important; */ }
   .right-sidebar .clip {
     border: none;
     padding: 5px 15px !important;
     box-shadow: inset 0px 10px 5px rgba(0, 0, 0, 0.07);
     border-radius: 0; }
+
+.hd {
+  text-align: center;
+  background: #509CCB;
+  color: white;
+  font-size: 14px; }
 
 /*# sourceMappingURL=styles.css.map */

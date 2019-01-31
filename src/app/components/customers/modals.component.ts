@@ -79,7 +79,13 @@ import { List } from 'src/app/utilities/listTemplate';
     }
     reprint(){
       let invoice = document.getElementsByClassName('Invoicediv')[0].innerHTML;
-      this._electronService.ipcRenderer.send('print', invoice);
+      /* this._electronService.ipcRenderer.send('print', invoice); */
+      this.menuService.jsonPost({
+        payload : this.data.data,
+        sess : 'ewere'
+      },'/server/usbReceiptPrint580mm.php').then((result)=>{
+        console.log(result);
+      });
     }
     postCall(action, payload, classtype){
       this.menuService.jsonPost({

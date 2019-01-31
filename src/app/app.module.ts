@@ -20,6 +20,7 @@ import { RecordModalContent } from './components/records/modals.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { UserModalContent } from './components/settings/modals.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { DashboardModalContent } from './components/dashboard/modals.component';
 import { ListComponent } from './utilities/list.component';
 import { CroppieComponent } from './utilities/croppie.component';
 import { search } from './utilities/customPipes';
@@ -37,6 +38,7 @@ import { search } from './utilities/customPipes';
     RecordModalContent,
     CroppieComponent,
     UserModalContent,
+    DashboardModalContent,
     search
   ],
   imports: [
@@ -58,6 +60,7 @@ import { search } from './utilities/customPipes';
     ProductModalContent,
     CustomerModalContent,
     RecordModalContent,
+    DashboardModalContent,
     UserModalContent
   ]
 })

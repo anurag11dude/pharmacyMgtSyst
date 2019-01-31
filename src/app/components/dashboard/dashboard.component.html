@@ -1,5 +1,5 @@
 <div class="tab row justify-content-between">
-  <div class="prime {{menuObj.selected.sidebar == 'gone' ? 'w-100' : 'w-70'}} px-4 pb-4 py-3">
+  <div class="prime {{menuObj.selected.sidebar == 'gone' ? 'w-100' : 'w-70'}} px-4 pb-4 py-3 h-100">
     <div *ngIf="menuObj.selected.menuName == 'Welcome'">
       <div class="py-2 row align-items-center mt-4">
         <div class="w-100 pb-1 row align-items-center b-1">
@@ -14,8 +14,78 @@
         </div>
       </div>
     </div>
-    <div *ngIf="menuObj.selected.menuName == 'Store'">
-
+    <div class="h-100 w-100" *ngIf="menuObj.selected.menuName == 'Store'">
+      <div class="h-20 row w-100 b-1 mb-2">
+        <div class="col-6 d-inline-block pr-4 h-100" [style.border-right] = "'1px solid #ccc'">
+          <div class="w-30 float-left d-inline-block">
+              <h4>Buyer</h4>
+              <button type="button" class="btn mt-3 btn-success" (click)="invoice.clearCustomerInput();" >{{ !invoice.customerInput ? 'Type' : 'Select'}}</button>
+          </div>
+          <select *ngIf="!invoice.customerInput" [(ngModel)] = "invoice.customer['id']" (change) = "getCustomerbyID()" class="float-left form-control w-70 text-center d-inline-block"  name="paymethod">
+            <option value="none" hidden>Select Customer</option>
+            <option value="{{cust.id}}" *ngFor = "let cust of tableData.customers.data">{{cust.customer_name}}</option>
+          </select>
+          <div class="w-70 d-inline-block float-left h-100" *ngIf="invoice.customerInput">
+            <input [(ngModel)] = "invoice.customer['name']" type="text" name="paidamt" class="h-25 f-13 form-control mb-1 w-100 text-center" placeholder="Name">
+            <input [(ngModel)] = "invoice.customer['phone']" type="number" name="paidamt" class="h-25 f-13 form-control my-1 w-100 text-center" placeholder="Phone">
+            <input [(ngModel)] = "invoice.customer['address']" type="text" name="paidamt" class="h-25 f-13 form-control mt-1 w-100 text-center" placeholder="Address">
+          </div>
+          <div class="clr"></div>
+        </div>
+        <div class="col-4 px-4 d-inline-block h-100" [style.border-right] = "'1px solid #ccc'">
+          <select [(ngModel)] = "invoice.customer['paymeth']" class="form-control text-center d-inline-block" name="paymethod">
+            <option value="Cash">Cash</option>
+            <option value="Cheque">Cheque</option>
+            <option value="POS">POS</option>
+            <option value="Credit">Credit</option>
+          </select>
+          <input class="form-control my-3 text-center w-100" [(ngModel)] = "invoice.customer['paid']" placeholder="Paid Amount"/>
+        </div>
+        <div class="col-2 pl-4 h-100">
+          <div class="w-100 choral fw-600 f-18 h-20 text-center"> Outbalance </div>
+          <h5 class="w-100 text-center row justify-content-center align-items-center h-80"> {{invoice.customer.outbal}} </h5>
+        </div>
+      </div>
+      <div class="row justify-content-between font-fam-Montserrat-bold py-2 px-4 opac-70">
+        <h6 class="w-40 d-inline-block">Number : {{invoice.cart.number}}</h6>
+        <button class="btn btn-gdark" (click)="printPreview()">PRINT</button>
+        <h6 class="w-40 d-inline-block text-right">Total : {{invoice.cart.total}}</h6>
+      </div>
+      <div class="">
+        <table class="table table-bordered table-sm" width="100%">
+          <colgroup>
+          <col width="3%">
+          <col width="3%">
+          <col width="34%">
+          <col width="10%">
+          <col width="30%">
+          <col width="10%">
+          <col width="10%">
+          </colgroup>
+          <thead>
+              <tr>
+                  <th class="hd">S/N</th>
+                  <th class="hd">QUANTITY</th>
+                  <th class="hd">ITEM</th>
+                  <th class="hd exprem">EXPIRY DATE</th>
+                  <th class="hd">DESCRIPTION</th>
+                  <th class="hd unithd"  data-bool = "false" >UNIT PRICE</th>
+                  <th class="hd">AMOUNT</th>
+              </tr>
+          </thead>
+          <tbody id="candidates" class="cand">
+              <tr class="rowCasing rowCasing1" pos ="1" *ngFor = "let prod of invoice.cart.products; let $index = index;" (click) = "selectCartRow($index)" [style.background] = "invoice.cart.selected == $index ? '#ddd' : ''">
+                  <td class="td sn text-center" (click)="removeCartrow($index)"><button [style.border-radius] = "'30px'" class="btn {{invoice.cart.products[$index]['product_name'] == null ? 'btn-danger' : 'btn-warning'}} f-20 fw-600">{{invoice.cart.products[$index]['product_name'] == null ? 'x' : '-'}}</button></td>
+                  <td class="td text-center"><input type = "number" [(ngModel)]="invoice.cart.products[$index].quantity" class="text-center inp w-100 quants" (keyup)="changeqty($index)"/></td>
+                  <td class="td text-center"><p>{{invoice.cart.products[$index].product_name}}</p></td>
+                  <td class="td exprem"><p>{{invoice.cart.products[$index].expiry_date}}</p></td>
+                  <td class="td text-center" ><p id="description1" class = "desp">{{invoice.cart.products[$index].product_description}}</p></td>
+                  <td class="td text-center" (click) = "togglePriceType($index)"><p class = "unitprice">{{invoice.cart.products[$index].unitcost}}</p ><div class = "badge-danger badge badge-pill">{{invoice.cart.products[$index].pricetype}}</div></td>
+                  <td class="td text-center"><p class="totalno">{{invoice.cart.products[$index].totalcost}}</p></td>
+              </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 
@@ -47,12 +117,18 @@
         </accordion>
     </div>
     <div *ngIf="menuObj.selected.menuName == 'Store'" class="Store py-4 h-100">
-      <div class="row mb-3 px-4 w-100 align-items-center"><fa class="swell px-0 col-2 anim-fast" size = "2x" inverse="true" name = "cart-arrow-down"></fa><input class="form-control text-center w-100 col-10" [(ngModel)] = "tableData.products.search" placeholder="Search Product"/></div>
-      <div class="w-100 my-3 ovflo-y hs-60">
-        <div class="px-4 pointer py-3 w-100" *ngFor = "let prod of tableData.products.data" (click) = "selectProd(prod)" [class.grn] = "tableData.products.selected[0].id == prod.id" >
+      <div class="row mb-3 px-4 w-100 align-items-center"><fa class="swell px-0 col-2 anim-fast" size = "2x" inverse="true" name = "cart-arrow-down" (click) = "pushProductToCart()"></fa><input class="form-control text-center w-100 col-10" [(ngModel)] = "tableData.products.search" placeholder="Search Product"/></div>
+      <div class="w-100 my-2 ovflo-y hs-60">
+        <div class="px-4 pointer py-3 w-100" *ngFor = "let prod of tableData.products.data | search: tableData.products.search : 'product_name'" (click) = "selectProd(prod)" [class.grn] = "tableData.products.selected[0].id == prod.id" >
           <h6 class="mb-2 wht">{{prod.product_name}}</h6>
-          <div class="w-100 {{tableData.products.selected[0].id == prod.id ? '' : 'opac-70'}} f-13 row justify-content-between"><span class=" wht">wholesale: {{prod.product_wholesaleprice}}</span><span class="wht">retail: {{prod.product_retailprice}}</span></div>
+          <div class="w-100 mt-2 {{tableData.products.selected[0].id == prod.id ? '' : 'opac-70'}} f-13 row justify-content-between"><span class=" wht">wholesale: {{prod.product_wholesaleprice}}</span><span class=" wht">Stock: {{prod.stock}}</span><span class="wht">retail: {{prod.product_retailprice}}</span></div>
         </div>
+      </div>
+      <div class="my-3 h-10 row justify-content-center w-100">
+        <div class="w-80 mx-auto h-80 wht fw-600 f-17 justify-content-center row align-items-center" [style.border]="'4px solid #ddd'" [style.border-radius]="'40px'">{{invoice.stock.selected['stockremain']}}&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;{{invoice.stock.selected['expirydate']}}</div>
+        <button [disabled] = "tableData.products.selected[0]['stock'] == 0 || tableData.products.selected[0]['expiry_date'] == '0000-00-00'" class="btn mt-3 btn-danger w-80" (click)="openModal({size: 'md', name:'changeStock', data: tableData.stocks.data}, 'changeStock');">
+          Change Stock
+        </button>
       </div>
     </div>
   </div>

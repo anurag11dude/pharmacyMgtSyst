@@ -167,7 +167,7 @@ list-table{
         font-weight: 600;
     }
     .Store .fa-inverse{
-        color: #fdd156 !important;
+        /* color: #fdd156 !important; */
     }
     .clip{
         border: none;
@@ -175,5 +175,12 @@ list-table{
         box-shadow : inset 0px 10px 5px rgba(0,0,0,.07);
         border-radius:0;
     }
+}
+
+.hd{
+    text-align: center;
+    background:  #509CCB;
+    color: white;
+    font-size: 14px;
 }
 
