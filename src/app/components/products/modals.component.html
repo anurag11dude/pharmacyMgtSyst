@@ -21,12 +21,16 @@
                     <div class="w-100 py-3">
                         <div class="w-50 d-inline-block pr-2">
                             <label class="text-primary text-center w-100">Retail Price</label>
-                            <input type="number" [(ngModel)] = "inputs.product_retailprice" name="product_retailprice" class="form-control w-100 text-center">
+                            <input type="number" onkeydown="javascript: return event.keyCode !=69 && event.keyCode !=189 && event.keyCode !=109" [(ngModel)] = "inputs.product_retailprice" name="product_retailprice" class="form-control w-100 text-center">
                         </div>
                         <div class="w-50 d-inline-block pl-2">
                             <label class="text-primary text-center w-100">Wholesale Price</label>
-                            <input type="number" [(ngModel)] = "inputs.product_wholesaleprice" name="product_wholesaleprice" class="form-control w-100 text-center">
+                            <input type="number" onkeydown="javascript: return event.keyCode !=69 && event.keyCode !=189 && event.keyCode !=109" [(ngModel)] = "inputs.product_wholesaleprice" name="product_wholesaleprice" class="form-control w-100 text-center">
                         </div>
+                    </div>
+                    <div class="w-100 py-3">
+                        <label class="text-primary text-center w-100">Shelf</label>
+                        <input [(ngModel)] = "inputs.shelf" type="text" name="shelf" class="form-control text-center"/>
                     </div>
                     
                 </div>
@@ -72,6 +76,10 @@
                         <label class="text-primary text-center w-100">Wholesale Price</label>
                         <input type="number" name="prodwholesaleprice" class="form-control f-13 w-100 text-center" readonly [(ngModel)] = "inputs.product_wholesaleprice">
                     </div>
+                    <div class="w-100 py-3">
+                        <label class="text-primary text-center w-100">Shelf</label>
+                        <input type="text" name="shelf" class="form-control f-13 w-100 text-center" readonly [(ngModel)] = "inputs.shelf">
+                    </div>
                 </div>
                 <div class="pl-3 w-50 d-inline-block">
                     <div class="w-100 py-3">
@@ -84,11 +92,15 @@
                     </div>
                     <div class="w-100 py-3">
                         <label class="text-primary text-center w-100">Retail Price</label>
-                        <input type="number" name="product_retailprice" class="form-control f-13 w-100 text-center" [(ngModel)] = "inputs.new_product_retailprice">
+                        <input type="number" name="product_retailprice" onkeydown="javascript: return event.keyCode !=69 && event.keyCode !=189 && event.keyCode !=109" class="form-control f-13 w-100 text-center" [(ngModel)] = "inputs.new_product_retailprice">
                     </div>
                     <div class="w-100 py-3">
                         <label class="text-primary text-center w-100">Wholesale Price</label>
-                        <input type="number" name="product_wholesaleprice" class="form-control f-13 w-100 text-center" [(ngModel)] = "inputs.new_product_wholesaleprice">
+                        <input type="number" name="product_wholesaleprice" onkeydown="javascript: return event.keyCode !=69 && event.keyCode !=189 && event.keyCode !=109" class="form-control f-13 w-100 text-center" [(ngModel)] = "inputs.new_product_wholesaleprice">
+                    </div>
+                    <div class="w-100 py-3">
+                        <label class="text-primary text-center w-100">Shelf</label>
+                        <input type="text" name="new_shelf" class="form-control f-13 w-100 text-center" [(ngModel)] = "inputs.new_shelf">
                     </div>
                 </div>
             </div>
@@ -100,7 +112,7 @@
             <img src="http://localhost:80/server/assets/loader.gif" width="60px"
             height="38px" />
         </div>
-        <button type="button" class="btn btn-success {{loading ? 'gone' : 'notgone'}}" (click)="updateProduct()" [disabled] = "!inputs.new_product_name && !inputs.new_product_description && !inputs.new_product_retailprice && !inputs.new_product_wholesaleprice">Update</button>
+        <button type="button" class="btn btn-success {{loading ? 'gone' : 'notgone'}}" (click)="updateProduct()" [disabled] = "!inputs.new_product_name && !inputs.new_product_description && !inputs.new_product_retailprice && !inputs.new_product_wholesaleprice && !inputs.new_shelf">Update</button>
     </div>
 </div>
 <!-- End Update Product -->
@@ -123,7 +135,7 @@
                     </div>
                     <div class="w-100 py-3">
                         <label class="text-primary text-center w-100 mt-3">Stock Quantity</label>
-                        <input [(ngModel)] = "inputs.stockno"  type="Number" name="stockno" class="form-control w-100 text-center">
+                        <input [(ngModel)] = "inputs.stockno" onkeydown="javascript: return event.keyCode !=69 && event.keyCode !=189 && event.keyCode !=109"  type="Number" name="stockno" class="form-control w-100 text-center">
                     </div>
                     <div class="w-100 py-3">
                         <label class="text-primary text-center w-100 mt-3">Expiry Date</label>
@@ -162,7 +174,7 @@
                     </div>
                     <div class="w-100 py-3">
                         <label class="text-primary text-center w-100">Stock</label>
-                        <textarea rows=2 type="text" name="stockno" class="form-control f-13 w-100 text-center" readonly [(ngModel)] = "inputs.stockno"></textarea>
+                        <input [(ngModel)] = "inputs.stockno" onkeydown="javascript: return event.keyCode !=69 && event.keyCode !=189 && event.keyCode !=109"  readonly type="Number" name="stockno" class="form-control w-100 text-center">
                     </div>
                 </div>
                 <div class="pl-3 w-50 d-inline-block">
@@ -172,7 +184,7 @@
                     </div>
                     <div class="w-100 py-3">
                         <label class="text-primary text-center w-100">Stock</label>
-                        <textarea rows=2 type="text" name="new_stockno" class="form-control f-13 w-100 text-center" [(ngModel)] = "inputs.new_stockno"></textarea>
+                        <input [(ngModel)] = "inputs.new_stockno" onkeydown="javascript: return event.keyCode !=69 && event.keyCode !=189 && event.keyCode !=109"  type="Number" name="new_stockno" class="form-control w-100 text-center">
                     </div>
                 </div>
             </div>

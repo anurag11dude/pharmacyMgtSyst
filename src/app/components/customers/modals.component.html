@@ -15,7 +15,7 @@
                 </div>
                 <div class="w-100 py-2">
                     <label class="text-primary text-center w-100">Phone</label>
-                    <input type="number" [(ngModel)] = "inputs.customer_phone" name="customer_phone" class="form-control w-100 text-center">
+                    <input type="number" onkeydown="javascript: return event.keyCode !=69 && event.keyCode !=189 && event.keyCode !=109" [(ngModel)] = "inputs.customer_phone" name="customer_phone" class="form-control w-100 text-center">
                 </div>
                 <div class="w-100 py-2">
                     <label class="text-primary text-center w-100">Email</label>
@@ -57,7 +57,7 @@
                     </div>
                     <div class="w-100 py-2">
                         <label class="text-primary text-center w-100">Phone</label>
-                        <input type="number" [(ngModel)] = "inputs.customer_phone" name="customer_phone" class="form-control w-100 text-center">
+                        <input type="number" onkeydown="javascript: return event.keyCode !=69 && event.keyCode !=189 && event.keyCode !=109" [(ngModel)] = "inputs.customer_phone" name="customer_phone" class="form-control w-100 text-center">
                     </div>
                     <div class="w-100 py-2">
                         <label class="text-primary text-center w-100">Email</label>
@@ -75,7 +75,7 @@
                     </div>
                     <div class="w-100 py-2">
                         <label class="text-primary text-center w-100">Phone</label>
-                        <input type="number" [(ngModel)] = "inputs.new_customer_phone" name="new_customer_phone" class="form-control w-100 text-center">
+                        <input type="number" onkeydown="javascript: return event.keyCode !=69 && event.keyCode !=189 && event.keyCode !=109" [(ngModel)] = "inputs.new_customer_phone" name="new_customer_phone" class="form-control w-100 text-center">
                     </div>
                     <div class="w-100 py-2">
                         <label class="text-primary text-center w-100">Email</label>
@@ -118,7 +118,7 @@
                     </div>
                     <div class="w-100 py-3">
                         <label class="text-primary text-center w-100">Money paid now</label>
-                        <input [(ngModel)] = "inputs.paidamt"  type="number" name="paidamt" class="form-control w-100 text-center">
+                        <input [(ngModel)] = "inputs.paidamt"  type="number" onkeydown="javascript: return event.keyCode !=69 && event.keyCode !=189 && event.keyCode !=109" name="paidamt" class="form-control w-100 text-center">
                     </div>
                     <div class="w-100 py-3">
                         <label class="text-primary text-center w-100">Payment Method</label>
@@ -181,11 +181,11 @@
                 </div>
                 <div class="w-100 py-3">
                     <label class="text-primary text-center w-100">New Quantity</label>
-                    <input [(ngModel)] = "inputs.quantity" type="number" onkeydown="javascript: return event.keyCode !=69 && event.keyCode !=189 && event.keyCode !=109" name="quantity" class="form-control w-100 text-center">
+                    <input [(ngModel)] = "inputs.quantity" type="number" onkeydown="javascript: return event.keyCode !=69 && event.keyCode !=189 && event.keyCode !=109" onkeydown="javascript: return event.keyCode !=69 && event.keyCode !=189 && event.keyCode !=109" name="quantity" class="form-control w-100 text-center">
                 </div>
                 <div class="w-100 py-3">
                     <label class="text-primary text-center w-100">Paid Amount</label>
-                    <input [(ngModel)] = "inputs.paidamt" type="number" onkeydown="javascript: return event.keyCode !=69" name="paidamt" class="form-control w-100 text-center">
+                    <input [(ngModel)] = "inputs.paidamt" type="number" onkeydown="javascript: return event.keyCode !=69 && event.keyCode !=189 && event.keyCode !=109" onkeydown="javascript: return event.keyCode !=69" name="paidamt" class="form-control w-100 text-center">
                 </div>
             </div>
         </form>
@@ -271,7 +271,7 @@
                                     </tr>
                                     <tr id="invoicebalance">
                                         <td class="invrow f-12">Outstanding<br/> Balance</td>
-                                        <td class="invrow f-12 float-left"> {{data.data.invoice.outbalance}} </td>
+                                        <td class="invrow f-12 float-left"> {{data.data.invoice.oldoutbal}} </td>
                                     </tr>
                                     <tr id="invoicepaymeth">
                                         <td class="invrow f-12">Payment Method</td>

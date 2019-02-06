@@ -91,6 +91,7 @@ export class CustomersComponent implements OnInit {
     if(!this.selectAnyRow(selectedTable, 'invoices')) {
       this.tableData.falsify(['invoices'], 'selected'); return;
     }
+    this.tableData.invoices.selected[0]['oldoutbal'] =  parseInt(this.tableData.invoices.selected[0]['totalpaid']) + parseInt(this.tableData.invoices.selected[0]['outbalance']) - parseInt(this.tableData.invoices.selected[0]['totalamt']);
     this.tableData.falsify(['sales'], 'selected');
   }
   salesListSelected(selectedTable){
@@ -164,7 +165,7 @@ export class CustomersComponent implements OnInit {
         data: payload,
         classname: classtype
       },
-      sess : 'ewere'
+      sess : window['user']['username']
     }).then((result)=>{
       console.log(result);
       if(action == 'delete_operation'){

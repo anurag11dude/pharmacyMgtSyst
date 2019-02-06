@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Http, RequestOptions } from '@angular/http';
+import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 
 const SERVER = "http://localhost:80";
 @Injectable({
@@ -27,9 +28,22 @@ public settingChange = new Subject<any>();
       console.log(response);
       let result; 
       try{
-        result = {
-          status : "SUCCESS",
-          data : response.json().data as Object
+        let resp = response.json().data as Object;
+        let message;
+        if(resp['msg'] == undefined){
+          message = resp;
+          result = {
+            status : "SUCCESS",
+            data : message
+          }
+        }else{
+          message = {msg : resp['msg']['resp']};
+          
+          if(resp['msg']['output'] == 'success'){
+            result =  {status : "SUCCESS",data : message};
+          }else{
+            result =  {status : "ERROR",data : message};
+          }        
         }
       }catch (e){
         console.log(e);

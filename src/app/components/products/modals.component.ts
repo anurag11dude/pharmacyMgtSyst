@@ -43,7 +43,7 @@ import { DatePipe } from '@angular/common';
       console.log(this.inputs);
       let customInput = this.inputs;
       customInput['product'] = this.data.data.product_name;
-      customInput['byadmin'] = 'ewere';
+      customInput['byadmin'] = window['user']['username'];
       this.postCall('add_operation', customInput, 'Stock');
     }
     updateProduct(){
@@ -69,7 +69,7 @@ import { DatePipe } from '@angular/common';
           data: payload,
           classname: classtype 
         },
-        sess : 'ewere'
+        sess : window['user']['username']
       }).then((result)=>{
         console.log(result);
         this.handleResponse(result);

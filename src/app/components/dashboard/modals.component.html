@@ -9,7 +9,7 @@
         <div class="modal-body">
             <form autocomplete="off" role="form" method="get" (ngSubmit) = "onSubmit" class="addProduct">
                 <div class="mx-5 my-4 px-5">
-                    <div class="w-100 row py-3 pointer" *ngFor="let stk of data.data; let $index = index;" (click)="stockselect(stk)" [class.btn-lytgrn] = "selectedStock.id == stk.id">
+                    <div class="w-100 row py-3 pointer" *ngFor="let stk of data.data; let $index = index;" (click)="stockselect(stk)" [class.btn-lytgrn] = "selectedStock.id == stk.id" [style.background] = "exipiredProd(stk) ? 'rgba(191,65,65, .4)': ''">
                         <div class="col-4 text-center">{{stk.stockremain}}</div>
                         <div class="col-8 text-center">{{stk.expirydate}}</div>
                     </div>
@@ -17,7 +17,7 @@
             </form>
         </div>
         <div class="modal-footer row justify-content-center py-4">
-            <button type="button" class="btn btn-danger" (click)="changeStock()" [disabled] = "selectedStock.id == undefined">Change Stock</button>
+            <button type="button" class="btn btn-gdark" (click)="changeStock()" [disabled] = "selectedStock.id == undefined">Change Stock</button>
         </div>
 </div>
 <!-- End Add Product -->

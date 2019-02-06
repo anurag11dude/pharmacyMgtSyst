@@ -29,7 +29,8 @@ export class Tab{
     Settings : TabTemplate = {
         menu: [
             {menuName : 'General', sidebar: 'gone'},
-            {menuName : 'Users', sidebar: 'w-30'}
+            {menuName : 'Users', sidebar: 'w-30'},
+            {menuName : 'Options', sidebar: 'gone'}
         ],
         selected : {menuName:"General", sidebar: 'gone'}
     }

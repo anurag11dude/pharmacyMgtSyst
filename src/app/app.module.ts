@@ -24,6 +24,8 @@ import { DashboardModalContent } from './components/dashboard/modals.component';
 import { ListComponent } from './utilities/list.component';
 import { CroppieComponent } from './utilities/croppie.component';
 import { search } from './utilities/customPipes';
+import { PharmSystemComponent } from './components/pharm-system/pharm-system.component';
+import { LoginComponent } from './components/login/login.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,7 +41,9 @@ import { search } from './utilities/customPipes';
     CroppieComponent,
     UserModalContent,
     DashboardModalContent,
-    search
+    search,
+    PharmSystemComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

@@ -12,7 +12,7 @@ import { settings } from 'cluster';
     <input class = "w-70 text-center" type="file" name="front-upload-img" id="front-upload-img" />
     <div class="text-center w-100 mt-3 py-0">
         <img class = "{{loading ? '' : 'gone'}}" src="{{loaderUrl}}" width="60px" height="40px"/>
-        <button [disabled] = "!uploaded" (click) = "save()" class="{{!loading ? '' : 'gone'}} front-cropImg btn btn-success w-70 " >Save</button>
+        <button [disabled] = "" (click) = "save()" class="{{!loading ? '' : 'gone'}} front-cropImg btn btn-success w-70 " >Save</button>
     </div>
     <div class = 'row py-3 justify-content-between w-60 align-items-center'>
         <div>
@@ -101,7 +101,7 @@ export class CroppieComponent implements OnInit {
                 data: { table: 'settings' },
                 classname: ''
             },
-            sess: 'ewere'
+            sess: window['user']['username']
         }).then((result) => {
             thisComp.logo = result.data.find(elem => {
                 return elem.prop == 'originallogo';
@@ -111,7 +111,7 @@ export class CroppieComponent implements OnInit {
         })
     }
     save() {
-        console.log('ewere');
+        console.log(window['user']['username']);
         let thisComp = this;
         thisComp.loading = true;
         thisComp.Croppie.result({
@@ -137,7 +137,7 @@ export class CroppieComponent implements OnInit {
                         },
                         classname: 'Settings'
                     },
-                    sess: 'ewere'
+                    sess: window['user']['username']
                 }).then((result) => {
                     console.log(result);
                     thisComp.loading = false;

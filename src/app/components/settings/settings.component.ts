@@ -7,6 +7,7 @@ import { BsModalService } from 'ngx-bootstrap';
 import { FormModels } from 'src/app/utilities/model';
 import { UserModalContent } from './modals.component';
 import { ActivatedRoute } from '@angular/router';
+import * as $ from 'jquery'; 
 
 @Component({
   selector: 'app-settings',
@@ -24,14 +25,12 @@ export class SettingsComponent implements OnInit {
 
   public loaderUrl:string = "http://localhost:80/server/assets/loader.gif";
 
-  
   menuObj = new Tab().Settings;
   public tableData = new List();
   public loading = new FormModels().general;
   public inputs = new FormModels().general;
 
   constructor(public menuService:MenuService, private modalService: BsModalService, private route:ActivatedRoute) { 
-    
     let tab = this.route.snapshot.queryParams.tab;
     console.log(tab);
     if(!tab) {
@@ -54,7 +53,6 @@ export class SettingsComponent implements OnInit {
       }
     );
   }
-
   handleAction(action){
     switch(action){
       case 'addUser':
@@ -71,32 +69,16 @@ export class SettingsComponent implements OnInit {
       case 'Users':
         this.displayUser();
       break;
+      case 'Options':
+      
+      break;
       default:
-      this.displaySetting();
+        this.displaySetting();
       break;
     }
   }
   ngOnInit() {
-    /* this.menuService.menuMsg.subscribe(
-      data => {
-        console.log(data);
-        if(data.nav == "Settings"){
-          this.menuObj.selected = data.tab;
-          console.log(this.menuObj.selected);
-          switch(this.menuObj.selected.menuName){
-            case 'General':
-              this.displaySetting();
-            break;
-            case 'Users':
-              this.displayUser();
-            break;
-            default:
-            this.displaySetting();
-            break;
-          }
-        }
-      }
-    ); */
+    
   }
   activateSelectMode(list){
     let selmode = this.tableData[list].multiSelect;
@@ -108,8 +90,9 @@ export class SettingsComponent implements OnInit {
   settingUpdate(setting){
     this.loading[setting] = "yes";
     let thisComp = this;
+    let valu = this.inputs[setting] == true || this.inputs[setting] == false ? (this.inputs[setting]).toString() : this.inputs[setting];
     this.postCall({
-      value : thisComp.inputs[setting],
+      value : valu,
       wherecol : setting
     }, 'general', ()=>{
       thisComp.loading[setting] = 'no';
@@ -124,6 +107,8 @@ export class SettingsComponent implements OnInit {
     let thisComp = this;
     this.postCall({table: 'settings'}, 'general', function(){
       thisComp.tableData.general.data.forEach((elem)=>{
+        elem.value = elem.value == "true" ? true : elem.value;
+        elem.value = elem.value == "false" ? false : elem.value;
         thisComp.inputs[elem.prop] = elem.value;
       });
       console.log(thisComp.inputs);
@@ -178,7 +163,7 @@ export class SettingsComponent implements OnInit {
         data: payload,
         classname: classtype
       },
-      sess : 'ewere'
+      sess : window['user']['username']
     }).then((result)=>{
       console.log(result);
       if(action == 'delete_operation'){

@@ -67,7 +67,7 @@ import { List } from 'src/app/utilities/listTemplate';
       }catch(e){
         this.inputs['cust'] = this.data.selected.customer_name;
       }
-      this.inputs['adminref'] = 'ewere';
+      this.inputs['adminref'] = window['user']['username'];
       console.log(this.inputs);
       this.postCall('update_operation', this.inputs, 'Inventory');
     }
@@ -78,14 +78,21 @@ import { List } from 'src/app/utilities/listTemplate';
       this.postCall('add_operation', this.inputs, 'Sales');
     }
     reprint(){
-      let invoice = document.getElementsByClassName('Invoicediv')[0].innerHTML;
-      /* this._electronService.ipcRenderer.send('print', invoice); */
-      this.menuService.jsonPost({
-        payload : this.data.data,
-        sess : 'ewere'
-      },'/server/usbReceiptPrint580mm.php').then((result)=>{
-        console.log(result);
-      });
+      if(this.settings.A4PrinterisActive == "true") {
+        let invoice = document.getElementsByClassName('Invoicediv')[0].innerHTML;
+        this._electronService.ipcRenderer.send('print', {inv: invoice, silentOption: this.settings.silentPrint, printer: this.settings.A4Printer});
+      }
+      else if(this.settings.posPrinterisActive == "true") {
+        this.menuService.jsonPost({
+          payload : this.data.data,
+          setting : this.settings,
+          sess : window['user']['username']
+        },'/server/reprintPOS.php').then((result)=>{
+          console.log(result);
+        });
+      }else{
+        alert('printing from A4 Printer and POS not activated')
+      }
     }
     postCall(action, payload, classtype){
       this.menuService.jsonPost({
@@ -94,7 +101,7 @@ import { List } from 'src/app/utilities/listTemplate';
           data: payload,
           classname: classtype 
         },
-        sess : 'ewere'
+        sess : window['user']['username']
       }).then((result)=>{
         console.log(result);
         this.handleResponse(result);
@@ -161,7 +168,7 @@ import { List } from 'src/app/utilities/listTemplate';
           data: {table: 'settings'},
           classname: ''
         },
-        sess : 'ewere'
+        sess : window['user']['username']
       }).then((result)=>{
         if(result.status != "SUCCESS"){
           thisComp.tableData['general'].changeData([]);

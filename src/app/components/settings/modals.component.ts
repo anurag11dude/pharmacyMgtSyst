@@ -51,7 +51,7 @@ import { DatePipe } from '@angular/common';
           data: payload,
           classname: classtype 
         },
-        sess : 'ewere'
+        sess : window['user']['username']
       }).then((result)=>{
         console.log(result);
         this.handleResponse(result);

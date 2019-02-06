@@ -27,7 +27,7 @@
           </select>
           <div class="w-70 d-inline-block float-left h-100" *ngIf="invoice.customerInput">
             <input [(ngModel)] = "invoice.customer['name']" type="text" name="paidamt" class="h-25 f-13 form-control mb-1 w-100 text-center" placeholder="Name">
-            <input [(ngModel)] = "invoice.customer['phone']" type="number" name="paidamt" class="h-25 f-13 form-control my-1 w-100 text-center" placeholder="Phone">
+            <input [(ngModel)] = "invoice.customer['phone']" type="number" onkeydown="javascript: return event.keyCode !=69 && event.keyCode !=189 && event.keyCode !=109" name="paidamt" class="h-25 f-13 form-control my-1 w-100 text-center" placeholder="Phone">
             <input [(ngModel)] = "invoice.customer['address']" type="text" name="paidamt" class="h-25 f-13 form-control mt-1 w-100 text-center" placeholder="Address">
           </div>
           <div class="clr"></div>
@@ -39,16 +39,16 @@
             <option value="POS">POS</option>
             <option value="Credit">Credit</option>
           </select>
-          <input class="form-control my-3 text-center w-100" [(ngModel)] = "invoice.customer['paid']" placeholder="Paid Amount"/>
+          <input class="form-control my-3 text-center w-100" type = "number" onkeydown="javascript: return event.keyCode !=69 && event.keyCode !=189 && event.keyCode !=109" [(ngModel)] = "invoice.customer['paid']" placeholder="Paid Amount"/>
         </div>
         <div class="col-2 pl-4 h-100">
           <div class="w-100 choral fw-600 f-18 h-20 text-center"> Outbalance </div>
           <h5 class="w-100 text-center row justify-content-center align-items-center h-80"> {{invoice.customer.outbal}} </h5>
         </div>
       </div>
-      <div class="row justify-content-between font-fam-Montserrat-bold py-2 px-4 opac-70">
+      <div class="row justify-content-between align-items-center font-fam-Montserrat-bold py-2 px-4 opac-70">
         <h6 class="w-40 d-inline-block">Number : {{invoice.cart.number}}</h6>
-        <button class="btn btn-gdark" (click)="printPreview()">PRINT</button>
+        <button class="btn btn-gdark" [disabled] = "invoice.cart.total <= 0" (click)="printPreview()">PRINT</button>
         <h6 class="w-40 d-inline-block text-right">Total : {{invoice.cart.total}}</h6>
       </div>
       <div class="">
@@ -74,14 +74,14 @@
               </tr>
           </thead>
           <tbody id="candidates" class="cand">
-              <tr class="rowCasing rowCasing1" pos ="1" *ngFor = "let prod of invoice.cart.products; let $index = index;" (click) = "selectCartRow($index)" [style.background] = "invoice.cart.selected == $index ? '#ddd' : ''">
+              <tr class="rowCasing rowCasing1 f-13 pointer" pos ="1" *ngFor = "let prod of invoice.cart.products; let $index = index;"  [style.background] = "invoice.cart.selected == $index ? '#ddd' : ''">
                   <td class="td sn text-center" (click)="removeCartrow($index)"><button [style.border-radius] = "'30px'" class="btn {{invoice.cart.products[$index]['product_name'] == null ? 'btn-danger' : 'btn-warning'}} f-20 fw-600">{{invoice.cart.products[$index]['product_name'] == null ? 'x' : '-'}}</button></td>
-                  <td class="td text-center"><input type = "number" [(ngModel)]="invoice.cart.products[$index].quantity" class="text-center inp w-100 quants" (keyup)="changeqty($index)"/></td>
-                  <td class="td text-center"><p>{{invoice.cart.products[$index].product_name}}</p></td>
-                  <td class="td exprem"><p>{{invoice.cart.products[$index].expiry_date}}</p></td>
-                  <td class="td text-center" ><p id="description1" class = "desp">{{invoice.cart.products[$index].product_description}}</p></td>
-                  <td class="td text-center" (click) = "togglePriceType($index)"><p class = "unitprice">{{invoice.cart.products[$index].unitcost}}</p ><div class = "badge-danger badge badge-pill">{{invoice.cart.products[$index].pricetype}}</div></td>
-                  <td class="td text-center"><p class="totalno">{{invoice.cart.products[$index].totalcost}}</p></td>
+                  <td class="td text-center"><input type = "number" onkeydown="javascript: return event.keyCode !=69 && event.keyCode !=189 && event.keyCode !=109" [(ngModel)]="invoice.cart.products[$index].quantity" class="text-center inp w-100 quants" (keyup)="changeqty($index)"/></td>
+                  <td class="td text-center" (click) = "selectCartRow($index)"><p>{{invoice.cart.products[$index].product_name}}</p></td>
+                  <td class="td exprem" (click) = "selectCartRow($index)"><p>{{invoice.cart.products[$index].expiry_date}}</p></td>
+                  <td class="td text-center" (click) = "selectCartRow($index)" ><p id="description1" class = "desp">{{invoice.cart.products[$index].product_description}}</p></td>
+                  <td class="td text-center" (click) = "togglePriceType($index)"><p class = "unitprice">{{invoice.cart.products[$index].unitcost}}</p ><div class = "badge-success f-14 badge badge-pill">{{invoice.cart.products[$index].pricetype}}</div></td>
+                  <td class="td text-center" (click) = "selectCartRow($index)"><p class="totalno">{{invoice.cart.products[$index].totalcost}}</p></td>
               </tr>
           </tbody>
         </table>
@@ -102,7 +102,7 @@
               [selectable] = false [query]="tableData.indebtedCustomers.search" [tableData]="tableData.indebtedCustomers" height="hs-60" [change]="tableData.indebtedCustomers.change"></list-table>
           </accordion-group>
           <accordion-group heading="Last Sale" class="btn-gdark"   [panelClass]="customClass">
-              <div class="w-100">
+              <div class="w-100 font-fam-Montserrat-bold">
                 <h6 class="w-100 text-center">{{lastStock['customer']}}</h6>
                 <div class="row justify-content-between w-100 py-1">
                   <span class="f-13 py-2 fw-600 w-50 text-left">INVOICE NO. : {{lastStock['invno']}}</span>
@@ -126,7 +126,7 @@
       </div>
       <div class="my-3 h-10 row justify-content-center w-100">
         <div class="w-80 mx-auto h-80 wht fw-600 f-17 justify-content-center row align-items-center" [style.border]="'4px solid #ddd'" [style.border-radius]="'40px'">{{invoice.stock.selected['stockremain']}}&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;{{invoice.stock.selected['expirydate']}}</div>
-        <button [disabled] = "tableData.products.selected[0]['stock'] == 0 || tableData.products.selected[0]['expiry_date'] == '0000-00-00'" class="btn mt-3 btn-danger w-80" (click)="openModal({size: 'md', name:'changeStock', data: tableData.stocks.data}, 'changeStock');">
+        <button [disabled] = "tableData.products.selected[0]['stock'] == 0 || tableData.products.selected[0]['expiry_date'] == '0000-00-00'" class="btn mt-3 btn-warning w-80" (click)="openModal({size: 'md', name:'changeStock', data: tableData.stocks.data}, 'changeStock');">
           Change Stock
         </button>
       </div>

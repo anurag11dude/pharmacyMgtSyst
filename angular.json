@@ -29,11 +29,13 @@
               "node_modules/@fortawesome/fontawesome-free/css/all.css",
               "src/styles.css",
               "node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
-              "node_modules/croppie/croppie.css"
+              "node_modules/croppie/croppie.css",
+              "src/assets/css/custom.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
-              "node_modules/croppie/croppie.js"
+              "node_modules/croppie/croppie.js",
+              "src/assets/js/custom.js"
             ]
           },
           "configurations": {

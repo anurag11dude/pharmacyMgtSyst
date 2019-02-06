@@ -44,6 +44,95 @@
       <list-table class="w-100" [multiSelect]="tableData.users.multiSelect" name="users" [tableData]="tableData.users"
         height="h-80" [query]="tableData.users.search" (selected)="usersListSelected($event)"></list-table>
     </div>
+    
+    <div *ngIf="menuObj.selected.menuName == 'Options'" class="h-100 w-100" >
+      <div class="printing p-4 hs-40">
+        <h4 class="w-100 b-1 text-center font-fam-Montserrat-bold pb-2 mb-4">Printing</h4>
+        <div class="printing-options row justify-content-between h-100">
+          <div class="posPrinter row justify-content-center col px-0 mr-3 h-100" style="background: #eee; border-radius: 6px; overflow: hidden;">
+            <h6 class="w-100 h-15 wht pt-2 m-0 text-center" style="background: #777;">POS Printer Name</h6>
+            <div class ="w-70 align-items-center h-80 p-4">
+              <input [(ngModel)]="inputs['posPrinter']" placeholder = "Printer Name" class="text-center form-control f-13 w-100"/>
+              <div class="w-100 mt-3 py-0 row justify-content-center">
+                <img [src]="loaderUrl" width="40px" height="28px" *ngIf="loading['posPrinter'] == 'yes'" />
+                <button *ngIf="loading['posPrinter'] == null || loading['posPrinter'] == 'no'" class="opac-70 btn wht btn-sm btn-success w-100"
+                  (click)="settingUpdate('posPrinter')">Save</button>
+              </div>
+              <div class="w-100 row justify-content-center">
+                <div class="toggle">
+                  <input type="checkbox" [(ngModel)] = "inputs['posPrinterisActive']" (change) ="settingUpdate('posPrinterisActive')" name="posPrinterisActive" class="check-checkbox" id="posPrinterisActive">
+                  <label class="check-label" for="posPrinterisActive">
+                    <div id="background"><p class="row justify-content-around py-2 px-1"></p></div>
+                    <span class="face d-inline">
+                      <span class="face-container">
+                        <span class="eye left"></span>
+                        <span class="eye right"></span>
+                        <span class="mouth"></span>
+                      </span>
+                    </span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="A4Printer row justify-content-center col px-0 mx-3 h-100" style="background: #eee; border-radius: 6px; overflow: hidden;">
+            <h6 class="w-100 h-15 wht pt-2 m-0 text-center" style="background: #777;">A4 Printer Name</h6>
+            <div class ="w-70 align-items-center h-80 p-4">
+              <input [(ngModel)]="inputs['A4Printer']" placeholder = "Printer Name" class="text-center form-control f-13 w-100"/>
+              <div class="w-100 mt-3 py-0 row justify-content-center">
+                <img [src]="loaderUrl" width="40px" height="28px" *ngIf="loading['A4Printer'] == 'yes'" />
+                <button *ngIf="loading['A4Printer'] == null || loading['A4Printer'] == 'no'" class="opac-70 btn wht btn-sm btn-success w-100"
+                  (click)="settingUpdate('A4Printer'); switch();">Save</button>
+              </div>
+              <div class="w-100 row justify-content-center">
+                <div class="toggle">
+                  <input type="checkbox" [(ngModel)] = "inputs['A4PrinterisActive']" (change) ="settingUpdate('A4PrinterisActive')" name="A4PrinterisActive" class="check-checkbox" id="A4PrinterisActive">
+                  <label class="check-label" for="A4PrinterisActive">
+                    <div id="background"><p class="row justify-content-around py-2 px-1"></p></div>
+                    <span class="face">
+                      <span class="face-container">
+                        <span class="eye left"></span>
+                        <span class="eye right"></span>
+                        <span class="mouth"></span>
+                      </span>
+                    </span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="pageSilent row justify-content-center col px-0 mr-3 h-100" style="background: #eee; border-radius: 6px; overflow: hidden;">
+            <h6 class="w-100 h-15 wht pt-2 m-0 text-center" style="background: #777;">Pages and Silent Print</h6>
+            <div class ="w-90 row relatv align-items-center h-29 px-4">
+              <input [(ngModel)]="inputs['pageNo']" placeholder = "Page Number" class="text-center form-control d-inline-block hs-5 f-13 col-6"/>
+              <div class="col-6 pl-4 hs-5 py-0 row justify-content-center">
+                <img [src]="loaderUrl" width="40px" height="28px" *ngIf="loading['pageNo'] == 'yes'" />
+                <button *ngIf="loading['pageNo'] == null || loading['pageNo'] == 'no'" class="opac-70 btn wht btn-sm btn-success w-100"
+                  (click)="settingUpdate('pageNo'); switch();">Save</button>
+              </div>
+            </div>
+            <div class="h-40">
+              <h5 class="m-0 opac-70">Silent Print</h5>
+              <div class="w-100 row justify-content-center">
+                <div class="toggle">
+                  <input type="checkbox" [(ngModel)] = "inputs['silentPrint']" (change) ="settingUpdate('silentPrint')" name="silentPrint" class="check-checkbox" id="silentPrint">
+                  <label class="check-label" for="silentPrint">
+                    <div id="background"><p class="row justify-content-around py-2 px-1"></p></div>
+                    <span class="face">
+                      <span class="face-container">
+                        <span class="eye left"></span>
+                        <span class="eye right"></span>
+                        <span class="mouth"></span>
+                      </span>
+                    </span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="right-sidebar {{menuObj.selected.sidebar}} px-4">

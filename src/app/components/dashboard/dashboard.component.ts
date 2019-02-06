@@ -15,58 +15,18 @@ import { DatePipe } from '@angular/common';
 })
 export class DashboardComponent implements OnInit {
 
-  menuObj = new Tab().Dashboard;
-  public tableData = new List();
+  public menuObj = new Tab().Dashboard;
+  public tableData;
   public sanitization:DomSanitizer;
   public customClass: string = 'accord';
   public lastStock = {};
-  public user = 'ewere';
-  public invObj = {};
-  public invoice = {
-    customerInput: false,
-    clearCustomerInput:()=>{
-      this.invoice.customerInput = this.invoice.customerInput ? false : true;
-      this.invoice.customer.id = "none";
-      this.invoice.customer.name ="";
-      this.invoice.customer.phone = "";
-      this.invoice.customer.address ="";
-      this.invoice.customer.paid =0;
-      this.invoice.customer.paymeth = "Cash";
-      this.invoice.customer.outbal = 0;
-    },
-    customer: {
-      id: <string> "none",
-      name: <string>"",
-      phone: <string> "",
-      address: <string>"",
-      paymeth: <string> "Cash",
-      outbal: <number> 0,
-      paid: <number> 0
-    },
-    cart: {
-      products:<Array<any>> [],
-      total:<number> 0,
-      number:<number> 0,
-      selected:<number> null
-    },
-    stock: {
-      list: <Array<any>> [],
-      selected: <any> {},
-    }
-  };
+  public user = window['user']['username'];
+  public invObj;
+  public invoice;
   
-  constructor(public menuService:MenuService, private modalService: BsModalService, private route:ActivatedRoute) { 
-    this.tableData.products.selected = [{id:0}];
-    let tab = this.route.snapshot.queryParams.tab;
-    console.log(tab);
-    if(!tab) {
-      this.handleRouterNavig(this.menuObj.selected);
-    }else{
-      this.menuObj.selected = this.menuObj.menu.find((elem)=>{
-        return elem.menuName == tab;
-      })
-      this.handleRouterNavig(tab);
-    }
+  constructor(public menuService:MenuService, private modalService: BsModalService, private route:ActivatedRoute) {
+    this.reset();
+    this.handleRouterNavig(this.menuObj.selected);
     this.menuService.menuMsg.subscribe(
     data => {
       this.menuObj.selected = data.tab;
@@ -76,6 +36,44 @@ export class DashboardComponent implements OnInit {
         this.handleRouterNavig(this.menuObj.selected.menuName);
       }
     })
+  }
+  reset(){
+    this.tableData = new List();
+    this.tableData.products.selected = [{id:0}];
+    this.invObj = {};
+    this.invoice = {
+      customerInput: false,
+      clearCustomerInput:()=>{
+        this.invoice.customerInput = this.invoice.customerInput ? false : true;
+        this.invoice.customer.id = "none";
+        this.invoice.customer.name ="";
+        this.invoice.customer.phone = "";
+        this.invoice.customer.address ="";
+        this.invoice.customer.paid =0;
+        this.invoice.customer.paymeth = "Cash";
+        this.invoice.customer.outbal = 0;
+      },
+      customer: {
+        id: <string> "none",
+        name: <string>"",
+        phone: <string> "",
+        address: <string>"",
+        paymeth: <string> "Cash",
+        outbal: <number> 0,
+        paid: <number> 0
+      },
+      cart: {
+        products:<Array<any>> [],
+        total:<number> 0,
+        number:<number> 0,
+        selected:<number> null
+      },
+      stock: {
+        list: <Array<any>> [],
+        selected: <any> {},
+      }
+    };
+    this.handleRouterNavig('Store');
   }
   handleRouterNavig(tab){
     console.log(tab);
@@ -279,7 +277,8 @@ export class DashboardComponent implements OnInit {
     let newinv = parseInt(this.invObj['value']) + 1;
     this.postCall(val, '', ()=>{
       this.postCall({value: newinv, wherecol: 'inv'}, 'general', ()=>{}, 'update_operation', 'Settings');
-    }, 'add_operation', 'Sell')
+      this.reset();
+    }, 'add_operation', 'Sell');
   }
   postCall(payload, type, callback, action = 'select_operation', classtype = ''){
     let thisComp = this;
@@ -289,7 +288,7 @@ export class DashboardComponent implements OnInit {
         data: payload,
         classname: classtype
       },
-      sess : 'ewere'
+      sess : window['user']['username']
     }).then((result)=>{
       console.log(result);
       if(result.status != "SUCCESS"){

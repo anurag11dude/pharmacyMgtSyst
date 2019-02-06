@@ -1,0 +1,13 @@
+
+.custom-btn-outline-orange {
+    background-image: none;
+    background-color: transparent;
+    border-color: rgba(255,255, 255, 0.9);
+    border-width: 3px;
+    border-radius: 5px;
+  }
+  
+.custom-btn-outline-orange:hover {
+    background-color: #f04e56;
+    border-color: #f04e56;
+  }

@@ -9,68 +9,64 @@ import { ElectronService } from 'ngx-electron';
 @Component({
     selector: 'ngbd-modal-content',
     templateUrl: `./modals.component.html`
-  })
-  export class DashboardModalContent implements OnInit{
-    public data:any;
-    public inputs:any;
-    public callback:Function;
-    public output:string;
-    public msg:string;
-    public selectedStock:any= {};
-    public loading:boolean = false;
-    public models:FormModels = new FormModels();
-    constructor(public activeModal: BsModalRef, public menuService:MenuService, private _electronService:ElectronService) {
-  
-      console.log(this.data);
+})
+export class DashboardModalContent implements OnInit {
+    public data: any;
+    public inputs: any;
+    public callback: Function;
+    public output: string;
+    public msg: string;
+    public selectedStock: any = {};
+    public loading: boolean = false;
+    public models: FormModels = new FormModels();
+    constructor(public activeModal: BsModalRef, public menuService: MenuService, private _electronService: ElectronService) {
+
+        console.log(this.data);
     }
-    ngOnInit(){
-      console.log(this.data);
-      this.inputs = this.models[this.data.name];
-      console.log((this.data.name).substring(0,6));
+    ngOnInit() {
+        console.log(this.data);
+        this.inputs = this.models[this.data.name];
+        console.log((this.data.name).substring(0, 6));
     }
-    print(){
-        /* let invoice = document.getElementsByClassName('Invoicediv')[0].innerHTML;
-        this._electronService.ipcRenderer.send('print', invoice); */
-        //this.usbprint();
-        this.callback({save: 'save', invoice: this.data.data.invoiceno});
+    print() {
+        if (this.data.data.settings.A4PrinterisActive == "true") {
+            let invoice = document.getElementsByClassName('Invoicediv')[0].innerHTML;
+            if(this.data.data.settings.silentPrint == "false"){
+                this._electronService.ipcRenderer.send('print', {inv: invoice, silentOption: this.data.data.settings.silentPrint, printer: this.data.data.A4Printer});
+            }else if(this.data.data.posPrinterisActive == "true"){
+                let pageNo = parseInt(this.data.data.settings.pageNo) || 0;
+                for(let i = 0; i < pageNo; i++){
+                    this._electronService.ipcRenderer.send('print', {inv: invoice, silentOption: this.data.data.settings.silentPrint, printer: this.data.data.A4Printer});
+                }
+            }else{
+                alert('printing from A4 Printer and POS not activated')
+            }
+        }
+        if (this.data.data.settings.posPrinterisActive == "true") {
+            this.menuService.jsonPost({
+                payload: this.data.data,
+                sess: window['user']['username']
+            }, '/server/printPOS.php').then((result) => {
+                console.log(result);
+            });
+        }
+        this.callback({ save: 'save', invoice: this.data.data.invoiceno });
         this.activeModal.hide();
     }
-    stockselect(stk){
+    stockselect(stk) {
+        if (new Date(stk.expirydate) <= new Date(this.getdate())) return;
         this.selectedStock = stk;
     }
-    changeStock(){
+    exipiredProd(stk) {
+        if (new Date(stk.expirydate) <= new Date(this.getdate())) return true;
+        return false;
+    }
+    changeStock() {
         this.callback(this.selectedStock);
         this.activeModal.hide()
     }
-    getdate(){
+    getdate() {
         const datePipe = new DatePipe('en-US');
         return datePipe.transform(new Date(), 'yyyy-MM-dd')
     }
-    /* usbprint(){
-        const device  = new escpos.USB();
-        // const device  = new escpos.Network('localhost');
-        // const device  = new escpos.Serial('/dev/usb/lp0');
-        
-        const options = { encoding: "GB18030"  }
-        // encoding is optional
-        
-        const printer = new escpos.Printer(device, options);
-        //console.log(escpos.USB.findPrinter());
-
-        device.open(function(){
-        printer
-        .font('a')
-        .align('ct')
-        .style('bu')
-        .size(1, 1)
-        .text('The quick brown fox jumps over the lazy dog')
-        .text('敏捷的棕色狐狸跳过懒狗')
-        .barcode('1234567', 'EAN8')
-        .qrimage('http://localhost:80/server/assets/logo.png', function(err){
-            this.cut();
-            this.close();
-        }); 
-        });
-    } */
-  }
-  
+}

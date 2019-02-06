@@ -1,6 +1,6 @@
 <div class="tab row justify-content-between">
-  <div class="prime w-100 px-4 pb-4 py-3">
-    <div *ngIf="menuObj.selected.menuName == 'Transaction'">
+  <div class="prime w-100 px-4 pb-4 py-3 h-100">
+    <div class="h-100" *ngIf="menuObj.selected.menuName == 'Transaction'">
       <div class="py-2 row align-items-center mt-4">
         <div class="w-100 pb-3 row align-items-center">
           <h4 class="font-fam-Montserrat-bold col-3 px-0">Transaction History</h4>
@@ -26,7 +26,7 @@
       </div>
       <list-table class="w-100" [multiSelect]="tableData.transactionHistory.multiSelect" field = "customer" name="transactionHistory" [change] = "tableData.transactionHistory.change" [tableData]="tableData.transactionHistory" height="h-80" [query]="tableData.transactionHistory.search" (selected)="listSelected($event, 'transactionHistory', 'customer')"></list-table>
     </div> 
-    <div *ngIf="menuObj.selected.menuName == 'Sales'">
+    <div class="h-100" *ngIf="menuObj.selected.menuName == 'Sales'">
       <div class="py-2 row align-items-center mt-4">
         <div class="w-100 pb-3 row align-items-center">
           <h4 class="font-fam-Montserrat-bold col-3 px-0">Sales History</h4>
@@ -45,7 +45,7 @@
       </div>
       <list-table class="w-100" [multiSelect]="tableData.saleHistory.multiSelect" field = "product" name="saleHistory" [change] = "tableData.saleHistory.change" [tableData]="tableData.saleHistory" height="h-80" [query]="tableData.saleHistory.search" (selected)="listSelected($event, 'saleHistory', 'product')"></list-table>
     </div> 
-    <div *ngIf="menuObj.selected.menuName == 'Stocks'">
+    <div *ngIf="menuObj.selected.menuName == 'Stocks'" class="h-100">
       <div class="py-2 row align-items-center mt-4">
         <div class="w-100 pb-3 row align-items-center">
           <h4 class="font-fam-Montserrat-bold col-3 px-0">Stocks History</h4>

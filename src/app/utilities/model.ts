@@ -2,6 +2,7 @@ export class FormModels{
     public addProduct = {
         product_name : <string>  null,
         product_description : <string>  null,
+        shelf : <string>  null,
         product_retailprice : <number> null,
         product_wholesaleprice : <number> null
     };
@@ -9,9 +10,11 @@ export class FormModels{
         product_name : <string>  null,
         product_description : <string>  null,
         product_retailprice : <number> null,
+        shelf : <string>  null,
         product_wholesaleprice : <number> null,
         new_product_name : <string>  null,
         new_product_description : <string>  null,
+        new_shelf : <string>  null,
         new_product_retailprice : <number> null,
         new_product_wholesaleprice : <number> null
     };
@@ -63,6 +66,12 @@ export class FormModels{
         address : <string> null,
         phone : <number> null,
         email : <string> null,
+        posPrinter : <string> null,
+        A4Printer : <string> null,
+        posPrinterisActive : <boolean> null,
+        A4PrinterisActive : <boolean> null,
+        pageNo : <number> null,
+        silentPrint : <boolean> null
     };
     public addUser = {
         user : <string>  null,

@@ -6,7 +6,8 @@ export class List{
         {name: "Stock", body: "stock", width:"w-10"},
         {name: "Retail", body: "product_retailprice", width:"w-10"},
         {name: "Wholesale", body: "product_wholesaleprice", width:"w-10"},
-        {name: "C.ExpDate", body: "expiry_date", width:"w-20"}
+        {name: "C.ExpDate", body: "expiry_date", width:"w-10"},
+        {name: "Shelf", body: "shelf", width:"w-10"}
     ]);
     zeroStockProducts:ListTemplate = new ListTemplate([
         {name: "Product", body: "product_name", width:"w-40"},

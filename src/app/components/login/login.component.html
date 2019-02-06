@@ -1,0 +1,22 @@
+<div class="cont hs-100 row align-items-center">
+    <form autocomplete="off" class="form-signin w-100" method="POST">
+        <div id = "mgTitle" class = "mb-4 w-100 text-center">
+            <img style="max-height: 20hv;" class = "" src = "http://localhost:80/server/assets/{{logo}}"/>
+            <!--<h5 class="form-signin-heading">SALES PANEL</h5>-->
+        </div><!-- /mgTitle -->
+        <div class="row mb-4"><label for="userName" class = "align-self-center">Username</label>
+            <input type="text" id="userName" class="form-control" [(ngModel)] = "auth.username" required autofocus name="username"></div>
+        <div class="row">
+            <label for="pass" class = "align-self-center">Password</label>
+        <input type="password" [(ngModel)] = "auth.password" id="pass" class="form-control" required name="password">
+        </div>
+
+        <button class="btn btn-lg btn-purp mt-5"  (click) ="authenticate(auth);">Sign in</button>
+    </form>
+
+    <div class="row pt-2 justify-content-center w-100">
+        <img id="sendGif" class="dropOpacity align-self-start {{!loading ? 'gone' : 'notgone'}}" src="http://localhost:80/server/assets/loaderbw.gif" width="100px" height="70px" style="position: absolute;"/>
+        <p id="wang" class="{{loading ? 'opac-0' : ''}} align-self-end anim wht" style="font-size:17px; margin-left:10px; margin-top:20px; font-weight: 700;" >{{output || '&nbsp;'}}</p>
+    </div>
+
+</div> <!-- /container -->

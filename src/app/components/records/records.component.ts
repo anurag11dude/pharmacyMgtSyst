@@ -152,7 +152,7 @@ export class RecordsComponent implements OnInit {
         data: payload,
         classname: classtype
       },
-      sess : 'ewere'
+      sess : window['user']['username']
     }).then((result)=>{
       console.log(result);
       if(result.status != "SUCCESS"){

@@ -42,7 +42,7 @@
                     </tr>
                 </thead>
                 <tbody id="candidates" class="cand" style="border-top: 2px solid #aaa;">
-                    <tr class="rowCasing rowCasing{{$index + 1}}" *ngFor="let tranx of data.data.info; let $index = index">
+                    <tr class="rowCasing rowCasing{{$index + 1}}" *ngFor="let tranx of data.data.info | search: data.data.selected : 'customer'; let $index = index">
                         <td class="td sn text-center f-12">{{tranx.customer}}</td>
                         <td class="td text-center">
                             <p class="f-12">{{tranx.invno}}</p>
@@ -125,7 +125,7 @@
                     </tr>
                 </thead>
                 <tbody id="candidates" class="cand" style="border-top: 2px solid #aaa;">
-                    <tr class="rowCasing rowCasing{{$index + 1}}" *ngFor="let tranx of data.data.info; let $index = index">
+                    <tr class="rowCasing rowCasing{{$index + 1}}" *ngFor="let tranx of data.data.info | search: data.data.selected : 'product'; let $index = index">
                         <td class="td sn text-center f-12">{{tranx.product}}</td>
                         <td class="td text-center">
                             <p class="f-12">{{tranx.invoiceno}}</p>
@@ -200,7 +200,7 @@
                     </tr>
                 </thead>
                 <tbody id="candidates" class="cand" style="border-top: 2px solid #aaa;">
-                    <tr class="rowCasing rowCasing{{$index + 1}}" *ngFor="let tranx of data.data.info; let $index = index">
+                    <tr class="rowCasing rowCasing{{$index + 1}}" *ngFor="let tranx of data.data.info | search: data.data.selected : 'product'; let $index = index">
                         <td class="td sn text-center f-12">{{tranx.product}}</td>
                         <td class="td text-center">
                             <p class="f-12">{{tranx.stockexpiry_date}}</p>
