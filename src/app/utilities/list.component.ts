@@ -31,6 +31,7 @@ export class ListComponent implements OnChanges{
   @Input('name') name:String;
   @Input('field') field:String = null;
   @Input() public tableData = {
+    map:[],
     data:[]
   };
   @Input() public multiSelect:boolean = false;

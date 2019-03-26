@@ -79,8 +79,8 @@ import { List } from 'src/app/utilities/listTemplate';
     }
     reprint(){
       if(this.settings.A4PrinterisActive == "true") {
-        let invoice = document.getElementsByClassName('Invoicediv')[0].innerHTML;
-        this._electronService.ipcRenderer.send('print', {inv: invoice, silentOption: this.settings.silentPrint, printer: this.settings.A4Printer});
+        /* let invoice = document.getElementsByClassName('Invoicediv')[0].innerHTML;
+        this._electronService.ipcRenderer.send('print', {inv: invoice, silentOption: this.settings.silentPrint, printer: this.settings.A4Printer}); */
       }
       else if(this.settings.posPrinterisActive == "true") {
         this.menuService.jsonPost({

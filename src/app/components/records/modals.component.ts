@@ -35,12 +35,12 @@ import { List } from 'src/app/utilities/listTemplate';
       console.log(this.data);
     }
     print(){
-      if(this.settings.A4PrinterisActive == "true") {
+      /* if(this.settings.A4PrinterisActive == "true") {
         let invoice = document.getElementsByClassName('printRecord')[0].innerHTML;
         this._electronService.ipcRenderer.send('print', {inv: invoice, silentOption: this.settings.silentPrint, printer: this.settings.A4Printer});
       }else{
         alert('printing from A4 Printer is not activated')
-      }
+      } */
     }
     displaySetting(callback = ()=>{}){
       let thisComp = this;

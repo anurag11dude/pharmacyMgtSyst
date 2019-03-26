@@ -30,7 +30,7 @@ export class DashboardModalContent implements OnInit {
     }
     print() {
         if (this.data.data.settings.A4PrinterisActive == "true") {
-            let invoice = document.getElementsByClassName('Invoicediv')[0].innerHTML;
+            /* let invoice = document.getElementsByClassName('Invoicediv')[0].innerHTML;
             if(this.data.data.settings.silentPrint == "false"){
                 this._electronService.ipcRenderer.send('print', {inv: invoice, silentOption: this.data.data.settings.silentPrint, printer: this.data.data.A4Printer});
             }else if(this.data.data.posPrinterisActive == "true"){
@@ -40,7 +40,7 @@ export class DashboardModalContent implements OnInit {
                 }
             }else{
                 alert('printing from A4 Printer and POS not activated')
-            }
+            } */
         }
         if (this.data.data.settings.posPrinterisActive == "true") {
             this.menuService.jsonPost({

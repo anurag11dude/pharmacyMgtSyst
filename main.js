@@ -8,7 +8,7 @@ function createWindow () {
   
   workerWindow = new BrowserWindow();
   workerWindow.loadFile("dist/PharmacyManagementSystem/assets/html/worker.html");
-  //workerWindow.hide();
+  workerWindow.hide();
   workerWindow.on('closed', () => {
     workerWindow = null
   })
