@@ -62,7 +62,7 @@ ipcMain.on('print', (event, content)=>{
 })
 
 ipcMain.on('readyToPrint', (event, content)=>{
-  workerWindow.webContents.print({silent: content['silentPrint'], printBackground: true, deviceName: content['printer']});
+  workerWindow.webContents.print({silent: content['silentPrint'], printBackground: true});
   /* workerWindow.webContents.printToPDF({
     marginsType: 0,
     printBackground: true

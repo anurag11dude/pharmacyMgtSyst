@@ -46,7 +46,7 @@ export class DashboardComponent implements OnInit {
       clearCustomerInput:()=>{
         this.invoice.customerInput = this.invoice.customerInput ? false : true;
         this.invoice.customer.id = "none";
-        this.invoice.customer.name ="";
+        this.invoice.customer.name ="visitor";
         this.invoice.customer.phone = "";
         this.invoice.customer.address ="";
         this.invoice.customer.paid =0;
@@ -55,7 +55,7 @@ export class DashboardComponent implements OnInit {
       },
       customer: {
         id: <string> "none",
-        name: <string>"",
+        name: <string>"visitor",
         phone: <string> "",
         address: <string>"",
         paymeth: <string> "Cash",
@@ -218,6 +218,10 @@ export class DashboardComponent implements OnInit {
     this.postCall({table: 'customers', col:['outstanding_balance'], val:['0'], signs: ['>']}, 'indebtedCustomers', callback);
   }
   printPreview(){
+    if(this.invoice.customer.name == 'visitor' && this.invoice.customer.paid != this.invoice.cart.total) {
+      alert ('visitor must pay in full');
+      return;
+    }
     let printcart = {};
     this.invoice.cart.products.forEach((elem)=>{
       if(printcart[`${elem.id}${elem.pricetype}`] != undefined){

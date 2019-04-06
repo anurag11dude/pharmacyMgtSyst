@@ -106,12 +106,12 @@ export class List{
         {name: "Log Off", body: "log_off", width:"w-50"}
     ]);
     quickAccess:ListTemplate = new ListTemplate([
-        {name: "Add Product", route: {tab:'Products', menu : 'products', action: 'addProduct'}, img: "http://localhost:80/server/assets/adddrug1.png", width:"w-25", imgHeight: "120px", imgWidth: "120px"},
-        {name: "Add Customer", route: {tab:'Customers', menu : 'customers', action: 'addCustomer'}, img: "http://localhost:80/server/assets/addcust.png", width:"w-25", imgHeight: "120px", imgWidth: "120px"},
-        {name: "Add User", route: {tab:'Users', menu : 'settings', action: 'addUser'}, img: "http://localhost:80/server/assets/adduser.png", width:"w-25", imgHeight: "120px", imgWidth: "120px"},
-        {name: "Add Stock", route: {tab:'Products', menu : 'products', action: 'addStock'}, img: "http://localhost:80/server/assets/adddrugstock.png", width:"w-25", imgHeight: "120px", imgWidth: "120px"},
-        {name: "Pay Debt", route: {tab:'Customers', menu : 'customers', action: 'payDebt'}, img: "http://localhost:80/server/assets/paydebt.png", width:"w-25", imgHeight: "120px", imgWidth: "120px"},
-        {name: "Store", route: {tab:'Store', menu : 'dashboard', action: 'store'}, img: "http://localhost:80/server/assets/store.png", width:"w-25", imgHeight: "120px", imgWidth: "120px"}
+        {name: "Add Product", route: {tab:'Products', menu : 'products', action: 'addProduct'}, img: "http://localhost:80/server/assets/adddrug1.png", width:"w-25", imgHeight: "100px", imgWidth: "100px"},
+        {name: "Add Customer", route: {tab:'Customers', menu : 'customers', action: 'addCustomer'}, img: "http://localhost:80/server/assets/addcust.png", width:"w-25", imgHeight: "100px", imgWidth: "100px"},
+        {name: "Add User", route: {tab:'Users', menu : 'settings', action: 'addUser'}, img: "http://localhost:80/server/assets/adduser.png", width:"w-25", imgHeight: "100px", imgWidth: "100px"},
+        {name: "Add Stock", route: {tab:'Products', menu : 'products', action: 'addStock'}, img: "http://localhost:80/server/assets/adddrugstock.png", width:"w-25", imgHeight: "100px", imgWidth: "100px"},
+        {name: "Pay Debt", route: {tab:'Customers', menu : 'customers', action: 'payDebt'}, img: "http://localhost:80/server/assets/paydebt.png", width:"w-25", imgHeight: "100px", imgWidth: "100px"},
+        {name: "Store", route: {tab:'Store', menu : 'dashboard', action: 'store'}, img: "http://localhost:80/server/assets/store.png", width:"w-25", imgHeight: "100px", imgWidth: "100px"}
     ]);
     
     constructor(){
