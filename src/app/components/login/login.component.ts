@@ -31,13 +31,17 @@ export class LoginComponent implements OnInit {
     console.log(auth);
     this.loading = true;
     let user;
+    let time;
     this.postCall({username: auth.username, password: auth.password}, '',(data)=>{
       console.log(data);
       if(data[0] == 'error') {
         this.output = data[1];
+        time = 1000;
       }else if(data[0] == 'good'){
         this.output = 'Authorization Granted';
         user = data[1];
+        localStorage.setItem('user', JSON.stringify(user));
+        time = 500;
       }
       this.loading = false;
       setTimeout(()=>{
@@ -46,7 +50,7 @@ export class LoginComponent implements OnInit {
           this.router.navigate([`pharmacy`], { queryParams: user })
         }
         
-      }, 6000);
+      }, time);
     },'/server/login.php');
   }
   getLogo(){

@@ -21,23 +21,26 @@ export class DashboardComponent implements OnInit {
   public customClass: string = 'accord';
   public lastStock = {};
   public user = window['user']['username'];
+  public authen = window['user']['auth'];
   public invObj;
   public invoice;
   
   constructor(public menuService:MenuService, private modalService: BsModalService, private route:ActivatedRoute) {
     this.reset();
+    console.log(this.authen);
     this.handleRouterNavig(this.menuObj.selected);
     this.menuService.menuMsg.subscribe(
     data => {
       this.menuObj.selected = data.tab;
       if(data.nav == "Dashboard"){
         this.menuObj.selected = data.tab;
-        console.log(this.menuObj.selected);
+        
         this.handleRouterNavig(this.menuObj.selected.menuName);
       }
     })
   }
   reset(){
+    /* this.menuObj = new Tab().Dashboard; */
     this.tableData = new List();
     this.tableData.products.selected = [{id:0}];
     this.invObj = {};
@@ -83,7 +86,6 @@ export class DashboardComponent implements OnInit {
       break;
       default:
       this.initWelcome();
-      break;
     }
   }
 
@@ -93,7 +95,12 @@ export class DashboardComponent implements OnInit {
       this.initStore();
       break;
       default:
-      this.initWelcome();
+      if (this.authen['welcome'] !== false) {
+        this.initWelcome();
+      }
+      else if (this.authen['store'] !== false) {
+        this.initStore();
+      }
       break;
     }
   }
@@ -106,7 +113,29 @@ export class DashboardComponent implements OnInit {
     this.displayProduct();
     this.displayCustomer();
   }
+  checkNavAuth(menu){
+    switch(menu){
+      case 'products':
+      if (this.authen['products'] !== false) return false;
+      break;
+      case 'customers':
+      if (this.authen['customers'] !== false) return false;
+      break;
+      case 'settings':
+      if (this.authen['settings'] !== false && this.authen['users'] !== false) return false;
+      break;
+      case 'dashboard':
+      if (this.authen['store'] !== false) return false;
+      break;
+    }
+    return true;
+  }
   autoNav(_route){
+    if(this.checkNavAuth(_route.menu)) 
+    {
+      alert('You are not authorized to access this menu')
+      return;
+    }
     if(_route.menu != 'dashboard'){
       this.menuService.AutoNavigation(_route);
     }

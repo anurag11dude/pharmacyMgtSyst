@@ -169,6 +169,10 @@ li {
 .abs {
   position: absolute; }
 
+.vt-center {
+  display: inline-block;
+  vertical-align: middle; }
+
 .relatv {
   position: relative; }
 
@@ -253,6 +257,14 @@ button:focus, li:focus {
 .b-1 {
   border-style: solid !important;
   border-color: rgba(0, 0, 0, 0.1) !important;
+  border-left-width: 0px !important;
+  border-top-width: 0px !important;
+  border-right-width: 0px !important;
+  border-bottom-width: 1px !important; }
+
+.bw-1 {
+  border-style: solid !important;
+  border-color: rgba(255, 255, 255, 0.8) !important;
   border-left-width: 0px !important;
   border-top-width: 0px !important;
   border-right-width: 0px !important;

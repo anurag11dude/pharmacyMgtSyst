@@ -77,7 +77,7 @@ export class FormModels{
         user : <string>  null,
         username : <number>  null,
         password : <string> null,
-        category : <string> null,
+        category : <string> '',
     };
     public updateUser = {
         user : <string>  null,
@@ -89,7 +89,52 @@ export class FormModels{
         new_user : <string>  null,
         new_username : <number>  null,
         new_password : <string> null,
-        new_category : <string> null,
+        new_category : <string> '',
+    };
+    public addUserCategory = {
+        role : <string>  null,
+    };
+    public updateUserCategory = {
+        role : <string>  null,
+        auth : <string>  null,
+        new_role : <string>  null,
+        new_auth : <string>  null,
+    };
+    public formAuth = {
+        products : <boolean> false,
+        customers : <boolean> false,
+        records : <boolean> false,
+        settings : <boolean> false,
+        welcome : <boolean> false,
+        store : <boolean> false,
+        transactions : <boolean> false,
+        sales : <boolean> false,
+        stocks : <boolean> false,
+        general : <boolean> false,
+        users : <boolean> false,
+        user_roles: <boolean> false,
+        options : <boolean> false,
+        add_product : <boolean> false,
+        update_product : <boolean> false,
+        delete_product : <boolean> false,
+        add_stock : <boolean> false,
+        delete_stock : <boolean> false,
+        update_stockentry : <boolean> false,
+        delete_stockentry : <boolean> false,
+        add_customer : <boolean> false,
+        update_customer : <boolean> false,
+        delete_customer : <boolean> false,
+        pay_debt : <boolean> false,
+        delete_invoice : <boolean> false,
+        add_product_to_invoice : <boolean> false,
+        delete_product_from_invoice : <boolean> false,
+        reprint : <boolean> false,
+        add_user : <boolean> false,
+        update_user : <boolean> false,
+        delete_user : <boolean> false,
+        add_user_role : <boolean> false,
+        update_user_role : <boolean> false,
+        delete_user_role : <boolean> false,
     };
     constructor(){}
 }

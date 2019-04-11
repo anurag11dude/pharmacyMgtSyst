@@ -23,7 +23,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { DashboardModalContent } from './components/dashboard/modals.component';
 import { ListComponent } from './utilities/list.component';
 import { CroppieComponent } from './utilities/croppie.component';
-import { search } from './utilities/customPipes';
+import { search, replacestr } from './utilities/customPipes';
 import { PharmSystemComponent } from './components/pharm-system/pharm-system.component';
 import { LoginComponent } from './components/login/login.component';
 @NgModule({
@@ -42,6 +42,7 @@ import { LoginComponent } from './components/login/login.component';
     UserModalContent,
     DashboardModalContent,
     search,
+    replacestr,
     PharmSystemComponent,
     LoginComponent
   ],

@@ -44,3 +44,6 @@
 .b-1{
     @include align(border, $t:0, $r:0, $l:0, $b:1, $c: rgba(0,0,0,.1), $u:"px");
 }
+.bw-1{
+    @include align(border, $t:0, $r:0, $l:0, $b:1, $c: rgba(255,255, 255,.8), $u:"px");
+}

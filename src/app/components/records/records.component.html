@@ -1,6 +1,6 @@
 <div class="tab row justify-content-between">
   <div class="prime w-100 px-4 pb-4 py-3 h-100">
-    <div class="h-100" *ngIf="menuObj.selected.menuName == 'Transaction'">
+    <div class="h-100" *ngIf="menuObj.selected.menuName == 'Transactions'">
       <div class="py-2 row align-items-center mt-4">
         <div class="w-100 pb-3 row align-items-center">
           <h4 class="font-fam-Montserrat-bold col-3 px-0">Transaction History</h4>
@@ -10,7 +10,7 @@
             <input class="form-control text-center col-2 ml-2 w-20 f-13" [(ngModel)]="enddate" placeholder="End Sales Date" bsDatepicker [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }"/>
             <button class="btn btn-primary col-1 ml-2 font-fam-Montserrat f-12" (click)="fetchdata('customerinvoice', 'transactionHistory', 'date', 'customer');" >Fetch</button>
             <button class="btn btn-danger col-1 ml-2 font-fam-Montserrat f-12" (click)="clearInputs('customerinvoice', 'transactionHistory', 'date', 'customer');" >Clear</button>
-            <button [class.disabled]="tableData.transactionHistory.multiSelect" class="btn btn-success font-fam-Montserrat f-12 col-1 ml-2" (click)="fetchdataOpenModal({size: 'lg', name:'printTransaction'},'customerinvoice', 'transactionHistory', 'date', 'customer');" >Print</button>
+            <button [disabled]="tableData.transactionHistory.multiSelect" class="btn btn-success font-fam-Montserrat f-12 col-1 ml-2" (click)="fetchdataOpenModal({size: 'lg', name:'printTransaction'},'customerinvoice', 'transactionHistory', 'date', 'customer');" >Print</button>
           </div>
         </div>
       </div>
@@ -36,7 +36,7 @@
             <input class="form-control text-center col-2 ml-2 w-20 f-13" [(ngModel)]="enddate" placeholder="End Sales Date" bsDatepicker [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }"/>
             <button class="btn btn-primary col-1 ml-2 font-fam-Montserrat f-12" (click)="fetchdata('sales', 'saleHistory', 'date', 'product');" >Fetch</button>
             <button class="btn btn-danger col-1 ml-2 font-fam-Montserrat f-12" (click)="clearInputs('sales', 'saleHistory', 'date', 'product');" >Clear</button>
-            <button [class.disabled]="tableData.saleHistory.multiSelect" class="btn btn-success font-fam-Montserrat f-12 col-1 ml-2" (click)="fetchdataOpenModal({size: 'lg', name:'printSales'}, 'sales', 'saleHistory', 'date', 'product');" >Print</button>
+            <button [disabled]="tableData.saleHistory.multiSelect" class="btn btn-success font-fam-Montserrat f-12 col-1 ml-2" (click)="fetchdataOpenModal({size: 'lg', name:'printSales'}, 'sales', 'saleHistory', 'date', 'product');" >Print</button>
           </div>
         </div>
       </div>
@@ -55,7 +55,7 @@
             <input class="form-control text-center col-2 ml-2 w-20 f-13" [(ngModel)]="enddate" placeholder="End Entry Date" bsDatepicker [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }"/>
             <button class="btn btn-primary col-1 ml-2 font-fam-Montserrat f-12" (click)="fetchdata('stockentry', 'stockHistory', 'entry_date', 'product');" >Fetch</button>
             <button class="btn btn-danger col-1 ml-2 font-fam-Montserrat f-12" (click)="clearInputs('stockentry', 'stockHistory', 'entry_date', 'product');" >Clear</button>
-            <button [class.disabled]="tableData.stockHistory.multiSelect" class="btn btn-success font-fam-Montserrat f-12 col-1 ml-2" (click)="fetchdataOpenModal({size: 'lg', name:'printStock'}, 'stockentry', 'stockHistory', 'entry_date', 'product')" >Print</button>
+            <button [disabled]="tableData.stockHistory.multiSelect" class="btn btn-success font-fam-Montserrat f-12 col-1 ml-2" (click)="fetchdataOpenModal({size: 'lg', name:'printStock'}, 'stockentry', 'stockHistory', 'entry_date', 'product')" >Print</button>
           </div>
         </div>
       </div>

@@ -21,13 +21,14 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ProductsComponent implements OnInit {
 
-  menuObj = new Tab().Products;
+  public menuObj = new Tab().Products;
   public tableData = new List();
   public grow:boolean = false;
+  public authen = window['user']['auth'];
 
   constructor(public menuService:MenuService, private modalService: BsModalService, private route:ActivatedRoute) {
     let tab = this.route.snapshot.queryParams.tab;
-    console.log(tab);
+    console.log(this.menuObj);
     if(!tab) {
       this.handleRouterNavig(this.menuObj.selected.menuName);
     }else{
@@ -41,7 +42,7 @@ export class ProductsComponent implements OnInit {
       data => {
         if(data.nav == "Products"){
           this.menuObj.selected = data.tab;
-          console.log(this.menuObj.selected);
+          
           this.handleRouterNavig(this.menuObj.selected.menuName);
         }
       }

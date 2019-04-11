@@ -7,7 +7,6 @@ import { BsModalService } from 'ngx-bootstrap';
 import { FormModels } from 'src/app/utilities/model';
 import { UserModalContent } from './modals.component';
 import { ActivatedRoute } from '@angular/router';
-import * as $ from 'jquery'; 
 
 @Component({
   selector: 'app-settings',
@@ -25,14 +24,18 @@ export class SettingsComponent implements OnInit {
 
   public loaderUrl:string = "http://localhost:80/server/assets/loader.gif";
 
-  menuObj = new Tab().Settings;
+  public menuObj = new Tab().Settings;
   public tableData = new List();
+  public saveAuth = false;
+  public authen = window['user']['auth'];
+  public authJson = this.tableData.authJson.map;
+  public formAuth = new FormModels().formAuth;
   public loading = new FormModels().general;
   public inputs = new FormModels().general;
 
   constructor(public menuService:MenuService, private modalService: BsModalService, private route:ActivatedRoute) { 
     let tab = this.route.snapshot.queryParams.tab;
-    console.log(tab);
+    
     if(!tab) {
       this.handleRouterNavig(this.menuObj.selected.menuName);
     }else{
@@ -47,7 +50,7 @@ export class SettingsComponent implements OnInit {
         console.log(data);
         if(data.nav == "Settings"){
           this.menuObj.selected = data.tab;
-          console.log(this.menuObj.selected);
+          
           this.handleRouterNavig(this.menuObj.selected.menuName);
         }
       }
@@ -61,19 +64,24 @@ export class SettingsComponent implements OnInit {
     }
    }
   handleRouterNavig(tab){
+    console.log(tab, this.authen);
     console.log(tab);
     switch(tab){
       case 'General':
         this.displaySetting();
       break;
       case 'Users':
+        this.displayUserCategory();
         this.displayUser();
       break;
+      case 'User Roles':
+        this.displayUserCategory();
+      break;
       case 'Options':
-      
+        this.displaySetting();
       break;
       default:
-        this.displaySetting();
+       this.displaySetting();
       break;
     }
   }
@@ -117,6 +125,12 @@ export class SettingsComponent implements OnInit {
   displayUser(callback = function(){}){
     this.postCall({table: 'users'}, 'users', callback);
   }
+  displayUserCategory(callback = function(){}){
+    this.postCall({table: 'user_category'}, 'userCategory', () => {
+      console.log(this.tableData.userCategory);
+      callback();
+    });
+  }
   deleteRows(selectedRow, classtype){
     if(!confirm("Are you sure you want to delete the selection")) return;
     this.postCall(selectedRow, '', function(){}, 'delete_operation', classtype);
@@ -127,6 +141,22 @@ export class SettingsComponent implements OnInit {
     }
     this.tableData.falsify(['sessions'], 'selected');
     this.displaySession();
+  }
+  userCategoryListSelected(selectedTable){
+    if(!this.selectAnyRow(selectedTable, 'userCategory')) {
+      this.tableData.falsify(['userCategory'], 'selected'); return;
+    }
+    const authStr = this.tableData.userCategory.selected[0].auth;
+    try {
+      const authStrJson = JSON.parse(authStr);
+      Object.keys(authStrJson).forEach(key => {
+        this.formAuth[key] = authStrJson[key] ? key : false;
+        /*console.log(document.querySelector(`.${key}`)); ['checked'] = authStrJson[key]; */
+      });
+    }catch (e) {
+      this.formAuth = new FormModels().formAuth;
+    }
+    
   }
   displaySession(callback = ()=>{}){
     if(!this.tableData.users.selected) return;
@@ -154,6 +184,19 @@ export class SettingsComponent implements OnInit {
   }
   resetTableSelections(thisComp){
     thisComp.displayUser(thisComp.displaySession());
+    thisComp.displayUserCategory();
+  }
+  saveUserCategoryAuth(){
+    console.log(this.formAuth);
+    this.saveAuth = true;
+    const updateAuth = {
+      auth: JSON.stringify(this.formAuth),
+      wherecol: this.tableData.userCategory.selected[0].id,
+    }
+    console.log(updateAuth, this.tableData.userCategory.selected);
+    this.postCall(updateAuth, 'userCategory', () => {
+      this.saveAuth = false;
+    },'update_operation', 'UserCategory');
   }
   postCall(payload, type, callback, action = 'select_operation', classtype = ''){
     let thisComp = this;
@@ -166,8 +209,9 @@ export class SettingsComponent implements OnInit {
       sess : window['user']['username']
     }).then((result)=>{
       console.log(result);
-      if(action == 'delete_operation'){
+      if(action == 'delete_operation' || (classtype == 'UserCategory' && action == 'update_operation')){
         thisComp.resetTableSelections(this);
+        callback();
         return;
       }
       if(result.status != "SUCCESS"){

@@ -13,11 +13,17 @@ import { DatePipe } from '@angular/common';
     public inputs:any;
     public callback:Function;
     public output:string;
+    public userCategories:Array<any> = [];
     public msg:string;
     public loading:boolean = false;
     public models:FormModels = new FormModels();
     constructor(public activeModal: BsModalRef, public menuService:MenuService) {
   
+      console.log(this.inputs);
+      /* this.postCall('select_operation', { table: 'user_category' }, '', (res) => {
+        console.log(res);
+        this.userCategories = res.data; 
+      }); */
       console.log(this.data);
     }
     ngOnInit(){
@@ -30,21 +36,32 @@ import { DatePipe } from '@angular/common';
           this.inputs[prop] = this.data.data[prop] || this.inputs[prop];
         }      
       }
-      console.log(this.inputs);
     }
     addUser(){
       this.loading = true;
       console.log(this.inputs);
       this.postCall('add_operation', this.inputs, 'User');
     }
+    addUserCategory(){
+      this.loading = true;
+      console.log(this.inputs);
+      this.postCall('add_operation', this.inputs, 'UserCategory');
+    }
     updateUser(){
       this.loading = true; 
       let updateInputs = this.getUpdates(this.inputs); 
       updateInputs['wherecol'] = this.data.data.id; 
-      console.log(this.data);
+      console.log(updateInputs);
       this.postCall('update_operation', updateInputs, 'User');
     }
-    postCall(action, payload, classtype){
+    updateUserCategory(){
+      this.loading = true; 
+      let updateInputs = this.getUpdates(this.inputs); 
+      updateInputs['wherecol'] = this.data.data.id; 
+      console.log(this.data);
+      this.postCall('update_operation', updateInputs, 'UserCategory');
+    }
+    postCall(action, payload, classtype, cback = (res) => {}){
       this.menuService.jsonPost({
         act : action,
         arg : {
@@ -55,6 +72,7 @@ import { DatePipe } from '@angular/common';
       }).then((result)=>{
         console.log(result);
         this.handleResponse(result);
+        cback(result);
         this.callback();
       });
     }

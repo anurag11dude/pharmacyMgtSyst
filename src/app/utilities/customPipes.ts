@@ -34,3 +34,16 @@ export class search implements PipeTransform {
 		return items.filter(isSearch);
 	}
 }
+@Pipe({
+	name: 'replacestr',
+	pure: false
+})
+@Injectable()
+export class replacestr implements PipeTransform {
+	transform(value:string, from:string, to:string): string {
+		value = value || '';
+		from = from || '';
+		to = to || '';
+		return value.replace(new RegExp(from, 'g'), to);
+	};
+}

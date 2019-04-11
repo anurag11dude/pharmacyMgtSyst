@@ -28,14 +28,16 @@ export class PharmSystemComponent implements OnInit {
   showMenu: boolean;
   log: boolean = false;
   public user = '';
+  public authen = {};
   menuObj = { menu: [], selected: '' };
   public tableData = new List();
   public company = '';
 
   constructor(public menuService: MenuService, private _electronService: ElectronService, public router: Router, private route:ActivatedRoute) {
-    window['user'] = window['user'] == undefined ?  this.route.snapshot.queryParams : undefined;
+    window['user'] = window['user'] == undefined ?  JSON.parse(localStorage.getItem('user')) : undefined;
     console.log(window['user']);
     this.user = window['user']['username'];
+    this.authen = window['user']['auth'];
     this.menuService.AutoNavig.subscribe(
       data => {
         let nav = this.sidebarnav.navig.navs.find((elem) => {
@@ -66,6 +68,7 @@ export class PharmSystemComponent implements OnInit {
 
   logOut(){
     window['user'] = undefined;
+    localStorage.clear();
     this.router.navigate([``])
   }
 

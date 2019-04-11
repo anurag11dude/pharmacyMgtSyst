@@ -6,10 +6,10 @@
           <h5 class="font-fam-Montserrat-bold text-center col-12 opac-70 px-0 ">Quick Access</h5>
         </div>
         <div class="quick-access w-100 my-2">
-          <div class="text-center d-inline-block {{icon.width}}" *ngFor="let icon of tableData.quickAccess.map" (click)="autoNav(icon.route)">
+          <div *ngFor="let icon of tableData.quickAccess.map" class="text-center {{authen[icon.name | lowercase | replacestr : ' ' : '_'] || icon.name == 'Store' ? 'd-inline-block' : 'gone'}}  {{icon.width}}" (click)="autoNav(icon.route)">
             <div class="my-3 mx-auto anim imgcon" [style.width]="icon.imgWidth" [style.height]="icon.imgHeight"
               [ngStyle]="{'background-image': 'url('+icon.img+')'}"></div>
-            <p class="fw-600 f-15 opac-70">{{icon.name}}</p>
+            <p class="fw-600 f-15 opac-70">{{icon.name | lowercase | replacestr : ' ' : '_'}}</p>
           </div>
         </div>
       </div>

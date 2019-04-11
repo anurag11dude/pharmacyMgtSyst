@@ -6,9 +6,9 @@
         <h4 class="font-fam-Montserrat-bold col-4 px-0">Manage Products</h4>
         <div class="col-8 pb-1 px-0 row align-items-center justify-content-end">
           <input class="form-control text-center w-30" [(ngModel)] = "tableData.products.search" placeholder="Search"/>
-          <button [class.disabled] = "tableData.products.multiSelect" class="ml-2 btn btn-success font-fam-Montserrat f-12" (click) = "openModal({size: 'md', name:'addProduct', data: tableData.products.selected[0]});" >Add</button>
-          <button [class.disabled] = "!tableData.products.selected || tableData.products.multiSelect" class="ml-2 btn btn-warning font-fam-Montserrat f-12" (click) = "openModal({size: 'lg', name:'updateProduct', data: tableData.products.selected[0]});" >Update</button>
-          <button [class.disabled] = "!tableData.products.selected" class="ml-2 btn btn-danger font-fam-Montserrat f-12"  (click) = "deleteRows(tableData.products.selected, 'Product')">Delete</button>
+          <button [disabled] = "tableData.products.multiSelect || authen['add_product'] == false" class="ml-2 btn btn-success font-fam-Montserrat f-12" (click) = "openModal({size: 'md', name:'addProduct', data: tableData.products.selected[0]});" >Add</button>
+          <button [disabled] = "!tableData.products.selected || tableData.products.multiSelect || authen['update_product']  == false" class="ml-2 btn btn-warning font-fam-Montserrat f-12" (click) = "openModal({size: 'lg', name:'updateProduct', data: tableData.products.selected[0]});" >Update</button>
+          <button [disabled] = "!tableData.products.selected || authen['delete_product'] == false" class="ml-2 btn btn-danger font-fam-Montserrat f-12"  (click) = "deleteRows(tableData.products.selected, 'Product')">Delete</button>
           <button class="ml-2 btn selectbtn font-fam-Montserrat f-12" [class.actv] = "tableData.stockentry.multiSelect" (click) = "activateSelectMode('products')">{{tableData.products.multiSelect ? 'Unselect' : 'Select'}}</button>
         </div>
       </div>
@@ -29,8 +29,8 @@
           <div class="header font-fam-Montserrat text-bold wht w-100">
             <h4 class="text-center mx-auto f-25 w-80 excerpt" style = "height:48px">{{tableData.products.selected[0]['product_name']}}</h4>
             <div class="w-100 row justify-content-between mt-3">
-              <button class="btn btn-success mx-1 font-fam-Montserrat f-12" [class.disabled] = "tableData.stocks.multiSelect" (click) = "grow = false; openModal({size: 'md', name:'addStock', data: tableData.products.selected[0]});" [class.hvr-pulse-grow] = "grow">Add</button>
-              <button class="btn btn-danger mx-1 font-fam-Montserrat f-12" [class.disabled] = "!tableData.stocks.selected" (click) = "deleteRows(tableData.stocks.selected, 'Stock')">Delete</button>
+              <button class="btn btn-success mx-1 font-fam-Montserrat f-12" [disabled] = "tableData.stocks.multiSelect || authen['add_stock'] == false" (click) = "grow = false; openModal({size: 'md', name:'addStock', data: tableData.products.selected[0]});" [class.hvr-pulse-grow] = "grow">Add</button>
+              <button class="btn btn-danger mx-1 font-fam-Montserrat f-12" [disabled] = "!tableData.stocks.selected || authen['delete_stock'] == false" (click) = "deleteRows(tableData.stocks.selected, 'Stock')">Delete</button>
               <button class="btn btn-info selectbtn mx-1 font-fam-Montserrat f-12" [class.actv] = "tableData.stocks.multiSelect" (click) = "activateSelectMode('stocks')">{{tableData.stocks.multiSelect ? 'Unselect' : 'Select'}}</button>
             </div>
           </div>
@@ -40,8 +40,8 @@
           <div class="header font-fam-Montserrat text-bold wht w-100">
             <h4 class="text-center mx-auto f-25 w-80 excerpt" style = "height:48px">{{tableData.products.selected[0]['product_name']}}</h4>
             <div class="w-100 row justify-content-between mt-3">
-              <button class="btn btn-success mx-1 font-fam-Montserrat f-12"  (click) = "openModal({size: 'lg', name:'updateStockEntry', data: tableData.stockentry.selected[0]});" [class.disabled] = "!tableData.stockentry.selected" >Update</button>
-              <button class="btn btn-danger mx-1 font-fam-Montserrat f-12" [class.disabled] = "!tableData.stockentry.selected" (click) = "deleteRows(tableData.stockentry.selected, 'StockEntry')">Delete</button>
+              <button class="btn btn-success mx-1 font-fam-Montserrat f-12"  (click) = "openModal({size: 'lg', name:'updateStockEntry', data: tableData.stockentry.selected[0]});" [disabled] = "!tableData.stockentry.selected || authen['update_stockentry'] == false" >Update</button>
+              <button class="btn btn-danger mx-1 font-fam-Montserrat f-12" [disabled] = "!tableData.stockentry.selected || authen['delete_stockentry'] == false" (click) = "deleteRows(tableData.stockentry.selected, 'StockEntry')">Delete</button>
               <button class="btn btn-info selectbtn mx-1 font-fam-Montserrat f-12" [class.actv] = "tableData.stockentry.multiSelect" (click) = "activateSelectMode('stockentry')">{{tableData.stockentry.multiSelect ? 'Unselect' : 'Select'}}</button>
             </div>
           </div>

@@ -101,9 +101,66 @@ export class List{
         {name: "Username", body: "username", width:"w-40"},
         {name: "Category", body: "category", width:"w-30"}
     ]);
+    userCategory:ListTemplate = new ListTemplate([
+        {name: "Role", body: "role", width:"w-100"}
+    ]);
     sessions:ListTemplate = new ListTemplate([
         {name: "Log On", body: "log_on", width:"w-50"},
         {name: "Log Off", body: "log_off", width:"w-50"}
+    ]);
+    authJson: ListTemplate = new ListTemplate([
+        {
+            name: "pages",
+            "body": [
+                "products",
+                "customers",
+                "records",
+                "settings"
+            ],
+            width: ""
+        },
+        {
+            name: "panels",
+            "body": [
+                "welcome",
+                "store",
+                "transactions",
+                "sales",
+                "stocks",
+                "general",
+                "users",
+                "user_roles",
+                "options"
+            ],
+            width: ""
+        },
+        {
+            name: "functions",
+            "body": [
+                "add_product",
+                "update_product",
+                "delete_product",
+                "add_stock",
+                "delete_stock",
+                "update_stockentry",
+                "delete_stockentry",
+                "add_customer",
+                "update_customer",
+                "delete_customer",
+                "pay_debt",
+                "delete_invoice",
+                "add_product_to_invoice",
+                "delete_product_from_invoice",
+                "reprint",
+                "add_user",
+                "update_user",
+                "delete_user",
+                "add_user_role",
+                "update_user_role",
+                "delete_user_role"
+            ],
+            width: ""
+        }
     ]);
     quickAccess:ListTemplate = new ListTemplate([
         {name: "Add Product", route: {tab:'Products', menu : 'products', action: 'addProduct'}, img: "http://localhost:80/server/assets/adddrug1.png", width:"w-25", imgHeight: "100px", imgWidth: "100px"},
@@ -130,6 +187,18 @@ export class List{
             if(prop == 'dblselected' && this[elem]['selected'] != false)this[elem]['dblselected'] = true;
         }, this)
     }
+    formToJson (form){
+        const inputs = [].slice.call(form.elements);
+        const val = {};
+        inputs.forEach((input) => {
+            if (['checkbox', 'radio'].indexOf(input.type) !== -1 && input.name !== '') {
+            /* val[input.name] = val[input.name] || []; */
+            val[input.name] = input.checked ? true : false;
+            /* input.type === 'radio' ? input.value : val[input.name].push(input.value); */
+            } else if (input.name !== '') val[input.name] = input.value;
+        });
+        return val;
+    };
 }
 
 class ListTemplate{

@@ -25,17 +25,18 @@ export class CustomersComponent implements OnInit {
   menuObj = new Tab().Customers;
   public tableData = new List();
   public grow:boolean = false;
+  public authen = window['user']['auth'];
   
   constructor(public menuService:MenuService, private modalService: BsModalService, private route:ActivatedRoute) {
-    
+    console.log(window['user']['auth']);
     let tab = this.route.snapshot.queryParams.tab;
-    console.log(tab);
+    console.log(this.menuObj,tab);
     if(!tab) {
       this.handleRouterNavig(this.menuObj.selected.menuName);
     }else{
       this.menuObj.selected = this.menuObj.menu.find((elem)=>{
         return elem.menuName == tab;
-      })
+      });
       this.handleRouterNavig(tab);
       this.handleAction(this.route.snapshot.queryParams.action);
     }
@@ -43,7 +44,7 @@ export class CustomersComponent implements OnInit {
       data => {
         if(data.nav == "Customers"){
           this.menuObj.selected = data.tab;
-          console.log(this.menuObj.selected);
+          
           this.handleRouterNavig(this.menuObj.selected.menuName);
         }
       }
@@ -67,6 +68,11 @@ export class CustomersComponent implements OnInit {
     switch(tab){
       case "Customers":
       this.displayCustomer();
+      break;
+      default:
+      if (this.authen['customers'] !== false) {
+        this.displayCustomer();
+      }
       break;
     }
   }

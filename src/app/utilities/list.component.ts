@@ -3,11 +3,11 @@ import { Component, Input, Output,EventEmitter,OnChanges, SimpleChange} from '@a
 @Component({
   selector: 'list-table',
   template: `
-    <div class = "listcont mt-3 {{height}}">
-    <div class = "listhd pr-3 row font-fam-Montserrat-bold">
+  <div class = "listcont mt-3 {{height}}">
+    <div class = "listhd {{padd}} row font-fam-Montserrat-bold">
         <div class = "{{!multiSelect ? 'gone' : 'w-5 row'}} align-items-center px-0" ><input (click) = "selectAll();" class = "form-control" type="checkbox" [checked] = "select.checkAll == true"/></div>
         <div class = "{{!multiSelect ? 'w-100 pl-3' : 'w-95 pl-2'}} pr-0 row" >
-          <span  *ngFor = "let hd of tableData.map; first as isFirst" class="{{hd.width}} {{!isFirst ? 'text-center': null}} opac-70" >{{hd.name}}</span>
+          <span  *ngFor = "let hd of tableData.map; first as isFirst" class="{{hd.width}} {{!isFirst ? 'text-center': textAlign}} opac-70" >{{hd.name}}</span>
         </div>
     </div>
     <div class = "h-80 listbody ovflo-y pb-4" >
@@ -15,7 +15,7 @@ import { Component, Input, Output,EventEmitter,OnChanges, SimpleChange} from '@a
           <li  *ngFor = "let val of tableData.data | search: query : field"  class = "row w-100">
             <div class = "{{!multiSelect ? 'gone' : 'w-5 row'}} px-0 align-items-center" ><input (click) = "selectSingle(val, $event)" class = "{{'check' + val.id}} form-control selcheck" type="checkbox" /></div>
             <div (click) = "selectRow(val)" class = "itemlistrow {{!multiSelect ? 'pl-3 w-100' : 'w-95 pl-2'}} pr-0 row align-items-center f-13" [class.active] = "(selectedRow.id == val.id && !multiSelect && selectable) || (select.list['obj' + val.id] && multiSelect && selectable)" >
-                <span *ngFor = "let key of tableData.map; first as isFirst" class = "{{key.width}} {{!isFirst ? 'text-center': null}}">{{val[key.body]}}</span>
+                <span *ngFor = "let key of tableData.map; first as isFirst" class = "{{key.width}} {{!isFirst ? 'text-center': textAlign}}">{{val[key.body]}}</span>
             </div>
           </li>
         </ul>
@@ -26,6 +26,8 @@ import { Component, Input, Output,EventEmitter,OnChanges, SimpleChange} from '@a
 export class ListComponent implements OnChanges{
 
   @Input('height') height:String;
+  @Input('textAlign') textAlign:String = "text-left";
+  @Input('padd') padd:String = 'p-3';
   //@Input('changeDisplay') changeDisplay:boolean = false;
   @Input('dblclick') dblclick:boolean = false;
   @Input('name') name:String;

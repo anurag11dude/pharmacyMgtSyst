@@ -14,9 +14,10 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class RecordsComponent implements OnInit {
 
-  menuObj = new Tab().Records;
+  public menuObj = new Tab().Records;
   public tableData = new List();
   public startdate = '';
+  public authen = window['user']['auth'];
   public enddate = '';
   public params:any = {
     entries: <number> 0, pos: <number> 0,
@@ -26,10 +27,10 @@ export class RecordsComponent implements OnInit {
   }
   
   constructor(public menuService:MenuService, private modalService: BsModalService, private route:ActivatedRoute) {
-    
     let tab = this.route.snapshot.queryParams.tab;
     console.log(tab);
     if(!tab) {
+      
       this.handleRouterNavig(this.menuObj.selected.menuName);
     }else{
       this.menuObj.selected = this.menuObj.menu.find((elem)=>{
@@ -41,7 +42,7 @@ export class RecordsComponent implements OnInit {
       data => {
         if(data.nav == "Records"){
           this.menuObj.selected = data.tab;
-          console.log(this.menuObj.selected);
+          
           this.handleRouterNavig(this.menuObj.selected.menuName);
         }
       }
@@ -64,13 +65,13 @@ export class RecordsComponent implements OnInit {
       this.display('stockentry','stockHistory');
       break;
       default:
-      this.params = {
-        entries: <number> 0, pos: <number> 0,
-        cheque: <number> 0, cash: <number> 0,
-        credit: <number> 0, paid: <number> 0,
-        cost: <number> 0, outbal: <string> ''
-      }
-      this.display('customerinvoice','transactionHistory');
+        this.params = {
+          entries: <number> 0, pos: <number> 0,
+          cheque: <number> 0, cash: <number> 0,
+          credit: <number> 0, paid: <number> 0,
+          cost: <number> 0, outbal: <string> ''
+        }
+        this.display('customerinvoice','transactionHistory');
       break;
     }
   }
@@ -90,7 +91,7 @@ export class RecordsComponent implements OnInit {
       return parseInt(elem.id) > max.id ? elem : max;
     },{id: 0});
     this.getParams(newTrans, type);
-    if(this.menuObj.selected.menuName == "Transaction")
+    if(this.menuObj.selected.menuName == "Transactions")
       this.params.outbal = String(str).toLowerCase() == String(maxTrans.customer).toLowerCase() ? maxTrans.outbalance : '';
     console.log(this.params, newTrans);
   }

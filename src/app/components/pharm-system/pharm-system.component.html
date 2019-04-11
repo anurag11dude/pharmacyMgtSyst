@@ -9,7 +9,7 @@
         </div>
         <div class="navig">
             <ul class="wht">
-                <li routerLink = "{{nav.route}}" *ngFor = "let nav of sidebarnav.navig.navs" [popover]="nav.popTemplate" triggers="mouseenter:mouseleave" placement="right" containerClass="customClass" class = "anim" (click) = "activateNav(nav)" [class.active] = "sidebarnav.navig.activeNav == nav.name" ><fa class = "mr-3" name="{{nav.iconClass}}"></fa>{{sidebarnav.menuicon.toggled ? nav.name : null}}</li>
+                <li routerLink = "{{nav.route}}" *ngFor = "let nav of sidebarnav.navig.navs" [popover]="nav.popTemplate" triggers="mouseenter:mouseleave" placement="right" containerClass="customClass" class = "anim {{authen[nav.name | lowercase] || nav.name == 'Dashboard' ? '' : 'gone'}}" (click) = "activateNav(nav)" [class.active] = "sidebarnav.navig.activeNav == nav.name" ><fa class = "mr-3" name="{{nav.iconClass}}"></fa>{{sidebarnav.menuicon.toggled ? nav.name : null}}</li>
             </ul>
             
         </div>
@@ -19,7 +19,7 @@
         <div class="w-90 row align-items-end">
             <h5 class="wht font-fam-Montserrat-bold mr-5 my-2 py-1">{{company}}</h5>
             <div class="tabnav row" [class.vanish] = "showMenu">
-                <button *ngFor='let nav of menuObj.menu' class="tabpill btnnone" (click)="selectMenu(nav)" [class.focus] ="menuObj.selected.menuName == nav.menuName">
+                <button *ngFor='let nav of menuObj.menu' class="tabpill btnnone {{authen[nav.menuName | lowercase | replacestr : ' ' : '_'] || nav.name == 'Dashboard' ? '' : 'gone'}}" (click)="selectMenu(nav)" [class.focus] ="menuObj.selected.menuName == nav.menuName">
                     <h6 class = "m-0 f-17 px-3 font-fam-Montserrat">{{nav.menuName}}</h6>
                 </button>
             </div>
